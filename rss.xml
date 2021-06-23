@@ -1,4 +1,177 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ghost's Blog]]></title><description><![CDATA[A port of the casper blog built for gatsby]]></description><link>https://gatsby-casper.netlify.com</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 23 Jun 2021 12:30:37 GMT</lastBuildDate><item><title><![CDATA[Build a business layer with a Repository 📦]]></title><description><![CDATA[Disclaimer If you are using a repository, use the repository all the time. - Anonymous As callbacks, authorization and data manipulation…]]></description><link>https://gatsby-casper.netlify.com/005-getting-started-with-repository/</link><guid isPermaLink="false">https://gatsby-casper.netlify.com/005-getting-started-with-repository/</guid><pubDate>Wed, 23 Jun 2021 10:58:20 GMT</pubDate><content:encoded>&lt;h3&gt;Disclaimer&lt;/h3&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ghost's Blog]]></title><description><![CDATA[A port of the casper blog built for gatsby]]></description><link>https://gatsby-casper.netlify.com</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 23 Jun 2021 14:32:08 GMT</lastBuildDate><item><title><![CDATA[REST in peace]]></title><description><![CDATA[The problem 🤷‍♂️ The old-fashioned approach is to decouple nearly everything, but (as a fullstack dev) when speaking about the relation…]]></description><link>https://gatsby-casper.netlify.com/006-getting-started-with-rest/</link><guid isPermaLink="false">https://gatsby-casper.netlify.com/006-getting-started-with-rest/</guid><pubDate>Wed, 23 Jun 2021 12:58:20 GMT</pubDate><content:encoded>&lt;h3&gt;The problem 🤷‍♂️&lt;/h3&gt;
+&lt;p&gt;The old-fashioned approach is to decouple &lt;em&gt;nearly everything&lt;/em&gt;, but (as a fullstack dev) when speaking about the relation between REST API’s, there is a problem:&lt;/p&gt;
+&lt;p&gt;&lt;span
+      class=&quot;gatsby-resp-image-wrapper&quot;
+      style=&quot;position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 500px; &quot;
+    &gt;
+      &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c7559848b7462aa174e52e6cd10fda3e/953fe/006-joker.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+    &lt;span
+    class=&quot;gatsby-resp-image-background-image&quot;
+    style=&quot;padding-bottom: 104.60000000000001%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wgARCAAVABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAcICQb/xAAYAQACAwAAAAAAAAAAAAAAAAAEBQECA//aAAwDAQACEAMQAAAB59VvB1Qi88eJbC9M6uCMsghEz//EABsQAQADAAMBAAAAAAAAAAAAAAUDBAYBAgcR/9oACAEBAAEFAiNtUzscXqVjoXdXAnsw/VJ5EkEguD5pemQu50Okw+Qdzo6IdlT/xAAiEQEAAQQBBAMBAAAAAAAAAAABAgMREiETAAQyYSIxQVH/2gAIAQMBAT8BpoMzHNqxlwLiTvEhOTx5G8XT7GOSMeuLuPvimjscJNxsmy49doE6deUi8qdBYfmKzhTvY14SQua8i0gTtqNOVClKQqx385/31Lr/xAAiEQACAQMEAgMAAAAAAAAAAAABAgMRITEABBITIkEyYcH/2gAIAQIBAT8BmCclKCVII2QS35ULAolX66cTIPMeJVFapFK67IBbtSot8gLi2DfUtnjAwzgH7HEtnOR+Ytrd7iZNzMqsAoaw4IfQ9lSdf//EACcQAAICAQMDAwUBAAAAAAAAAAIDAQQSBRETAAYUISIjFRYkMTJB/9oACAEBAAY/ArAUu1NMVN7GOSxebcsMdChHFRuT8CpmTMa6/iWx0yPrtuVl/blAWPtANZMSQVpFURny5VYZ+NILQmFTI45JbiSvcxv2mhJGZkwK+t6iCMyYZTwqhYilcRMCKh9owPp+9oS2yUBuRzEgMQI7TkXw7+sfyMR+tto/zq/VJmniOmRy16kVpm1jqFjksvS6Wl461+GvIpmPV3GMTyl0tqZ5RYG84wU4HBEBBMxExO0jvvEzExMT19Or9vFY9mg6gx1+xouoGVi1TS2xATd7YsNVXmyRsXXh8rFUil0Px5Cr26vb6M7NmzkFhPbLVD5xVFHAgvtJEcYcfItRZLWySJIqzbyNt1quq0vMBduyleq1Br+ZZjlsHVr1NGpVqdYiL4qik4qiP7OZ36//xAAYEAEBAQEBAAAAAAAAAAAAAAABEQAhMf/aAAgBAQABPyEW0xFaBTCqXAN9aFmPS3xQXUYcuJYXohNWgsKIjpGEh6USOy1T6/mISRT1rcdDYoYiNipVA7sE5u5o3dkO0laQGRfhBfU3/n3Yl1cRJcump2c//9oADAMBAAIAAwAAABCDxz//xAAZEQEBAQEBAQAAAAAAAAAAAAABESEAMUH/2gAIAQMBAT8QxiGCCGXoSyWxxRgwEGBAIERo/XxzjGIbwrCTRYlpyAPGioVo8AMDADDv/8QAGhEBAQADAQEAAAAAAAAAAAAAAREAITFBYf/aAAgBAgEBPxAZaAQ3AKd8SAYY7AooXCCGARAiHD5jXSU1V0FVhJQYhVapth6NUdkV2qrfc//EABYQAQEBAAAAAAAAAAAAAAAAAAEAEf/aAAgBAQABPxB17MpEt2rOlFUoHhHYyN3SaoBnYIiEkkICHSVvkLqUEa+DjbY0SsB9zs5C7Iurg88GIGICqVDaEvQmRiMvLGejkGBoxMxl6lnMz0Rrmbf/2Q==&apos;); background-size: cover; display: block;&quot;
+  &gt;&lt;/span&gt;
+  &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        alt=&quot;Does clients depends on APIs?&quot;
+        title=&quot;Does clients depends on APIs?&quot;
+        src=&quot;/static/c7559848b7462aa174e52e6cd10fda3e/953fe/006-joker.jpg&quot;
+        srcset=&quot;/static/c7559848b7462aa174e52e6cd10fda3e/953fe/006-joker.jpg 500w&quot;
+        sizes=&quot;(max-width: 500px) 100vw, 500px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
+        loading=&quot;lazy&quot;
+        decoding=&quot;async&quot;
+      /&gt;
+  &lt;/a&gt;
+    &lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;So, let’s dig deep into the good old S.O.L.I.D. principles, until the end of it, where &lt;strong&gt;D&lt;/strong&gt; stands for &lt;strong&gt;dependency inversion&lt;/strong&gt;… khm:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Entities must depend on abstractions, not on concretions.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So, again, let’s get this straight. The happy path should be:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Design an abstraction (interface) for the API&lt;/li&gt;
+&lt;li&gt;Implement your API&lt;/li&gt;
+&lt;li&gt;The client should depend on the abstraction, not the actual implementation&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In FuryStack, there is 3 type of REST packages which are meant to solve the scenarios. In order:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;@furystack/rest&lt;/code&gt; for the API design&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;@furystack/rest-service&lt;/code&gt; for the implementation&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;@furystack/rest-client-fetch&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;@furystack/rest-client-got&lt;/code&gt; for consuming the API&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;Prerequisites 👈&lt;/h3&gt;
+&lt;p&gt;To be able to use this ideal path, you have to share the abstraction between the service and the consumer / frontend.
+The preferred way can be some kind of a Monorepo (see the Boilerplate app’s approacth with Yarn Workspaces).
+If you can’t do that, you can still extract the definition to e.g. an NPM package.&lt;/p&gt;
+&lt;h3&gt;Step One - Design your API first. 📐&lt;/h3&gt;
+&lt;p&gt;If you want to achieve the first step, your API should have an abstraction. An interface. And that should be a… (drumroll 🥁 )… &lt;strong&gt;Typescript Interface&lt;/strong&gt; 🎉&lt;/p&gt;
+&lt;p&gt;The following example can give you the idea how you should implement the API&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  DeleteEndpoint&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  GetCollectionEndpoint&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  GetEntityEndpoint&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  PatchEndpoint&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  PostEndpoint&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  RestApi&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@furystack/rest&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Mock&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;
+  value&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CustomQuery&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  query&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  result&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CustomUrl&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  url&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  result&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; id&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CustomHeaders&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  headers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  result&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;CustomBody&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  body&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  result&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;number&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token builtin&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;MyApi&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;RestApi&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;GET&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&apos;/custom-query&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; CustomQuery
+    &lt;span class=&quot;token string&quot;&gt;&apos;/custom-url/:id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; CustomUrl
+    &lt;span class=&quot;token string&quot;&gt;&apos;/custom-headers&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; CustomHeaders
+    &lt;span class=&quot;token string&quot;&gt;&apos;/mock&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; GetCollectionEndpoint&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;MockEntity&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&apos;/mock/:id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; GetEntityEndpoint&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;MockEntity&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;POST&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&apos;/custom-body&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; CustomBody
+    &lt;span class=&quot;token string&quot;&gt;&apos;/mock&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; PostEndpoint&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Mock&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;PATCH&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&apos;/mock/:id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; PatchEndpoint&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Mock&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token constant&quot;&gt;DELETE&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&apos;/mock/:id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; DeleteEndpoint&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Mock&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;id&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So the interface is build on two levels. The first level defines the HTTP method.&lt;/p&gt;
+&lt;p&gt;The second level is actually a &lt;em&gt;key-value pair&lt;/em&gt;. The key will be the URL endpoint, the second one is the type in a predefined format.
+The custom types can contain the following fields:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;result&lt;/code&gt;: This will be the type of the response on success&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;url&lt;/code&gt;: An URL parameter object. This should be also part of the url (e.g. if you define the &lt;code class=&quot;language-text&quot;&gt;{id: string}&lt;/code&gt; as type, the &lt;code class=&quot;language-text&quot;&gt;/:id&lt;/code&gt; parameter)&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;headers&lt;/code&gt;: The required explicit headers&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;query&lt;/code&gt;: The query string parameters&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;body&lt;/code&gt;: The POST Body parameters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;There are also some entity-related shortcut types in the example, e.g. &lt;code class=&quot;language-text&quot;&gt;PatchEndpoint&amp;lt;T, TKey&amp;gt;&lt;/code&gt; stands for &lt;code class=&quot;language-text&quot;&gt;{ body: Partial&amp;lt;T&amp;gt;, url: { id: T[TPrimaryKey] }, result: undefined}&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;Step Two - Implement 🛠&lt;/h3&gt;
+&lt;p&gt;OK, we’ve got a well-defined REST API with all the payloads, bodys, headers, bells and whistles. Now we can implement it, so let’s move to the &lt;em&gt;service-side&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;So, an example API implementation overview looks like this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; i &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Injector&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+i&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token generic-function&quot;&gt;&lt;span class=&quot;token function&quot;&gt;useRestService&lt;/span&gt;&lt;span class=&quot;token generic class-name&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;MyApi&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  port&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;1234&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;       &lt;span class=&quot;token comment&quot;&gt;// The port that the app will use&lt;/span&gt;
+  root&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;/api/v1&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;  &lt;span class=&quot;token comment&quot;&gt;// The root path of your API&lt;/span&gt;
+  api&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token constant&quot;&gt;GET&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token string&quot;&gt;&quot;/custom-headers&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; customHeadersEndpoint
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token comment&quot;&gt;/*(...and you should implement all endpoints here if you want to compile it. Good luck ;) )*/&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So, the basic structure is similar to the interface, you should use the &lt;code class=&quot;language-text&quot;&gt;.useRestService&amp;lt;T&amp;gt;()&lt;/code&gt; injector extension with some basic options like the port or root path.
+The &lt;code class=&quot;language-text&quot;&gt;api&lt;/code&gt; should follow the same structure as the definition, but the &lt;code class=&quot;language-text&quot;&gt;customHeadersEndpoint&lt;/code&gt; should implement the endpoint &lt;code class=&quot;language-text&quot;&gt;CustomHeaders&lt;/code&gt;. So let’s take a look at this:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; customHeadersEndpoint&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; RequestAction&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;CustomHeaders&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; headers &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token builtin&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;headers&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// The type is inferred from CustomHeaders: { foo: string; bar: number; baz: boolean }&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;JsonResult&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;headers&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// This should also match the `result` type&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The magical part is covered by the &lt;code class=&quot;language-text&quot;&gt;RequestAction&amp;lt;CustomHeaders&amp;gt;&lt;/code&gt;. This generic type tells that this&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Should be an async method&lt;/li&gt;
+&lt;li&gt;Will recieve headers with a specified type&lt;/li&gt;
+&lt;li&gt;Should return the JsonResult with a specified type&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The other properties will be also inferred:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;if there is &lt;code class=&quot;language-text&quot;&gt;{ url: T }&lt;/code&gt; defined on the interface, you will have &lt;code class=&quot;language-text&quot;&gt;getUrlParams: ()=&amp;gt; T&lt;/code&gt; in the parameter object&lt;/li&gt;
+&lt;li&gt;if there is &lt;code class=&quot;language-text&quot;&gt;{ body: T }&lt;/code&gt; defined, you will get &lt;code class=&quot;language-text&quot;&gt;getBody: () =&amp;gt; Promise&amp;lt;T&amp;gt;&lt;/code&gt; in the parameter object&lt;/li&gt;
+&lt;li&gt;if there is &lt;code class=&quot;language-text&quot;&gt;{ query: T }&lt;/code&gt; defined, you will get &lt;code class=&quot;language-text&quot;&gt;getQuery: () =&amp;gt; T&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Consume your interface, not your API 🍽&lt;/h3&gt;
+&lt;p&gt;OK, we have an interface and an implementation. The interface is shared between the service and the client. So let’s take a look how the client can consume the API.
+Let’s take a simple approacth with the native &lt;code class=&quot;language-text&quot;&gt;fetch&lt;/code&gt; implementation (there’s also a &lt;code class=&quot;language-text&quot;&gt;got&lt;/code&gt;-based client implementation that can be used in node-based clients as well)&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;&lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; createClient &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;@furystack/rest-client-fetch&apos;&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; callMyApi &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token generic-function&quot;&gt;&lt;span class=&quot;token function&quot;&gt;createClient&lt;/span&gt;&lt;span class=&quot;token generic class-name&quot;&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;MyApi&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  endpointUrl&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token template-string&quot;&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;http://localhost:1234/api/v1&lt;/span&gt;&lt;span class=&quot;token template-punctuation string&quot;&gt;`&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; result &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;callMyApi&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  method&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;GET&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;    &lt;span class=&quot;token comment&quot;&gt;// This should be the first property in order to work with Intellisense&lt;/span&gt;
+  action&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;/custom-headers&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// After selecting the action from the list, other required properties will be inferred and required&lt;/span&gt;
+  headers&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    foo&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;asd&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    bar&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    baz&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;So, step by step:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Select a method&lt;/li&gt;
+&lt;li&gt;All available actions will be offered by IntelliSense&lt;/li&gt;
+&lt;li&gt;Once you’ve selected an action, the full payload will be inferred. You will get type checks in header, body, query, url, etc… parameters. The response type will be also there for you 💚&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;The main gotcha: Let’s break all the thingzzz!!!!4!!!💥&lt;/h3&gt;
+&lt;p&gt;There’s an ancient refactoring technique in the &lt;em&gt;type-safe dreamlands&lt;/em&gt;: If you can change your type definitions and try to recompile, you will see immediately where it will break your code.
+The good news: Now you can do that with your API definition - your service and your frontend will be still type-protected 🙌&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/dbc0c92051f7c74f52512af8b90712bf/006-hulk.gif&quot; alt=&quot;Does clients depends on APIs?&quot;&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Build a business layer with a Repository]]></title><description><![CDATA[Disclaimer If you are using a repository, use the repository all the time. - Anonymous As callbacks, authorization and data manipulation…]]></description><link>https://gatsby-casper.netlify.com/005-getting-started-with-repository/</link><guid isPermaLink="false">https://gatsby-casper.netlify.com/005-getting-started-with-repository/</guid><pubDate>Wed, 23 Jun 2021 10:58:20 GMT</pubDate><content:encoded>&lt;h3&gt;Disclaimer&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;If you are using a repository, use the repository all the time. - Anonymous&lt;/p&gt;
 &lt;/blockquote&gt;
