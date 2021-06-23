@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Build a business layer with a Repository 📦
+title: Build a business layer with a Repository
 author: [gallayl]
 tags: ['Getting Started', 'repository']
 image: img/005-getting-started-with-repository-cover.jpg
