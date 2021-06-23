@@ -27,6 +27,18 @@ const PageTemplate = css`
   }
 `;
 
+const StatusBadge: React.FC<{ packageName: string }> = ({ packageName }) => <a href={`https://www.npmjs.com/package/${packageName}`} target="_blank">
+    <img style={{ display: 'inline' }} src={`https://img.shields.io/npm/v/${packageName}.svg?maxAge=3600`} alt={packageName} />
+</a>
+
+const TableRow: React.FC<{ packageName: string }> = ({ packageName }) => <tr>
+    <td>{packageName}</td>
+    <td><StatusBadge packageName={packageName} /></td>
+    <td style={{ textAlign: 'center' }}>
+        <a style={{ textDecoration: 'none', boxShadow: 'none', fontSize: '1.3em' }} href={`/tags/${packageName.split('/')[1]}`}>👉</a>
+    </td>
+</tr>
+
 
 const PackagesPage: React.FC = () => {
     return <IndexLayout>
@@ -51,23 +63,36 @@ const PackagesPage: React.FC = () => {
                         <PostFullContent className="post-full-content">
                             <div className="post-content">
                                 <h5>A List of FuryStack Packages</h5>
-
-
-                                <p>
-                                    The main goal of FuryStack is to bring enterprise-grade architecture to the NodeJS Ecosystem with a pack of separated but perfectly matched parts.
-                                    You can build a modern scalable backend service in no-time and a responsive SPA frontend without bloating your app with 3rd party
-                                    and low quality, often abandoned dependencies. Developer experience is the main focus while the framework also tries to encourage keeping the code
-                                    clean and decoupled.
-                                </p>
-                                <p>
-                                    FuryStack contains all the basic parts that you need to start with - like DI/IOC, authentication, data stores, entity authorization, logging, etc... -
-                                    If you want to use only a subset of the layers (e.g. only the the Dependency Injection) you can also pick the one you like.
-                                </p>
-                                <p>
-                                    In FuryStack, there are some concepts that are not very common nowdays - like sharing REST API definitions
-                                    with type checking between the service and the frontend in a monorepo.
-                                </p>
-
+                                <table style={{ width: '100%' }}>
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>NPM link</th>
+                                            <th>Related posts</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <TableRow packageName="@furystack/auth-google" />
+                                        <TableRow packageName="@furystack/core" />
+                                        <TableRow packageName="@furystack/filesystem-store" />
+                                        <TableRow packageName="@furystack/inject" />
+                                        <TableRow packageName="@furystack/logging" />
+                                        <TableRow packageName="@furystack/mongodb-store" />
+                                        <TableRow packageName="@furystack/redis-store" />
+                                        <TableRow packageName="@furystack/repository" />
+                                        <TableRow packageName="@furystack/rest" />
+                                        <TableRow packageName="@furystack/rest-client-fetch" />
+                                        <TableRow packageName="@furystack/rest-client-got" />
+                                        <TableRow packageName="@furystack/rest-service" />
+                                        <TableRow packageName="@furystack/sequelize-store" />
+                                        <TableRow packageName="@furystack/shades" />
+                                        <TableRow packageName="@furystack/shades-common-components" />
+                                        <TableRow packageName="@furystack/shades-lottie" />
+                                        <TableRow packageName="@furystack/shades-nipple" />
+                                        <TableRow packageName="@furystack/utils" />
+                                        <TableRow packageName="@furystack/websocket-api" />
+                                    </tbody>
+                                </table>
                             </div>
                         </PostFullContent>
                     </article>
