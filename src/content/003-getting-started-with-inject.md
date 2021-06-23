@@ -2,12 +2,13 @@
 layout: post
 title: 'DI / IOC with @furystack/inject 💉'
 author: [gallayl]
-tags: ['getting-started', 'inject']
+tags: ['Getting Started', 'inject']
 image: img/003-getting-started-with-inject-cover.jpg
 date: '2021-06-23T08:58:20.257Z'
 draft: false
 excerpt: Dependency injection and Inversion of control is a common practice that tries to protect you from insanity that would happen when you realize that you can't refactor and test a giant global static app structure. @furystack/inject is a simple but powerful tool that you can use in NodeJs and in the browser. 
 ---
+
 
 ## Injectable services
 An _injectable service_ is basically a class, decorated with the `@Injectable()` decorator. If you decorate a class, its injectable options (e.g. lifetime) and constructor argument types will be stored and the injector will be able to instantiate a new instance any time. Constructor arguments should be also _injectable services_ and they will be resolved recursively. Take a look at the following example and you'll get the idea:
@@ -55,3 +56,7 @@ The package defines four types of lifecycle:
 
 ## Extension methods
 A simple injector can be easily extended by 3rd party packages with extension methods, just like the FuryStack packages. These extension methods usually provides a _shortcut_ of an instance or sets up a preconfigured explicit instance of a service. You can build clean and nice fluent API-s in that way - you can get the idea from one of the [FuryStack Injector Extensions](https://github.com/furystack/furystack/blob/develop/packages/rest-service/src/injector-extensions.ts)
+
+You find more inject-related articles [here](/tags/inject) or check out the package at NPM
+
+[![npm](https://img.shields.io/npm/v/@furystack/inject.svg?maxAge=3600)](https://www.npmjs.com/package/@furystack/inject)

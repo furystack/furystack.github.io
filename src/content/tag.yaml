@@ -1,3 +1,9 @@
-- id: announcement
-  description: Generic announcements
-  image: img/furystack-logo-512.png
+- id: Getting Started
+  description: Guides about basic concepts
+  image: img/tag-getting-started.jpg
+- id: boilerplate
+  description: The Boilerplate project is your best friend if you want to get familiar with FuryStack or start a new FuryStack project
+  image: img/tag-boilerplate.jpg
+- id: inject
+  description: \@furystack/inject or other DI/IOC - related posts
+  image: img/tag-inject.jpg

@@ -2,7 +2,7 @@
 layout: post
 title: 'Getting started with the Boilerplate 🏁'
 author: [gallayl]
-tags: ['getting-started', 'boilerplate']
+tags: ['Getting Started', 'boilerplate']
 image: img/002-getting-started-with-a-boilerplate-cover.jpg
 date: '2021-06-23T08:48:20.257Z'
 draft: false
