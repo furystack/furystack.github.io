@@ -54,7 +54,7 @@ export interface WebsiteConfig {
 
 const config: WebsiteConfig = {
   title: 'furystack.github.io',
-  description: 'The professional publishing platform',
+  description: 'A kick-ass open source full-stack web framework',
   coverImage: 'img/blog-cover.png',
   logo: 'img/furystack-logo-512.png',
   lang: 'en',
