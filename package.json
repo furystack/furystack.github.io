@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-casper",
-  "description": "Casper for gatsby",
+  "name": "furystack.github.io",
+  "description": "FuryStack Home Page",
   "version": "0.0.0",
   "private": true,
-  "author": "Scott Cooper <scttcper@gmail.com>",
+  "author": "Gallay Lajos <gallay.lajos@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
