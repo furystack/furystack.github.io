@@ -6,7 +6,7 @@ tags: ['Getting Started', 'rest', 'rest-service', 'rest-client-fetch', 'rest-cli
 image: img/006-getting-started-with-rest-cover.jpg
 date: '2021-06-23T12:58:20.257Z'
 draft: false
-excerpt: Designing and implementing APIs can be hard and consuming them can be frustrating, if they doesn't work as expected. REST API as a Typescript interface for the rescue!
+excerpt: Designing and implementing APIs can be hard and consuming them can be frustrating, if they doesn't work as expected. REST API as a Typescript interface to the rescue!
 ---
 
 ### The problem 🤷‍♂️
@@ -176,6 +176,6 @@ So, step by step:
 ### The main gotcha: Let's break all the thingzzz!!!!4!!!💥
 
 There's an ancient refactoring technique in the _type-safe dreamlands_: If you can change your type definitions and try to recompile, you will see immediately where it will break your code.
-The good news: Now you can do that with your API definition - your service and your frontend will be still type-protected 🙌
+We have good news: **Now you can do that with your API definition** - your backend service and your frontend app will is type-protected now 🙌
 
-![Does clients depends on APIs?](img/006-hulk.gif)
+![hulk breaks thingz](img/006-hulk.gif)
