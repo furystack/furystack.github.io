@@ -1,16 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ghost's Blog]]></title><description><![CDATA[A port of the casper blog built for gatsby]]></description><link>https://gatsby-casper.netlify.com</link><generator>GatsbyJS</generator><lastBuildDate>Tue, 22 Jun 2021 21:34:08 GMT</lastBuildDate><item><title><![CDATA[Welcome to FuryStack]]></title><description><![CDATA[So, down with the old one… I’ve opened up the old site to update some docs (and dependencies meanwhile…) and I’ve realized that I didn’t…]]></description><link>https://gatsby-casper.netlify.com/01-welcome/</link><guid isPermaLink="false">https://gatsby-casper.netlify.com/01-welcome/</guid><pubDate>Tue, 22 Jun 2021 21:07:02 GMT</pubDate><content:encoded>&lt;h2&gt;So, down with the old one…&lt;/h2&gt;
-&lt;p&gt;I’ve opened up the old site to update some docs (and dependencies meanwhile…) and I’ve realized that I didn’t touch the site since the last two years. Holy shit. There was even &lt;code class=&quot;language-text&quot;&gt;tslint&lt;/code&gt; instead of &lt;code class=&quot;language-text&quot;&gt;eslint&lt;/code&gt; in the project… So I’ve deicided if I have to touch it, I’ll make a more professional approach.&lt;/p&gt;
-&lt;h2&gt;The requirements&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Ghost's Blog]]></title><description><![CDATA[A port of the casper blog built for gatsby]]></description><link>https://gatsby-casper.netlify.com</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 23 Jun 2021 08:39:00 GMT</lastBuildDate><item><title><![CDATA[Welcome to FuryStack, Gatsby 💙]]></title><description><![CDATA[So, down with the old one… I’ve opened up the old site to update some docs (and dependencies meanwhile…) and I’ve realized that I didn’t…]]></description><link>https://gatsby-casper.netlify.com/001-welcome/</link><guid isPermaLink="false">https://gatsby-casper.netlify.com/001-welcome/</guid><pubDate>Wed, 23 Jun 2021 08:38:20 GMT</pubDate><content:encoded>&lt;h2&gt;So, down with the old one…&lt;/h2&gt;
+&lt;p&gt;I’ve opened up the old site to update some docs (and dependencies meanwhile…) and I’ve realized that I didn’t touch the site since the last two years. Holy shit 😭
+There was even &lt;code class=&quot;language-text&quot;&gt;tslint&lt;/code&gt; instead of &lt;code class=&quot;language-text&quot;&gt;eslint&lt;/code&gt; in the project… So I’ve deicided if I have to touch it, I’ll try to make a more professional approach.&lt;/p&gt;
+&lt;h2&gt;Times has changed and so the requirements&lt;/h2&gt;
 &lt;p&gt;The new site should be:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Easy to maintain. Maybe some .md files in some PR-s, that’s all&lt;/li&gt;
-&lt;li&gt;SEO friendly 👉 static&lt;/li&gt;
-&lt;li&gt;Should be integrated into CI/CD&lt;/li&gt;
+&lt;li&gt;Easy to maintain. Maybe some .md files in some PR-s, that’s all. Simple and stupid, with no hassle&lt;/li&gt;
+&lt;li&gt;SEO friendly 👉 static. Had some issues in the past with &lt;a href=&quot;https://info340.github.io/client-side-routing.html&quot;&gt;React Router and Github Pages&lt;/a&gt;…&lt;/li&gt;
+&lt;li&gt;Should be integrated into CI/CD (that’s still a ToDo 😊)&lt;/li&gt;
 &lt;li&gt;Easy-to-setup locally&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;New kids on the block&lt;/h2&gt;
-&lt;p&gt;So I’ve &lt;del&gt;killed&lt;/del&gt; archived the old one and I have to make a replacement.
-First, I’ve checked &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; - as the default approach for Github Pages it’s easy to setup and deploy. We’ve used it in one of my previous workplace, it does the job pretty well.
-The downside is that I’m not so familiar with Ruby, &lt;em&gt;gemfiles&lt;/em&gt; and other esotheric things, so the stack is totally out of scope.&lt;/p&gt;
+&lt;h2&gt;The new candidates&lt;/h2&gt;
+&lt;p&gt;So I’ve &lt;del&gt;killed&lt;/del&gt; archived the old one and I have to make a replacement. The old site was a react-based SPA. I could do the same with React or Shades but I still had to struggle with routes and SEO…&lt;/p&gt;
+&lt;p&gt;First, I’ve checked &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; - as the default approach for Github Pages it’s easy to setup and deploy. We’ve used it in one of my previous workplace, it does the job pretty well.
+The downside is that I’m not so familiar with Ruby, &lt;em&gt;gemfiles&lt;/em&gt; and other esotheric things, so the stack is totally out of scope. So the templating syntax, theming and stuffs like these.&lt;/p&gt;
 &lt;p&gt;The next candidate is &lt;a href=&quot;https://www.gatsbyjs.com/&quot;&gt;GatsbyJS&lt;/a&gt; - I’ve found a great theme with Typescript support. I’ve updated all deprecated dependencies and it’s still working. I’m familiar with the syntax. So far, so good. There are we now.&lt;/p&gt;
-&lt;p&gt;The next step will be setting up the CI/CD and migrating the docs from the old site.&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;h2&gt;What to expect&lt;/h2&gt;
+&lt;p&gt;The plan is to publish announcements like new releases and features, some posts about concepts in FuryStack some techical stuff, development practices and dirty little tricks. But no promises how often will this happen 😉&lt;/p&gt;
+&lt;h2&gt;Coming out next&lt;/h2&gt;
+&lt;p&gt;The next step will be setting up the CI/CD and migrating the docs from the old site (or maybe the main monorepo).&lt;/p&gt;</content:encoded></item></channel></rss>
