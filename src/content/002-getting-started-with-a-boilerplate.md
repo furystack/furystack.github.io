@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 'Getting started with the FuryStack Boilerplate'
+title: 'Getting started with the Boilerplate 🏁'
 author: [gallayl]
-tags: ['getting-started']
+tags: ['getting-started', 'boilerplate']
 image: img/002-getting-started-with-a-boilerplate-cover.jpg
 date: '2021-06-23T08:48:20.257Z'
 draft: false
