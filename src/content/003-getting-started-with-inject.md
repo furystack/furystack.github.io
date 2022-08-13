@@ -11,13 +11,17 @@ excerpt: Dependency injection and Inversion of control is a common practice that
 
 
 ## Injectable services
-An _injectable service_ is basically a class, decorated with the `@Injectable()` decorator. If you decorate a class, its injectable options (e.g. lifetime) and constructor argument types will be stored and the injector will be able to instantiate a new instance any time. Constructor arguments should be also _injectable services_ and they will be resolved recursively. Take a look at the following example and you'll get the idea:
+An _injectable service_ is basically a class, decorated with the `@Injectable()` decorator. If you decorate a class, its injectable options (e.g. lifetime) will be stored and the injector will be able to instantiate a new instance any time. You can also decorate properties with the `@Injected(Type)` decorator to inject them after instantiating the object. Take a look at the following example and you'll get the idea:
 
 ```ts
 const injector = new Injector()
 @Injectable()
 class Service1 {
-  constructor(public service2: Service2, public service3: Service3) {}
+  @Injected(Service2)
+  public service2!: Service2
+
+  @Injected(Service3)
+  public service2!: Service3
 }
 @Injectable()
 class Service2 {
@@ -54,7 +58,10 @@ The package defines four types of lifecycle:
  - **Singleton** injectables are hoisted to the root injector. If you request a singleton, the injector will check create the instance in it's highest parent - and also returns it from there, if already exists.
  - **Explicit** values are not really injectables - you can call `injector.setExplicitInstance(myServiceInstance)` to set up an instance manually. Just like scoped services, explicit instances will be returned from the current scope only.
 
-## Extension methods
+## ~~Extension methods~~
+
+[(We have already said goodbye to extension methods)](/008-byebye-extension-methods/)
+
 A simple injector can be easily extended by 3rd party packages with extension methods, just like the FuryStack packages. These extension methods usually provides a _shortcut_ of an instance or sets up a preconfigured explicit instance of a service. You can build clean and nice fluent API-s in that way - you can get the idea from one of the [FuryStack Injector Extensions](https://github.com/furystack/furystack/blob/develop/packages/rest-service/src/injector-extensions.ts)
 
 You find more inject-related articles [here](/tags/inject) or check out the package at NPM

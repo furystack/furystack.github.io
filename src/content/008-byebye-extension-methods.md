@@ -9,11 +9,11 @@ draft: false
 excerpt: Using extension methods was fun at the beginning but I've ran into more and more problems with them
 ---
 
-### The Heritage from C#
+## The Heritage from C#
 
 It's not a big sectet that one of the main inspiration for FuryStack is the .NET (legacy and Core) stack where extension methods are quite common. The same can achieved in the JS world where everything is possible, every prototype can be hacked and it can be also type-safe.
 
-### The Problem
+## The Problem
 
 The main problem in short that extending another module is _not officially supported_ by Typescript - however the type system can be hacked like _it was_ in FuryStack and as you can see in the following example:
 
@@ -42,7 +42,7 @@ const result = await injector.isAuthorized('admin');
 
 ...well, it works but I've ran into unexpected issues with conflicting import declarations and overrides. The problems appeared random, but somewhat based on the running context (ts-node, jest, browser) and it started to block dependency upgrades...
 
-### How it works now
+## How it works now
 
 The extensions has been replaced by _helpers_, as you can see in the following example. These helpers are simple shortcuts - you should usually pass the injector (or the related manager class) to them as a parameter.
 The imports are clear, as well as the execution path and the types.
