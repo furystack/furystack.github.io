@@ -10,6 +10,7 @@ import { colors } from '../styles/colors';
 
 interface IndexProps {
   className?: string;
+  children?: React.ReactNode;
 }
 
 const IndexLayout: React.FC<IndexProps> = props => {
