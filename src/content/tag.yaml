@@ -7,3 +7,6 @@
 - id: inject
   description: \@furystack/inject or other DI/IOC - related posts
   image: img/tag-inject.jpg
+- id: shades
+  description: A JSX-based UI Library for FuryStack
+
