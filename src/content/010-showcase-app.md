@@ -4,7 +4,7 @@ title: Showcase-time
 author: [gallayl]
 tags: ['shades', 'shades-common-components', 'shades-showcase-app']
 image: img/010-showcase-app.jpg
-date: '2022-08-14T18:00:00.257Z'
+date: '2022-08-16T21:00:00.257Z'
 draft: false
 excerpt: Updates on Shades - Kick-ass DataGrid updates, fragments and a brand new Showcase app
 ---
