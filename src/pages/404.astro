@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteNav from '../components/SiteNav.astro';
 import PostCard from '../components/PostCard.astro';
+import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -12,60 +13,76 @@ const recentPosts = allPosts
 
 <BaseLayout title="Page not found">
   <div class="error-template">
-    <header class="site-header outer">
-      <div class="outer site-nav-main">
-        <div class="inner">
-          <SiteNav />
-        </div>
+    <div class="site-nav-main">
+      <div class="inner" style="padding: 0 5vw;">
+        <SiteNav />
       </div>
-    </header>
+    </div>
 
-    <main id="site-main" class="error-content outer">
-      <div class="inner">
-        <section style="text-align: center">
-          <h1 class="error-code">404</h1>
-          <p class="error-description">Page not found</p>
-          <a class="error-link" href="/">Go to the front page →</a>
-        </section>
-
-        <div class="post-feed">
-          {recentPosts.map(post => <PostCard post={post} />)}
-        </div>
+    <main class="error-main">
+      <div class="error-inner">
+        <h1>404</h1>
+        <p>This page could not be found.</p>
+        <a href="/" class="back-link">Back to home &rarr;</a>
       </div>
+
+      {recentPosts.length > 0 && (
+        <div class="recent-posts inner">
+          <h2>Recent posts</h2>
+          <div class="posts-grid">
+            {recentPosts.map(post => <PostCard post={post} />)}
+          </div>
+        </div>
+      )}
     </main>
+
+    <Footer />
   </div>
 </BaseLayout>
 
 <style>
   .error-template { display: flex; flex-direction: column; min-height: 100vh; }
 
-  .error-content { padding: 14vw 4vw 6vw; }
+  .error-main {
+    flex-grow: 1;
+    padding: calc(64px + 48px) 5vw 80px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) { .error-main { background: var(--color-darkmode); } }
 
-  .error-code {
-    margin: 0;
+  .error-inner {
+    text-align: center;
+    padding: 6vw 0;
+  }
+  .error-inner h1 {
+    font-size: 10rem;
+    font-weight: 800;
     color: var(--color-lightgrey);
-    font-size: 12vw;
-    line-height: 1em;
-    letter-spacing: -5px;
-    opacity: 0.75;
+    line-height: 1;
+    margin-bottom: 8px;
   }
+  @media (prefers-color-scheme: dark) { .error-inner h1 { color: var(--color-darkmode-l15); } }
 
-  .error-description {
-    margin: 0;
+  .error-inner p {
+    font-size: 1.8rem;
     color: var(--color-midgrey);
-    font-size: 3rem;
-    line-height: 1.3em;
-    font-weight: 400;
+    margin-bottom: 24px;
   }
-  @media (max-width: 800px) { .error-description { font-size: 1.8rem; } }
 
-  .error-link { display: inline-block; margin-top: 5px; }
+  .back-link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .back-link:hover { text-decoration: underline; }
 
-  .post-feed {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -20px;
-    padding: 50px 0 0;
+  .recent-posts { padding-top: 40px; }
+  .recent-posts h2 { font-size: 2rem; margin-bottom: 24px; }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
   }
 </style>

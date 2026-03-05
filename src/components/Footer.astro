@@ -2,60 +2,113 @@
 import { SITE_TITLE, SOCIAL } from '../consts';
 ---
 
-<footer class="site-footer outer">
-  <div class="site-footer-content inner">
-    <section class="copyright">
-      <a href="/">{SITE_TITLE}</a> &copy; {new Date().getFullYear()}
-    </section>
-    <nav class="site-footer-nav">
-      <a href="/">Latest Posts</a>
-      {SOCIAL.github && <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer">Github</a>}
-      {SOCIAL.facebook && <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>}
-      {SOCIAL.twitter && <a href={SOCIAL.twitter} target="_blank" rel="noopener noreferrer">Twitter</a>}
-      <a href="/rss.xml">RSS</a>
-    </nav>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <img src="/images/furystack-logo-512.png" alt={SITE_TITLE} width="24" height="24" />
+          <span>FuryStack</span>
+        </a>
+        <p class="footer-tagline">Open-source full-stack web framework</p>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-nav-group">
+          <h4>Site</h4>
+          <a href="/">Home</a>
+          <a href="/tags/getting-started/">Getting Started</a>
+          <a href="/packages/">Packages</a>
+          <a href="/about/">About</a>
+        </div>
+        <div class="footer-nav-group">
+          <h4>Connect</h4>
+          {SOCIAL.github && <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer">GitHub</a>}
+          {SOCIAL.twitter && <a href={SOCIAL.twitter} target="_blank" rel="noopener noreferrer">Twitter</a>}
+          <a href="/rss.xml">RSS Feed</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {new Date().getFullYear()} {SITE_TITLE}</span>
+    </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    position: relative;
-    padding-top: 20px;
-    padding-bottom: 60px;
-    color: #fff;
-    background: #040404;
+    background: var(--color-footer-bg);
+    color: rgba(255, 255, 255, 0.5);
+    padding: 48px 5vw 32px;
   }
 
-  .site-footer-content {
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.3rem;
+    gap: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .site-footer-content :global(a) { color: rgba(255, 255, 255, 0.7); }
-  .site-footer-content :global(a:hover) { color: rgba(255, 255, 255, 1); text-decoration: none; }
-  @media (max-width: 650px) { .site-footer-content { flex-direction: column; } }
+  @media (max-width: 600px) {
+    .footer-top { flex-direction: column; gap: 32px; }
+  }
 
-  .site-footer-nav {
+  .footer-brand { max-width: 280px; }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 8px;
+  }
+  .footer-logo:hover { text-decoration: none; color: #fff; }
+  .footer-logo img { border-radius: 4px; }
+
+  .footer-tagline {
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+  }
+
+  .footer-nav {
     display: flex;
+    gap: 56px;
   }
-  .site-footer-nav a {
-    position: relative;
-    margin-left: 20px;
+  @media (max-width: 400px) { .footer-nav { gap: 32px; } }
+
+  .footer-nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
-  .site-footer-nav a:before {
-    content: '';
-    position: absolute;
-    top: 11px;
-    left: -11px;
-    display: block;
-    width: 2px;
-    height: 2px;
-    background: #fff;
-    border-radius: 100%;
+  .footer-nav-group h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 4px;
   }
-  .site-footer-nav a:first-of-type:before { display: none; }
-  @media (max-width: 650px) { .site-footer-nav a:first-of-type { margin-left: 0; } }
+  .footer-nav-group a {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .footer-nav-group a:hover { color: rgba(255, 255, 255, 0.9); text-decoration: none; }
+
+  .footer-bottom {
+    padding-top: 24px;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
 </style>

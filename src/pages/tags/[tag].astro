@@ -40,28 +40,24 @@ const description = tagData?.description ?? '';
 
 <BaseLayout title={title} description={description}>
   <div class="tag-template">
-    <header class="site-archive-header">
-      <div class="outer site-nav-main">
-        <div class="inner">
-          <SiteNav />
-        </div>
+    <div class="site-nav-main">
+      <div class="inner" style="padding: 0 5vw;">
+        <SiteNav />
       </div>
-      <div class:list={['outer', 'site-header-background', { 'has-cover': tagData?.image }]}
-        style={tagData?.image ? `background-image: url('${tagData.image}')` : undefined}>
-        <div class="site-header-content inner">
-          <h1 class="site-title">{tag}</h1>
-          <h2 class="site-description">
-            {tagData?.description || (
-              <>A collection of {totalCount > 1 ? `${totalCount} posts` : totalCount === 1 ? '1 post' : 'No posts'}</>
-            )}
-          </h2>
-        </div>
+    </div>
+
+    <header class="tag-header">
+      <div class="tag-header-inner">
+        <h1>{tag}</h1>
+        <p>
+          {tagData?.description || `A collection of ${totalCount} ${totalCount === 1 ? 'post' : 'posts'}`}
+        </p>
       </div>
     </header>
 
-    <main id="site-main" class="site-main outer">
+    <main class="tag-main">
       <div class="inner">
-        <div class="post-feed">
+        <div class="posts-grid">
           {posts.map(post => <PostCard post={post} />)}
         </div>
       </div>
@@ -72,97 +68,46 @@ const description = tagData?.description ?? '';
 </BaseLayout>
 
 <style>
-  .site-archive-header .site-header-content {
-    position: relative;
-    align-items: stretch;
-    padding: 12vw 0 20px;
-    min-height: 200px;
-    max-height: 600px;
-  }
+  .tag-template { display: flex; flex-direction: column; min-height: 100vh; }
 
-  .site-header-background.has-cover {
-    position: relative;
-    margin-top: 64px;
-    padding-bottom: 12px;
+  .tag-header {
+    padding: calc(64px + 48px) 5vw 40px;
+    background: var(--color-nav-bg);
     color: #fff;
-    background: #090a0b no-repeat 50%;
-    background-size: cover;
-  }
-  .site-header-background.has-cover:before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    z-index: 10;
-    display: block;
-    background: rgba(0, 0, 0, 0.18);
-  }
-  .site-header-background.has-cover:after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: auto; left: 0;
-    z-index: 10;
-    display: block;
-    height: 140px;
-    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-  }
-  @media (prefers-color-scheme: dark) {
-    .site-header-background.has-cover:before { background: rgba(0, 0, 0, 0.6); }
   }
 
-  .site-header-background:not(.has-cover) {
-    padding-top: 0;
-    padding-bottom: 0;
-    color: var(--color-darkgrey);
-    background: #fff;
-  }
-  .site-header-background:not(.has-cover) .site-header-content {
-    padding: 5vw 0 10px;
-    border-bottom: 1px solid var(--color-lightgrey-l12);
-  }
-  .site-header-background:not(.has-cover) .site-description {
-    color: var(--color-midgrey);
-    opacity: 1;
-  }
-  @media (prefers-color-scheme: dark) {
-    .site-header-background:not(.has-cover) {
-      color: rgba(255, 255, 255, 0.9);
-      background: var(--color-darkmode);
-    }
-    .site-header-background:not(.has-cover) .site-header-content {
-      border-bottom-color: #272a30;
-    }
+  .tag-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
   }
 
-  .site-title {
-    z-index: 10;
-    margin: 0 0 0 -2px;
-    padding: 0;
-    font-size: 5rem;
-    line-height: 1em;
-    font-weight: 600;
+  .tag-header h1 {
+    font-size: 3.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
   }
-  @media (max-width: 500px) { .site-title { font-size: 4.2rem; } }
+  @media (max-width: 600px) { .tag-header h1 { font-size: 2.6rem; } }
 
-  .site-description {
-    z-index: 10;
+  .tag-header p {
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.55);
     margin: 0;
-    padding: 5px 0;
-    font-size: 2.1rem;
-    line-height: 1.4em;
-    font-weight: 400;
-    opacity: 0.8;
+    max-width: 500px;
   }
 
-  .post-feed {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -20px;
-    padding: 40px 0 5vw;
-    background: #fff;
+  .tag-main {
+    flex-grow: 1;
+    padding: 40px 5vw 80px;
+    background: var(--color-whitegrey);
   }
-  @media (prefers-color-scheme: dark) {
-    .post-feed { background: var(--color-darkmode); }
-    .site-main { background: var(--color-darkmode); }
+  @media (prefers-color-scheme: dark) { .tag-main { background: var(--color-darkmode); } }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
   }
+  @media (max-width: 600px) { .posts-grid { grid-template-columns: 1fr; gap: 20px; } }
 </style>

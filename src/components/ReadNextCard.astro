@@ -17,91 +17,93 @@ const filteredPosts = relatedPosts
   .slice(0, 3);
 ---
 
-<article class="read-next-card">
-  <header class="read-next-card-header">
-    <h3>
-      <span>More in</span>{' '}
-      <a href={`/tags/${tagSlug}/`}>{tag}</a>
-    </h3>
+<div class="related-card">
+  <header class="related-header">
+    <span>More in</span>
+    <a href={`/tags/${tagSlug}/`}>{tag}</a>
   </header>
-  <div class="read-next-card-content">
-    <ul>
-      {filteredPosts.map(post => {
-        const d = new Date(post.data.date);
-        const datetime = format(d, 'yyyy-MM-dd');
-        const displayDatetime = format(d, 'dd LLL yyyy');
-        const words = (post.body?.split(/\s+/).length) ?? 0;
-        const readingTime = Math.max(1, Math.ceil(words / 265));
-        return (
-          <li>
-            <h4><a href={`/posts/${post.id}/`}>{post.data.title}</a></h4>
-            <div class="read-next-card-meta">
-              <p><time datetime={datetime}>{displayDatetime}</time> - {readingTime} min read</p>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
-  </div>
-  <footer class="read-next-card-footer">
+  <ul class="related-list">
+    {filteredPosts.map(post => {
+      const d = new Date(post.data.date);
+      const words = (post.body?.split(/\s+/).length) ?? 0;
+      const readingTime = Math.max(1, Math.ceil(words / 265));
+      return (
+        <li>
+          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+          <span class="related-meta">
+            {format(d, 'dd LLL yyyy')} &middot; {readingTime} min read
+          </span>
+        </li>
+      );
+    })}
+  </ul>
+  <footer class="related-footer">
     <a href={`/tags/${tagSlug}/`}>
-      {relatedPosts.length > 1 ? `See all ${relatedPosts.length} posts` : relatedPosts.length === 1 ? '1 post' : 'No posts'} →
+      See all {relatedPosts.length} {relatedPosts.length === 1 ? 'post' : 'posts'} &rarr;
     </a>
   </footer>
-</article>
+</div>
 
 <style>
-  .read-next-card {
-    position: relative;
-    flex: 0 1 326px;
+  .related-card {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+  }
+  @media (prefers-color-scheme: dark) {
+    .related-card {
+      background: var(--color-darkmode-l08);
+      border-color: var(--color-darkmode-border);
+      box-shadow: none;
+    }
+  }
+
+  .related-header {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-midgrey);
+    margin-bottom: 16px;
+  }
+  .related-header a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .related-header a:hover { text-decoration: underline; }
+
+  .related-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    margin: 0 25px 50px;
-    padding: 25px;
-    background: linear-gradient(#1c1e22, #0e0f11);
-    border-radius: 3px;
+    gap: 12px;
   }
-  .read-next-card :global(a) { transition: all 0.2s ease-in-out; }
-  .read-next-card :global(a:hover) { text-decoration: none; }
-  @media (max-width: 1170px) { .read-next-card { flex: 1 1 261px; margin-bottom: 5vw; } }
-  @media (max-width: 650px) { .read-next-card { flex: 1 1 auto; margin: 0 25px; padding: 0; background: none; } }
+  .related-list li { display: flex; flex-direction: column; gap: 2px; }
+  .related-list li a {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-darkgrey);
+    text-decoration: none;
+    line-height: 1.35;
+  }
+  .related-list li a:hover { color: var(--color-accent); }
+  @media (prefers-color-scheme: dark) { .related-list li a { color: rgba(255, 255, 255, 0.85); } }
 
-  .read-next-card-header h3 {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.6);
+  .related-meta {
     font-size: 1.2rem;
-    line-height: 1em;
-    font-weight: 300;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
+    color: var(--color-midgrey);
   }
-  .read-next-card-header h3 a { color: #fff; font-weight: 500; text-decoration: none; opacity: 0.8; }
-  .read-next-card-header h3 a:hover { opacity: 1; }
 
-  .read-next-card-content { font-size: 1.7rem; }
-  .read-next-card-content ul { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
-  .read-next-card-content li { display: flex; flex-direction: column; align-items: flex-start; margin: 0; padding: 20px 0; border-bottom: rgba(255, 255, 255, 0.1); }
-  .read-next-card-content li:last-of-type { padding-bottom: 5px; border: none; }
-  .read-next-card-content h4 { margin: 0; font-size: 1.6rem; line-height: 1.35em; font-weight: 600; }
-  .read-next-card-content li a { display: block; color: #fff; opacity: 0.8; }
-  .read-next-card-content li a:hover { opacity: 1; }
-
-  .read-next-card-meta { margin-top: 2px; font-size: 1.2rem; line-height: 1.4em; font-weight: 400; }
-  .read-next-card-meta p { margin: 0; color: rgba(255, 255, 255, 0.6); }
-
-  .read-next-card-footer { position: relative; margin: 40px 0 5px; }
-  .read-next-card-footer a {
-    padding: 7px 12px 8px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1.3rem;
-    border-radius: 999px;
-    transition: all 0.35s ease-in-out;
-  }
-  .read-next-card-footer a:hover {
-    border-color: var(--color-yellow);
-    color: var(--color-yellow);
+  .related-footer a {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--color-accent);
     text-decoration: none;
   }
+  .related-footer a:hover { text-decoration: underline; }
 </style>
