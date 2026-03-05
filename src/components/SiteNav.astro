@@ -1,0 +1,236 @@
+---
+import { Image } from 'astro:assets';
+import { SOCIAL, SITE_TITLE } from '../consts';
+import GitHubIcon from './icons/GitHubIcon.astro';
+import XIcon from './icons/XIcon.astro';
+import logo from '../../public/images/furystack-logo-512.png';
+
+interface Props {
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
+---
+
+<nav class="site-nav" aria-label="Main navigation">
+  <div class="site-nav-left">
+    {
+      !isHome && (
+        <a class="site-nav-logo" href="/">
+          <Image src={logo} alt={SITE_TITLE} width={24} height={24} loading="eager" />
+          <span>FuryStack</span>
+        </a>
+      )
+    }
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <ul class="nav" role="menu">
+      <li role="menuitem"><a href="/">Home</a></li>
+      <li role="menuitem"><a href="/tags/getting-started/">Getting Started</a></li>
+      <li role="menuitem"><a href="/packages/">Packages</a></li>
+      <li role="menuitem"><a href="/about/">About</a></li>
+    </ul>
+  </div>
+  <div class="site-nav-right">
+    {
+      SOCIAL.github && (
+        <a
+          class="social-link"
+          href={SOCIAL.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+        >
+          <GitHubIcon />
+        </a>
+      )
+    }
+    {
+      SOCIAL.x && (
+        <a
+          class="social-link"
+          href={SOCIAL.x}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="X (Twitter)"
+        >
+          <XIcon />
+        </a>
+      )
+    }
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.site-nav .nav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      nav.classList.toggle('nav-open');
+    });
+  });
+</script>
+
+<style>
+  .site-nav {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    font-size: 1.4rem;
+  }
+
+  .site-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .site-nav-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 16px;
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .site-nav-logo:hover {
+    text-decoration: none;
+    opacity: 0.9;
+  }
+  .site-nav-logo :global(img) {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 36px;
+    height: 36px;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+  }
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .nav-toggle-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 1px;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .nav {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav li a {
+    display: block;
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+    border-radius: 6px;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease;
+    text-decoration: none;
+  }
+  .nav li a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+  }
+
+  @media (max-width: 700px) {
+    .nav-toggle {
+      display: flex;
+    }
+    .nav {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--color-nav-bg);
+      padding: 8px 16px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    .nav.nav-open {
+      display: flex;
+    }
+    .nav li a {
+      padding: 10px 12px;
+      font-size: 1.5rem;
+    }
+    .site-nav-logo span {
+      display: none;
+    }
+    .site-nav-logo {
+      margin-right: 8px;
+    }
+    .site-nav-left {
+      padding-left: 5vw;
+    }
+  }
+
+  .site-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  @media (max-width: 700px) {
+    .site-nav-right {
+      padding-right: 5vw;
+    }
+  }
+
+  .social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: rgba(255, 255, 255, 0.55);
+    border-radius: 6px;
+    transition:
+      color 0.15s ease,
+      background 0.15s ease;
+  }
+  .social-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .social-link :global(svg) {
+    fill: currentColor;
+  }
+</style>

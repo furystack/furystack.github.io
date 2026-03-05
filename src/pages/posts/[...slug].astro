@@ -1,0 +1,55 @@
+---
+import PostLayout from '../../layouts/PostLayout.astro';
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts');
+  const authors = await getCollection('authors');
+  const sorted = allPosts
+    .filter(p => !p.data.draft)
+    .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+
+  return sorted.map((post, index) => {
+    const prev = index > 0 ? sorted[index - 1] : null;
+    const next = index < sorted.length - 1 ? sorted[index + 1] : null;
+    const primaryTag = post.data.tags?.[0];
+    const relatedPosts = primaryTag
+      ? sorted.filter(p => p.data.tags?.includes(primaryTag) && p.id !== post.id)
+      : [];
+    const authorData = post.data.author
+      .map(authorId => authors.find(a => a.data.id === authorId)?.data)
+      .filter(Boolean);
+
+    return {
+      params: { slug: post.id },
+      props: { post, prev, next, relatedPosts, authorData },
+    };
+  });
+}
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  prev: CollectionEntry<'posts'> | null;
+  next: CollectionEntry<'posts'> | null;
+  relatedPosts: CollectionEntry<'posts'>[];
+  authorData: { id: string; avatar: string; bio: string }[];
+}
+
+const { post, prev, next, relatedPosts, authorData } = Astro.props;
+const { Content } = await render(post);
+
+const words = post.body?.split(/\s+/).length ?? 0;
+const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
+---
+
+<PostLayout
+  post={post}
+  prevPost={prev}
+  nextPost={next}
+  relatedPosts={relatedPosts}
+  readingTime={readingTime}
+  authorData={authorData}
+>
+  <Content />
+</PostLayout>

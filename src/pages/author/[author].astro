@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+  const authors = await getCollection('authors');
+
+  return authors.map(author => {
+    const authorPosts = allPosts
+      .filter(p => p.data.author.includes(author.data.id))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    return {
+      params: { author: author.data.id.toLowerCase() },
+      props: { author: author.data, posts: authorPosts },
+    };
+  });
+}
+
+interface Props {
+  author: {
+    id: string;
+    avatar: string;
+    bio: string;
+    twitter?: string;
+    facebook?: string;
+    website?: string;
+    location?: string;
+    profile_image?: string;
+  };
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+}
+
+const { author, posts } = Astro.props;
+const totalCount = posts.length;
+const title = `${author.id} - ${SITE_TITLE}`;
+---
+
+<BaseLayout title={title} description={author.bio} ogType="profile">
+  <header class="author-header">
+    <div class="author-header-inner">
+      <img
+        class="author-avatar"
+        src={author.avatar}
+        alt={author.id}
+        width="80"
+        height="80"
+        loading="eager"
+      />
+      <div class="author-info">
+        <h1>{author.id}</h1>
+        {author.bio && <p class="author-bio">{author.bio}</p>}
+        <div class="author-meta">
+          {author.location && <span>{author.location}</span>}
+          <span>{totalCount} {totalCount === 1 ? 'post' : 'posts'}</span>
+          {
+            author.website && (
+              <a href={author.website} target="_blank" rel="noopener noreferrer">
+                Website
+              </a>
+            )
+          }
+          {
+            author.twitter && (
+              <a href={`https://x.com/${author.twitter}`} target="_blank" rel="noopener noreferrer">
+                X (Twitter)
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="author-main">
+    <div class="inner">
+      <div class="posts-grid">
+        {posts.map((post, i) => <PostCard post={post} eager={i === 0} />)}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .author-header {
+    padding: calc(64px + 48px) 5vw 40px;
+    background: var(--color-nav-bg);
+    color: #fff;
+  }
+
+  .author-header-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  @media (max-width: 600px) {
+    .author-header-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .author-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .author-info h1 {
+    font-size: 2.8rem;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .author-bio {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 8px;
+    max-width: 500px;
+  }
+
+  .author-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.45);
+    flex-wrap: wrap;
+  }
+  .author-meta a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+  }
+  .author-meta a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  .author-main {
+    flex-grow: 1;
+    padding: 40px 5vw 80px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .author-main {
+      background: var(--color-darkmode);
+    }
+  }
+</style>

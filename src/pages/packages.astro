@@ -1,0 +1,181 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const packages = [
+  '@furystack/auth-google',
+  '@furystack/auth-jwt',
+  '@furystack/cache',
+  '@furystack/core',
+  '@furystack/entity-sync',
+  '@furystack/entity-sync-client',
+  '@furystack/entity-sync-service',
+  '@furystack/filesystem-store',
+  '@furystack/i18n',
+  '@furystack/inject',
+  '@furystack/logging',
+  '@furystack/mongodb-store',
+  '@furystack/redis-store',
+  '@furystack/repository',
+  '@furystack/rest',
+  '@furystack/rest-client-fetch',
+  '@furystack/rest-service',
+  '@furystack/security',
+  '@furystack/sequelize-store',
+  '@furystack/shades',
+  '@furystack/shades-common-components',
+  '@furystack/shades-i18n',
+  '@furystack/shades-lottie',
+  '@furystack/shades-mfe',
+  '@furystack/shades-nipple',
+  '@furystack/utils',
+  '@furystack/websocket-api',
+  '@furystack/yarn-plugin-changelog',
+];
+---
+
+<BaseLayout title="Packages">
+  <main id="main-content" class="page-main">
+    <div class="page-inner">
+      <h1>Packages</h1>
+      <p class="page-subtitle">All FuryStack packages published on npm.</p>
+      <div class="packages-list">
+        {
+          packages.map(pkg => {
+            const shortName = pkg.split('/')[1];
+            return (
+              <div class="pkg-row">
+                <div class="pkg-name">
+                  <a
+                    href={`https://www.npmjs.com/package/${pkg}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {pkg}
+                  </a>
+                </div>
+                <div class="pkg-badge">
+                  <img
+                    src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`}
+                    alt={`${pkg} version`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <a class="pkg-posts-link" href={`/tags/${shortName}/`}>
+                  Posts &rarr;
+                </a>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-main {
+    flex-grow: 1;
+    padding: calc(64px + 48px) 5vw 80px;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-main {
+      background: var(--color-darkmode);
+    }
+  }
+
+  .page-inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .page-inner h1 {
+    margin-bottom: 8px;
+    font-size: 3.6rem;
+    letter-spacing: -0.03em;
+  }
+
+  .page-subtitle {
+    font-size: 1.6rem;
+    color: var(--color-midgrey);
+    margin-bottom: 36px;
+  }
+
+  .packages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+  @media (prefers-color-scheme: dark) {
+    .packages-list {
+      border-color: var(--color-darkmode-border);
+    }
+  }
+
+  .pkg-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: #fff;
+    font-size: 1.4rem;
+  }
+  .pkg-row:nth-child(even) {
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .pkg-row {
+      background: var(--color-darkmode-l04);
+    }
+    .pkg-row:nth-child(even) {
+      background: var(--color-darkmode-l08);
+    }
+  }
+  @media (max-width: 600px) {
+    .pkg-row {
+      flex-wrap: wrap;
+    }
+  }
+
+  .pkg-name {
+    flex: 1 1 auto;
+    font-weight: 500;
+  }
+  .pkg-name a {
+    color: var(--color-darkgrey);
+    text-decoration: none;
+  }
+  .pkg-name a:hover {
+    color: var(--color-accent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .pkg-name a {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  .pkg-badge {
+    flex-shrink: 0;
+  }
+  .pkg-badge img {
+    display: inline;
+    height: 20px;
+    vertical-align: middle;
+  }
+
+  .pkg-posts-link {
+    flex-shrink: 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .pkg-posts-link:hover {
+    text-decoration: underline;
+  }
+</style>

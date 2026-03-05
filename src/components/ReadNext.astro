@@ -1,0 +1,71 @@
+---
+import PostCard from './PostCard.astro';
+import ReadNextCard from './ReadNextCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  currentSlug: string;
+  tags: string[];
+  relatedPosts: CollectionEntry<'posts'>[];
+  prevPost?: CollectionEntry<'posts'> | null;
+  nextPost?: CollectionEntry<'posts'> | null;
+}
+
+const { currentSlug, tags, relatedPosts, prevPost, nextPost } = Astro.props;
+const showRelatedPosts = relatedPosts.length > 1;
+const hasContent = showRelatedPosts || prevPost || nextPost;
+---
+
+{
+  hasContent && (
+    <aside class="read-next">
+      <div class="read-next-inner">
+        <h3 class="read-next-heading">Read Next</h3>
+        <div class="read-next-feed">
+          {showRelatedPosts && (
+            <ReadNextCard currentSlug={currentSlug} tags={tags} relatedPosts={relatedPosts} />
+          )}
+          {prevPost && <PostCard post={prevPost} />}
+          {nextPost && <PostCard post={nextPost} />}
+        </div>
+      </div>
+    </aside>
+  )
+}
+
+<style>
+  .read-next {
+    padding: 48px 5vw 64px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .read-next {
+      background: var(--color-darkmode-l04);
+    }
+  }
+
+  .read-next-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .read-next-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-midgrey);
+    margin-bottom: 24px;
+  }
+
+  .read-next-feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  @media (max-width: 600px) {
+    .read-next-feed {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

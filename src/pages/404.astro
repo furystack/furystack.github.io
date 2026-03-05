@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Page not found">
+  <main id="main-content" class="error-main">
+    <div class="error-inner">
+      <h1>404</h1>
+      <p>This page could not be found.</p>
+      <a href="/" class="back-link">Back to home &rarr;</a>
+    </div>
+
+    {
+      recentPosts.length > 0 && (
+        <div class="recent-posts inner">
+          <h2>Recent posts</h2>
+          <div class="posts-grid">
+            {recentPosts.map(post => (
+              <PostCard post={post} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .error-main {
+    flex-grow: 1;
+    padding: calc(64px + 48px) 5vw 80px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .error-main {
+      background: var(--color-darkmode);
+    }
+  }
+
+  .error-inner {
+    text-align: center;
+    padding: 6vw 0;
+  }
+  .error-inner h1 {
+    font-size: 10rem;
+    font-weight: 800;
+    color: var(--color-lightgrey);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .error-inner h1 {
+      color: var(--color-darkmode-l15);
+    }
+  }
+
+  .error-inner p {
+    font-size: 1.8rem;
+    color: var(--color-midgrey);
+    margin-bottom: 24px;
+  }
+
+  .back-link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  .recent-posts {
+    padding-top: 40px;
+  }
+  .recent-posts h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
+</style>

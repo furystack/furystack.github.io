@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+  const tags = [...new Set(allPosts.flatMap(p => p.data.tags ?? []))];
+  const allTags = await getCollection('tags');
+
+  return tags.map(tag => {
+    const tagSlug = tag.toLowerCase().replace(/\s+/g, '-');
+    const filteredPosts = allPosts
+      .filter(p => p.data.tags?.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    const tagData = allTags.find(t => t.data.id.toLowerCase() === tag.toLowerCase());
+
+    return {
+      params: { tag: tagSlug },
+      props: { tag, posts: filteredPosts, tagData: tagData?.data },
+    };
+  });
+}
+
+interface Props {
+  tag: string;
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+  tagData?: { id: string; description?: string; image?: string };
+}
+
+const { tag, posts, tagData } = Astro.props;
+const totalCount = posts.length;
+
+const title = `${tag} - ${SITE_TITLE}`;
+const description = tagData?.description ?? '';
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="tag-header">
+    <div class="tag-header-inner">
+      <h1>{tag}</h1>
+      <p>
+        {
+          tagData?.description ||
+            `A collection of ${totalCount} ${totalCount === 1 ? 'post' : 'posts'}`
+        }
+      </p>
+    </div>
+  </header>
+
+  <main id="main-content" class="tag-main">
+    <div class="inner">
+      <div class="posts-grid">
+        {posts.map((post, i) => <PostCard post={post} eager={i === 0} />)}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .tag-header {
+    padding: calc(64px + 48px) 5vw 40px;
+    background: var(--color-nav-bg);
+    color: #fff;
+  }
+
+  .tag-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .tag-header h1 {
+    font-size: 3.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 600px) {
+    .tag-header h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .tag-header p {
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    max-width: 500px;
+  }
+
+  .tag-main {
+    flex-grow: 1;
+    padding: 40px 5vw 80px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .tag-main {
+      background: var(--color-darkmode);
+    }
+  }
+</style>

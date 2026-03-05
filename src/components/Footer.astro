@@ -1,0 +1,145 @@
+---
+import { Image } from 'astro:assets';
+import { SITE_TITLE, SOCIAL } from '../consts';
+import logo from '../../public/images/furystack-logo-512.png';
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <Image src={logo} alt={SITE_TITLE} width={24} height={24} loading="eager" />
+          <span>FuryStack</span>
+        </a>
+        <p class="footer-tagline">A flexible end-to-end framework for building complex services</p>
+      </div>
+      <nav class="footer-nav">
+        <div class="footer-nav-group">
+          <h4>Site</h4>
+          <a href="/">Home</a>
+          <a href="/tags/getting-started/">Getting Started</a>
+          <a href="/packages/">Packages</a>
+          <a href="/about/">About</a>
+        </div>
+        <div class="footer-nav-group">
+          <h4>Connect</h4>
+          {
+            SOCIAL.github && (
+              <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            )
+          }
+          {
+            SOCIAL.x && (
+              <a href={SOCIAL.x} target="_blank" rel="noopener noreferrer">
+                X (Twitter)
+              </a>
+            )
+          }
+          <a href="/rss.xml">RSS Feed</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {new Date().getFullYear()} {SITE_TITLE}</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-footer-bg);
+    color: rgba(255, 255, 255, 0.5);
+    padding: 48px 5vw 32px;
+  }
+
+  .footer-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  @media (max-width: 600px) {
+    .footer-top {
+      flex-direction: column;
+      gap: 32px;
+    }
+  }
+
+  .footer-brand {
+    max-width: 280px;
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 8px;
+  }
+  .footer-logo:hover {
+    text-decoration: none;
+    color: #fff;
+  }
+  .footer-logo :global(img) {
+    border-radius: 4px;
+  }
+
+  .footer-tagline {
+    font-size: 1.35rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 56px;
+  }
+  @media (max-width: 400px) {
+    .footer-nav {
+      gap: 32px;
+    }
+  }
+
+  .footer-nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .footer-nav-group h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.35);
+    margin-bottom: 4px;
+  }
+  .footer-nav-group a {
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .footer-nav-group a:hover {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+  }
+
+  .footer-bottom {
+    padding-top: 24px;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.3);
+  }
+</style>
