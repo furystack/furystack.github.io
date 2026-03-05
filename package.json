@@ -13,7 +13,12 @@
     "preview": "astro preview",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,astro}": "eslint --fix",
+    "*": "prettier --write --ignore-unknown"
   },
   "engines": {
     "node": ">=22.0.0"
@@ -33,6 +38,8 @@
     "@types/node": "^25.3.3",
     "eslint": "^10.0.2",
     "eslint-plugin-astro": "^1.6.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
     "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.9.3",
