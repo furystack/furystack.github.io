@@ -114,3 +114,15 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 .vscode
+
+.yarn/unplugged
+.yarn/build-state.yml
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+!.yarn/changelogs
