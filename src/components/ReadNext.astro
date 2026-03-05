@@ -1,32 +1,44 @@
 ---
 import PostCard from './PostCard.astro';
-import ReadNextCard from './ReadNextCard.astro';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   currentSlug: string;
-  tags: string[];
   relatedPosts: CollectionEntry<'posts'>[];
   prevPost?: CollectionEntry<'posts'> | null;
   nextPost?: CollectionEntry<'posts'> | null;
 }
 
-const { currentSlug, tags, relatedPosts, prevPost, nextPost } = Astro.props;
-const showRelatedPosts = relatedPosts.length > 1;
-const hasContent = showRelatedPosts || prevPost || nextPost;
+const { currentSlug, relatedPosts, prevPost, nextPost } = Astro.props;
+
+const MAX_CARDS = 3;
+const seen = new Set<string>([currentSlug]);
+const cards: CollectionEntry<'posts'>[] = [];
+
+for (const post of relatedPosts) {
+  if (cards.length >= MAX_CARDS) break;
+  if (!seen.has(post.id)) {
+    seen.add(post.id);
+    cards.push(post);
+  }
+}
+
+for (const post of [prevPost, nextPost]) {
+  if (cards.length >= MAX_CARDS) break;
+  if (post && !seen.has(post.id)) {
+    seen.add(post.id);
+    cards.push(post);
+  }
+}
 ---
 
 {
-  hasContent && (
+  cards.length > 0 && (
     <aside class="read-next">
       <div class="read-next-inner">
         <h3 class="read-next-heading">Read Next</h3>
         <div class="read-next-feed">
-          {showRelatedPosts && (
-            <ReadNextCard currentSlug={currentSlug} tags={tags} relatedPosts={relatedPosts} />
-          )}
-          {prevPost && <PostCard post={prevPost} />}
-          {nextPost && <PostCard post={nextPost} />}
+          {cards.map(post => <PostCard post={post} />)}
         </div>
       </div>
     </aside>
