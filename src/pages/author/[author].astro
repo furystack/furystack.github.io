@@ -1,0 +1,231 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import PostCard from '../../components/PostCard.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+  const authors = await getCollection('authors');
+
+  return authors.map(author => {
+    const authorPosts = allPosts
+      .filter(p => p.data.author.includes(author.data.id))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+    return {
+      params: { author: author.data.id.toLowerCase() },
+      props: { author: author.data, posts: authorPosts },
+    };
+  });
+}
+
+interface Props {
+  author: {
+    id: string;
+    avatar: string;
+    bio: string;
+    twitter?: string;
+    facebook?: string;
+    website?: string;
+    location?: string;
+    profile_image?: string;
+  };
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+}
+
+const { author, posts } = Astro.props;
+const totalCount = posts.length;
+const title = `${author.id} - ${SITE_TITLE}`;
+---
+
+<BaseLayout title={title} description={author.bio} ogType="profile">
+  <div class="author-template">
+    <header class="site-archive-header">
+      <div class="outer site-nav-main">
+        <div class="inner">
+          <SiteNav />
+        </div>
+      </div>
+      <div class:list={['outer', 'site-header-background', { 'has-cover': author.profile_image }]}
+        style={author.profile_image ? `background-image: url('${author.profile_image}')` : undefined}>
+        <div class="inner">
+          <div class="site-header-content author-header">
+            <img class="author-profile-image" src={author.avatar} alt={author.id} />
+            <div class="author-header-content">
+              <h1 class="site-title">{author.id}</h1>
+              {author.bio && <h2 class="author-bio">{author.bio}</h2>}
+              <div class="author-meta">
+                {author.location && <div class="author-location hidden-mobile">{author.location}</div>}
+                <div class="author-stats hidden-mobile">
+                  {totalCount > 1 ? `${totalCount} posts` : totalCount === 1 ? '1 post' : 'No posts'}
+                </div>
+                {author.website && (
+                  <span class="author-social-link">
+                    <a href={author.website} target="_blank" rel="noopener noreferrer">Website</a>
+                  </span>
+                )}
+                {author.twitter && (
+                  <span class="author-social-link">
+                    <a href={`https://twitter.com/${author.twitter}`} target="_blank" rel="noopener noreferrer">Twitter</a>
+                  </span>
+                )}
+                {author.facebook && (
+                  <span class="author-social-link">
+                    <a href={`https://www.facebook.com/${author.facebook}`} target="_blank" rel="noopener noreferrer">Facebook</a>
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="site-main" class="site-main outer">
+      <div class="inner">
+        <div class="post-feed">
+          {posts.map(post => <PostCard post={post} />)}
+        </div>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .author-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10vw 0 10px;
+  }
+  @media (max-width: 500px) { .author-header { padding: 10px 0 0; padding-bottom: 10px; } }
+
+  .author-profile-image {
+    z-index: 10;
+    flex-shrink: 0;
+    margin: -4px 0 0;
+    width: 110px;
+    height: 110px;
+    box-shadow: rgba(255, 255, 255, 0.1) 0 0 0 6px;
+    border-radius: 100%;
+    object-fit: cover;
+  }
+
+  .author-header-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px 0 0 30px;
+  }
+  @media (max-width: 500px) {
+    .author-header-content { align-items: center; margin: 16px 0 0 0; }
+  }
+
+  .author-bio {
+    z-index: 10;
+    flex-shrink: 0;
+    margin: 6px 0 0;
+    max-width: 46em;
+    font-size: 2rem;
+    line-height: 1.3em;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  .author-meta {
+    z-index: 10;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 1px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .author-location + .author-stats:before,
+  .author-stats + .author-social-link:before,
+  .author-social-link + .author-social-link:before {
+    content: '•';
+    display: inline-block;
+    margin: 0 12px;
+    color: #fff;
+    opacity: 0.6;
+  }
+
+  .author-social-link { display: inline-block; margin: 0; padding: 6px 0; }
+  .author-social-link a { color: #fff; font-weight: 600; }
+  .author-social-link a:hover { opacity: 1; }
+
+  @media (max-width: 500px) { .hidden-mobile { display: none; } }
+
+  .site-header-background.has-cover {
+    position: relative;
+    margin-top: 64px;
+    padding-bottom: 12px;
+    color: #fff;
+    background: #090a0b no-repeat 50%;
+    background-size: cover;
+  }
+  .site-header-background.has-cover:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 10;
+    display: block;
+    background: rgba(0, 0, 0, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-header-background.has-cover:before { background: rgba(0, 0, 0, 0.6); }
+  }
+
+  .site-header-background:not(.has-cover) {
+    color: var(--color-darkgrey);
+    background: #fff;
+  }
+  .site-header-background:not(.has-cover) .site-header-content {
+    padding: 5vw 0 10px;
+    border-bottom: 1px solid var(--color-lightgrey-l12);
+  }
+  .site-header-background:not(.has-cover) .author-bio { color: var(--color-midgrey); opacity: 1; }
+  .site-header-background:not(.has-cover) .author-meta { color: var(--color-midgrey); opacity: 1; }
+  .site-header-background:not(.has-cover) .author-social-link a { color: var(--color-darkgrey); }
+
+  @media (prefers-color-scheme: dark) {
+    .site-header-background:not(.has-cover) {
+      color: rgba(255, 255, 255, 0.9);
+      background: var(--color-darkmode);
+    }
+    .site-header-background:not(.has-cover) .site-header-content { border-bottom-color: #272a30; }
+    .site-header-background:not(.has-cover) .author-social-link a { color: rgba(255, 255, 255, 0.75); }
+  }
+
+  .site-title {
+    z-index: 10;
+    margin: 0;
+    font-size: 5rem;
+    line-height: 1em;
+    font-weight: 600;
+  }
+
+  .post-feed {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+    padding: 40px 0 5vw;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .post-feed { background: var(--color-darkmode); }
+    .site-main { background: var(--color-darkmode); }
+  }
+</style>

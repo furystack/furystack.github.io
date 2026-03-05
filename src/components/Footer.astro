@@ -1,0 +1,61 @@
+---
+import { SITE_TITLE, SOCIAL } from '../consts';
+---
+
+<footer class="site-footer outer">
+  <div class="site-footer-content inner">
+    <section class="copyright">
+      <a href="/">{SITE_TITLE}</a> &copy; {new Date().getFullYear()}
+    </section>
+    <nav class="site-footer-nav">
+      <a href="/">Latest Posts</a>
+      {SOCIAL.github && <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer">Github</a>}
+      {SOCIAL.facebook && <a href={SOCIAL.facebook} target="_blank" rel="noopener noreferrer">Facebook</a>}
+      {SOCIAL.twitter && <a href={SOCIAL.twitter} target="_blank" rel="noopener noreferrer">Twitter</a>}
+      <a href="/rss.xml">RSS</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 60px;
+    color: #fff;
+    background: #040404;
+  }
+
+  .site-footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.3rem;
+  }
+  .site-footer-content :global(a) { color: rgba(255, 255, 255, 0.7); }
+  .site-footer-content :global(a:hover) { color: rgba(255, 255, 255, 1); text-decoration: none; }
+  @media (max-width: 650px) { .site-footer-content { flex-direction: column; } }
+
+  .site-footer-nav {
+    display: flex;
+  }
+  .site-footer-nav a {
+    position: relative;
+    margin-left: 20px;
+  }
+  .site-footer-nav a:before {
+    content: '';
+    position: absolute;
+    top: 11px;
+    left: -11px;
+    display: block;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 100%;
+  }
+  .site-footer-nav a:first-of-type:before { display: none; }
+  @media (max-width: 650px) { .site-footer-nav a:first-of-type { margin-left: 0; } }
+</style>

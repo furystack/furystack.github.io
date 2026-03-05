@@ -1,89 +1,69 @@
-# gatsby-casper
+# furystack.github.io
 
-Demo: https://gatsby-casper.netlify.app
+The official website and blog for [FuryStack](https://github.com/furystack/furystack) — an open-source full-stack web framework for Node.js.
 
-This is a static blog generator and starter gatsby repo. A port of [Casper](https://github.com/TryGhost/Casper) v3 a theme from [Ghost](https://ghost.org/) for [GatsbyJS](https://www.gatsbyjs.org/) using [TypeScript](https://www.typescriptlang.org/).
+**Live site:** [https://furystack.github.io](https://furystack.github.io)
+
+## Tech Stack
+
+- [Astro](https://astro.build/) — Static site generator
+- [TypeScript](https://www.typescriptlang.org/) — Type safety
+- Markdown — Blog content via Astro Content Collections
+- [ESLint 9](https://eslint.org/) + [Prettier](https://prettier.io/) — Linting & formatting
 
 ## Getting Started
 
-Clone this repo.
+### Prerequisites
 
-```
-git clone https://github.com/scttcper/gatsby-casper.git --depth=1
-```
+- Node.js 22+
+- Yarn (via Corepack)
 
-Remove .git folder and setup a new one
+### Development
 
-```
-rm -rf .git && git init
-```
-
-Edit website-config.ts with your website settings.
-Either disable subscribe or setup a mailchimp list and add the form action and hidden field input name.
-
-Now push to whatever repo you want!
-
-### Progress
-
-- [x] emotion / component styles
-- [x] home page
-- [x] tag page
-- [x] author page
-- [x] blog page
-  - [x] subscribe form - using [mailchimp](https://mailchimp.com)
-  - [ ] full width images in markdown? - not sure if possible
-  - [x] multiple post authors
-- [x] 404 page
-- [x] subscribe modal/overlay
-- [x] rss feed (on production build)
-- [ ] polish ✨
-  - [x] meta tags
-  - [x] page titles
-  - [ ] pagination
-
-### Deploy to Netlify
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/scttcper/gatsby-casper)
-
-## How to configure Google Analytics
-
-Edit `gatsby-config.js` and add your tracking ID
-
-```javascript
-{
-    resolve: `gatsby-plugin-google-analytics`,
-    options: {
-      // Here goes your tracking ID
-      trackingId: 'UA-XXXX-Y',
-      // Puts tracking script in the head instead of the body
-      head: true,
-      // IP anonymization for GDPR compliance
-      anonymize: true,
-      // Disable analytics for users with `Do Not Track` enabled
-      respectDNT: true,
-      // Avoids sending pageview hits from custom paths
-      exclude: ['/preview/**'],
-      // Specifies what percentage of users should be tracked
-      sampleRate: 100,
-      // Determines how often site speed tracking beacons will be sent
-      siteSpeedSampleRate: 10,
-    },
-},
+```bash
+corepack enable
+yarn install
+yarn dev
 ```
 
-## How to edit your site title and description
+The dev server runs at `http://localhost:4321`.
 
-Edit `gatsby-config.js` section `siteMetadata`
+### Build
 
-```javascript
- siteMetadata: {
-    title: 'My awesome site name',
-    description: 'This is a description for my site',
-    siteUrl: 'https://mysite.com', // full path to blog - no ending slash
-  },
+```bash
+yarn build
 ```
 
-## How to adjust pagination
+Output goes to `dist/`.
 
-In `gatsby-node.js`, edit the `postsPerPage` constant. The default value is
-six posts per page.
+### Preview
+
+```bash
+yarn preview
+```
+
+## Content
+
+Blog posts live in `src/content/posts/` as Markdown files with frontmatter:
+
+```yaml
+---
+title: 'Post Title'
+author: [gallayl]
+tags: ['Getting Started']
+image: img/cover.jpg
+date: '2024-01-01T00:00:00.000Z'
+draft: false
+excerpt: A short summary of the post.
+---
+```
+
+Author data is in `src/data/authors.yaml` and tag metadata in `src/data/tags.yaml`.
+
+## Deployment
+
+The site deploys automatically to GitHub Pages via GitHub Actions on push to `main`. See `.github/workflows/deploy.yml`.
+
+## License
+
+MIT

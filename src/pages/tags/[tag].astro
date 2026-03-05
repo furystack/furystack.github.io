@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteNav from '../../components/SiteNav.astro';
+import PostCard from '../../components/PostCard.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE } from '../../consts';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+  const tags = [...new Set(allPosts.flatMap(p => p.data.tags ?? []))];
+  const allTags = await getCollection('tags');
+
+  return tags.map(tag => {
+    const tagSlug = tag.toLowerCase().replace(/\s+/g, '-');
+    const filteredPosts = allPosts
+      .filter(p => p.data.tags?.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    const tagData = allTags.find(t => t.data.id.toLowerCase() === tag.toLowerCase());
+
+    return {
+      params: { tag: tagSlug },
+      props: { tag, posts: filteredPosts, tagData: tagData?.data },
+    };
+  });
+}
+
+interface Props {
+  tag: string;
+  posts: Awaited<ReturnType<typeof getCollection<'posts'>>>;
+  tagData?: { id: string; description?: string; image?: string };
+}
+
+const { tag, posts, tagData } = Astro.props;
+const totalCount = posts.length;
+
+const title = `${tag} - ${SITE_TITLE}`;
+const description = tagData?.description ?? '';
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="tag-template">
+    <header class="site-archive-header">
+      <div class="outer site-nav-main">
+        <div class="inner">
+          <SiteNav />
+        </div>
+      </div>
+      <div class:list={['outer', 'site-header-background', { 'has-cover': tagData?.image }]}
+        style={tagData?.image ? `background-image: url('${tagData.image}')` : undefined}>
+        <div class="site-header-content inner">
+          <h1 class="site-title">{tag}</h1>
+          <h2 class="site-description">
+            {tagData?.description || (
+              <>A collection of {totalCount > 1 ? `${totalCount} posts` : totalCount === 1 ? '1 post' : 'No posts'}</>
+            )}
+          </h2>
+        </div>
+      </div>
+    </header>
+
+    <main id="site-main" class="site-main outer">
+      <div class="inner">
+        <div class="post-feed">
+          {posts.map(post => <PostCard post={post} />)}
+        </div>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .site-archive-header .site-header-content {
+    position: relative;
+    align-items: stretch;
+    padding: 12vw 0 20px;
+    min-height: 200px;
+    max-height: 600px;
+  }
+
+  .site-header-background.has-cover {
+    position: relative;
+    margin-top: 64px;
+    padding-bottom: 12px;
+    color: #fff;
+    background: #090a0b no-repeat 50%;
+    background-size: cover;
+  }
+  .site-header-background.has-cover:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 10;
+    display: block;
+    background: rgba(0, 0, 0, 0.18);
+  }
+  .site-header-background.has-cover:after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: auto; left: 0;
+    z-index: 10;
+    display: block;
+    height: 140px;
+    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-header-background.has-cover:before { background: rgba(0, 0, 0, 0.6); }
+  }
+
+  .site-header-background:not(.has-cover) {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: var(--color-darkgrey);
+    background: #fff;
+  }
+  .site-header-background:not(.has-cover) .site-header-content {
+    padding: 5vw 0 10px;
+    border-bottom: 1px solid var(--color-lightgrey-l12);
+  }
+  .site-header-background:not(.has-cover) .site-description {
+    color: var(--color-midgrey);
+    opacity: 1;
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-header-background:not(.has-cover) {
+      color: rgba(255, 255, 255, 0.9);
+      background: var(--color-darkmode);
+    }
+    .site-header-background:not(.has-cover) .site-header-content {
+      border-bottom-color: #272a30;
+    }
+  }
+
+  .site-title {
+    z-index: 10;
+    margin: 0 0 0 -2px;
+    padding: 0;
+    font-size: 5rem;
+    line-height: 1em;
+    font-weight: 600;
+  }
+  @media (max-width: 500px) { .site-title { font-size: 4.2rem; } }
+
+  .site-description {
+    z-index: 10;
+    margin: 0;
+    padding: 5px 0;
+    font-size: 2.1rem;
+    line-height: 1.4em;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  .post-feed {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+    padding: 40px 0 5vw;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .post-feed { background: var(--color-darkmode); }
+    .site-main { background: var(--color-darkmode); }
+  }
+</style>

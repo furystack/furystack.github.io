@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title="Page not found">
+  <div class="error-template">
+    <header class="site-header outer">
+      <div class="outer site-nav-main">
+        <div class="inner">
+          <SiteNav />
+        </div>
+      </div>
+    </header>
+
+    <main id="site-main" class="error-content outer">
+      <div class="inner">
+        <section style="text-align: center">
+          <h1 class="error-code">404</h1>
+          <p class="error-description">Page not found</p>
+          <a class="error-link" href="/">Go to the front page →</a>
+        </section>
+
+        <div class="post-feed">
+          {recentPosts.map(post => <PostCard post={post} />)}
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .error-template { display: flex; flex-direction: column; min-height: 100vh; }
+
+  .error-content { padding: 14vw 4vw 6vw; }
+
+  .error-code {
+    margin: 0;
+    color: var(--color-lightgrey);
+    font-size: 12vw;
+    line-height: 1em;
+    letter-spacing: -5px;
+    opacity: 0.75;
+  }
+
+  .error-description {
+    margin: 0;
+    color: var(--color-midgrey);
+    font-size: 3rem;
+    line-height: 1.3em;
+    font-weight: 400;
+  }
+  @media (max-width: 800px) { .error-description { font-size: 1.8rem; } }
+
+  .error-link { display: inline-block; margin-top: 5px; }
+
+  .post-feed {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+    padding: 50px 0 0;
+  }
+</style>

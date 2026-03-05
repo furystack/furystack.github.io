@@ -1,0 +1,61 @@
+---
+import PostCard from './PostCard.astro';
+import ReadNextCard from './ReadNextCard.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  currentSlug: string;
+  tags: string[];
+  relatedPosts: CollectionEntry<'posts'>[];
+  prevPost?: CollectionEntry<'posts'> | null;
+  nextPost?: CollectionEntry<'posts'> | null;
+}
+
+const { currentSlug, tags, relatedPosts, prevPost, nextPost } = Astro.props;
+const showRelatedPosts = relatedPosts.length > 1;
+---
+
+<aside class="read-next outer">
+  <div class="read-next-feed inner">
+    {showRelatedPosts && (
+      <ReadNextCard
+        currentSlug={currentSlug}
+        tags={tags}
+        relatedPosts={relatedPosts}
+      />
+    )}
+
+    {prevPost && <PostCard post={prevPost} />}
+    {nextPost && <PostCard post={nextPost} />}
+  </div>
+</aside>
+
+<style>
+  .read-next {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #0e0f11;
+  }
+
+  .read-next-feed {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -25px;
+    padding: 60px 0 0 0;
+  }
+
+  .read-next :global(.post-card) { padding-bottom: 0; border-bottom: none; }
+  .read-next :global(.post-card-primary-tag) { color: #fff; opacity: 0.6; }
+  .read-next :global(.post-card-title) { color: #fff; opacity: 0.8; }
+  .read-next :global(.post-card-excerpt) { color: rgba(255, 255, 255, 0.6); }
+  .read-next :global(.post-card-byline-content) { color: rgba(255, 255, 255, 0.6); }
+  .read-next :global(.post-card-byline-content a) { color: rgba(255, 255, 255, 0.8); }
+
+  @media (max-width: 650px) {
+    .read-next :global(.post-card) {
+      flex: 1 1 auto;
+      margin: 25px;
+      padding: 25px 0 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+</style>

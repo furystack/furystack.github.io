@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout title="About FuryStack">
+  <div class="page-template">
+    <header class="site-archive-header no-image">
+      <div class="outer site-nav-main">
+        <div class="inner">
+          <SiteNav />
+        </div>
+      </div>
+    </header>
+
+    <main id="site-main" class="site-main outer">
+      <div class="inner">
+        <article class="post page no-image">
+          <header class="post-full-header">
+            <h1 class="post-full-title">About FuryStack</h1>
+          </header>
+          <section class="post-full-content">
+            <div class="post-content">
+              <h5>FuryStack is an open-source full-stack framework designed to build complex web solutions fast and easily.</h5>
+              <p>
+                The main goal of FuryStack is to bring enterprise-grade architecture to the NodeJS Ecosystem with a pack of separated but perfectly matched parts.
+                You can build a modern scalable backend service in no-time and a responsive SPA frontend without bloating your app with 3rd party
+                and low quality, often abandoned dependencies. Developer experience is the main focus while the framework also tries to encourage keeping the code
+                clean and decoupled.
+              </p>
+              <p>
+                FuryStack contains all the basic parts that you need to start with - like DI/IOC, authentication, data stores, entity authorization, logging, etc... -
+                If you want to use only a subset of the layers (e.g. only the the Dependency Injection) you can also pick the one you like.
+              </p>
+              <p>
+                In FuryStack, there are some concepts that are not very common nowdays - like sharing REST API definitions
+                with type checking between the service and the frontend in a monorepo.
+              </p>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .site-main {
+    margin-top: 64px;
+    padding-bottom: 4vw;
+    background: #fff;
+    flex-grow: 1;
+  }
+  @media (prefers-color-scheme: dark) { .site-main { background: var(--color-darkmode); } }
+
+  .page-template { display: flex; flex-direction: column; min-height: 100vh; }
+
+  .post-full-header {
+    position: relative;
+    margin: 0 auto;
+    padding: 70px 170px 50px;
+  }
+  @media (max-width: 1170px) { .post-full-header { padding: 60px 11vw 50px; } }
+  @media (max-width: 800px) { .post-full-header { padding-right: 5vw; padding-left: 5vw; } }
+  @media (max-width: 500px) { .post-full-header { padding: 20px 0 35px; } }
+
+  .post-full-title {
+    margin: 0 0 0.2em;
+    color: #0d0e10;
+  }
+  @media (prefers-color-scheme: dark) { .post-full-title { color: rgba(255, 255, 255, 0.9); } }
+
+  .post-full-content {
+    position: relative;
+    margin: 0 auto;
+    padding: 0 170px 6vw;
+    min-height: 230px;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    line-height: 1.6em;
+    background: #fff;
+  }
+  @media (max-width: 1170px) { .post-full-content { padding: 0 11vw; } }
+  @media (max-width: 800px) { .post-full-content { padding: 0 5vw; font-size: 1.8rem; } }
+  @media (max-width: 500px) { .post-full-content { padding: 0; } }
+  @media (prefers-color-scheme: dark) { .post-full-content { background: var(--color-darkmode); } }
+
+  .no-image .post-full-content { padding-top: 0; }
+</style>

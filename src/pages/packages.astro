@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import Footer from '../components/Footer.astro';
+
+const packages = [
+  '@furystack/auth-google',
+  '@furystack/core',
+  '@furystack/filesystem-store',
+  '@furystack/inject',
+  '@furystack/logging',
+  '@furystack/mongodb-store',
+  '@furystack/redis-store',
+  '@furystack/repository',
+  '@furystack/rest',
+  '@furystack/rest-client-fetch',
+  '@furystack/rest-client-got',
+  '@furystack/rest-service',
+  '@furystack/sequelize-store',
+  '@furystack/shades',
+  '@furystack/shades-common-components',
+  '@furystack/shades-lottie',
+  '@furystack/shades-nipple',
+  '@furystack/utils',
+  '@furystack/websocket-api',
+];
+---
+
+<BaseLayout title="Packages">
+  <div class="page-template">
+    <header class="site-archive-header no-image">
+      <div class="outer site-nav-main">
+        <div class="inner">
+          <SiteNav />
+        </div>
+      </div>
+    </header>
+
+    <main id="site-main" class="site-main outer">
+      <div class="inner">
+        <article class="post page no-image">
+          <header class="post-full-header">
+            <h1 class="post-full-title">Packages</h1>
+          </header>
+          <section class="post-full-content">
+            <div class="post-content">
+              <h5>A List of FuryStack Packages</h5>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>NPM link</th>
+                    <th>Related posts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {packages.map(pkg => (
+                    <tr>
+                      <td>{pkg}</td>
+                      <td>
+                        <a href={`https://www.npmjs.com/package/${pkg}`} target="_blank" rel="noopener noreferrer">
+                          <img style="display: inline" src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`} alt={pkg} />
+                        </a>
+                      </td>
+                      <td style="text-align: center">
+                        <a style="text-decoration: none; box-shadow: none; font-size: 1.3em" href={`/tags/${pkg.split('/')[1]}/`}>👉</a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .site-main {
+    margin-top: 64px;
+    padding-bottom: 4vw;
+    background: #fff;
+    flex-grow: 1;
+  }
+  @media (prefers-color-scheme: dark) { .site-main { background: var(--color-darkmode); } }
+
+  .page-template { display: flex; flex-direction: column; min-height: 100vh; }
+
+  .post-full-header {
+    position: relative;
+    margin: 0 auto;
+    padding: 70px 170px 50px;
+  }
+  @media (max-width: 1170px) { .post-full-header { padding: 60px 11vw 50px; } }
+  @media (max-width: 800px) { .post-full-header { padding-right: 5vw; padding-left: 5vw; } }
+  @media (max-width: 500px) { .post-full-header { padding: 20px 0 35px; } }
+
+  .post-full-title {
+    margin: 0 0 0.2em;
+    color: #0d0e10;
+  }
+  @media (prefers-color-scheme: dark) { .post-full-title { color: rgba(255, 255, 255, 0.9); } }
+
+  .post-full-content {
+    position: relative;
+    margin: 0 auto;
+    padding: 0 170px 6vw;
+    min-height: 230px;
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    line-height: 1.6em;
+    background: #fff;
+  }
+  @media (max-width: 1170px) { .post-full-content { padding: 0 11vw; } }
+  @media (max-width: 800px) { .post-full-content { padding: 0 5vw; font-size: 1.8rem; } }
+  @media (max-width: 500px) { .post-full-content { padding: 0; } }
+  @media (prefers-color-scheme: dark) { .post-full-content { background: var(--color-darkmode); } }
+
+  .no-image .post-full-content { padding-top: 0; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 8px 12px; border: 1px solid var(--color-whitegrey); text-align: left; }
+  th { background-color: var(--color-whitegrey-l04); font-weight: 700; text-transform: uppercase; font-size: 1.2rem; }
+  @media (prefers-color-scheme: dark) {
+    th { background-color: var(--color-darkmode-l08); color: rgba(255, 255, 255, 0.85); }
+    th, td { border-color: var(--color-darkmode-l08); }
+  }
+</style>

@@ -1,0 +1,174 @@
+---
+import { Image } from 'astro:assets';
+import { format } from 'date-fns';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  large?: boolean;
+}
+
+const { post, large = false } = Astro.props;
+const { title, date, tags, excerpt, image, author } = post.data;
+
+const datetime = format(date, 'yyyy-MM-dd');
+const displayDatetime = format(date, 'dd LLL yyyy');
+
+const slug = `/posts/${post.id}/`;
+const primaryTag = tags?.[0];
+const words = (post.body?.split(/\s+/).length) ?? 0;
+const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
+---
+
+<article class:list={['post-card', { 'no-image': !image, 'post-card-large': large }]}>
+  {image && (
+    <a class="post-card-image-link" href={slug}>
+      <div class="post-card-image">
+        <Image src={image} alt={`${title} cover image`} width={720} height={400} />
+      </div>
+    </a>
+  )}
+  <div class="post-card-content">
+    <a class="post-card-content-link" href={slug}>
+      <header class="post-card-header">
+        {primaryTag && (
+          <div class="post-card-primary-tag">
+            <a href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>{primaryTag}</a>
+          </div>
+        )}
+        <h2 class="post-card-title">{title}</h2>
+      </header>
+      <section class="post-card-excerpt">
+        <p>{excerpt || ''}</p>
+      </section>
+    </a>
+    <footer class="post-card-meta">
+      <div class="post-card-byline-content">
+        <span>
+          {author.map((authorId, i) => (
+            <>
+              <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
+              {i < author.length - 1 && ', '}
+            </>
+          ))}
+        </span>
+        <span class="post-card-byline-date">
+          <time datetime={datetime}>{displayDatetime}</time>
+          {' '}<span class="bull">&bull;</span> {readingTime}
+        </span>
+      </div>
+    </footer>
+  </div>
+</article>
+
+<style>
+  .post-card {
+    position: relative;
+    flex: 1 1 301px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 0 40px;
+    padding: 0 20px 40px;
+    min-height: 220px;
+    background-size: cover;
+  }
+
+  .post-card-large {
+    flex: 1 1 100%;
+    flex-direction: row;
+    padding-bottom: 40px;
+    min-height: 280px;
+    border-top: 0;
+  }
+  @media (max-width: 795px) { .post-card-large { flex-direction: column; } }
+
+  .post-card-image-link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 5px 5px 0 0;
+  }
+  .post-card-large .post-card-image-link {
+    position: relative;
+    flex: 1 1 auto;
+    margin-bottom: 0;
+    min-height: 380px;
+  }
+  @media (max-width: 795px) { .post-card-large .post-card-image-link { min-height: auto; } }
+
+  .post-card-image {
+    width: auto;
+    height: 200px;
+    background: var(--color-lightgrey) no-repeat center center;
+    background-size: cover;
+  }
+  .post-card-image :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .post-card-large .post-card-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  @media (max-width: 795px) { .post-card-large .post-card-image { position: relative; height: 200px; } }
+  @media (prefers-color-scheme: dark) { .post-card-image { background: var(--color-darkmode); } }
+
+  .post-card-content { flex-grow: 1; display: flex; flex-direction: column; }
+  .post-card-large .post-card-content { flex: 0 1 361px; justify-content: center; }
+  @media (max-width: 795px) { .post-card-large .post-card-content { flex: 1 1 auto; } }
+
+  .post-card-content-link {
+    position: relative;
+    display: block;
+    color: var(--color-darkgrey);
+  }
+  .post-card-content-link:hover { text-decoration: none; }
+  .post-card-large .post-card-content-link { padding: 0 0 0 40px; }
+  @media (max-width: 795px) { .post-card-large .post-card-content-link { padding: 0; } }
+
+  .post-card-header { margin: 15px 0 0; }
+
+  .post-card-primary-tag {
+    margin: 0 0 0.2em;
+    color: var(--color-blue);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+
+  .post-card-title {
+    margin: 0 0 0.4em;
+    line-height: 1.15em;
+    transition: color 0.2s ease-in-out;
+  }
+  .post-card-large .post-card-title { margin-top: 0; font-size: 3.2rem; }
+  @media (prefers-color-scheme: dark) { .post-card-title { color: rgba(255, 255, 255, 0.85); } }
+
+  .post-card-excerpt { font-family: Georgia, serif; }
+  .post-card-large .post-card-excerpt :global(p) { margin-bottom: 1.5em; font-size: 1.8rem; line-height: 1.5em; }
+  @media (prefers-color-scheme: dark) { .post-card-excerpt { color: var(--color-midgrey-l10) !important; } }
+
+  .post-card-meta {
+    display: flex;
+    align-items: flex-start;
+    padding: 0;
+  }
+  .post-card-large .post-card-meta { padding: 0 0 0 40px; }
+  @media (max-width: 795px) { .post-card-large .post-card-meta { padding: 0; } }
+
+  .post-card-byline-content {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 4px 0 0 10px;
+    color: var(--color-midgrey-l10);
+    font-size: 1.2rem;
+    line-height: 1.4em;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+  .post-card-byline-content span { margin: 0; }
+  .post-card-byline-content a { color: var(--color-darkgrey-l20); font-weight: 600; }
+  @media (prefers-color-scheme: dark) { .post-card-byline-content a { color: rgba(255, 255, 255, 0.75); } }
+</style>

@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteNav from '../components/SiteNav.astro';
+import PostCard from '../components/PostCard.astro';
+import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const ogImage = `${SITE_URL}/images/blog-cover.png`;
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} ogImage={ogImage}>
+  <div class="home-template">
+    <div class="site-header outer site-header-background"
+      style={`background-image: url('/images/blog-cover.png')`}>
+      <div class="inner">
+        <SiteNav isHome />
+        <div class="site-header-content">
+          <h1 class="site-title">
+            <img style="max-height: 55px" src="/images/furystack-logo-512.png" alt={SITE_TITLE} />
+          </h1>
+          <h2 class="site-description">{SITE_DESCRIPTION}</h2>
+        </div>
+      </div>
+    </div>
+
+    <main id="site-main" class="site-main outer">
+      <div class="inner posts">
+        <div class="post-feed">
+          {posts.map((post, index) => (
+            <PostCard post={post} large={index === 0} />
+          ))}
+        </div>
+      </div>
+    </main>
+
+    <Footer />
+  </div>
+</BaseLayout>
+
+<style>
+  .site-header-background {
+    position: relative;
+    margin-top: 0;
+    padding-bottom: 12px;
+    color: #fff;
+    background: #090a0b no-repeat center center;
+    background-size: cover;
+  }
+  .site-header-background:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 10;
+    display: block;
+    background: rgba(0, 0, 0, 0.18);
+  }
+  .site-header-background:after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: auto; left: 0;
+    z-index: 10;
+    display: block;
+    height: 140px;
+    background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-header-background:before { background: rgba(0, 0, 0, 0.6); }
+  }
+
+  .site-header-content {
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6vw 3vw;
+    min-height: 200px;
+    max-height: 340px;
+  }
+
+  .site-title {
+    z-index: 10;
+    margin: 0 0 0 -2px;
+    padding: 0;
+    font-size: 5rem;
+    line-height: 1em;
+    font-weight: 600;
+  }
+  @media (max-width: 500px) { .site-title { font-size: 4.2rem; } }
+
+  .site-description {
+    z-index: 10;
+    margin: 0;
+    padding: 5px 0;
+    font-size: 2.1rem;
+    line-height: 1.4em;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+  @media (max-width: 500px) { .site-description { font-size: 1.8rem; } }
+
+  .post-feed {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+    padding: 40px 0 5vw;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) { .post-feed { background: var(--color-darkmode); } }
+
+  .posts { overflow-x: hidden; }
+
+  @media (prefers-color-scheme: dark) {
+    .site-main { background: var(--color-darkmode); }
+  }
+</style>
