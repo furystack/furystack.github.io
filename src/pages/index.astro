@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import GitHubIcon from '../components/icons/GitHubIcon.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SOCIAL } from '../consts';
+import logo from '../../public/images/furystack-logo-512.png';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -15,7 +17,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} ogImage={ogImage} isHome>
   <section class="hero">
     <div class="hero-inner">
-      <img class="hero-logo" src="/images/furystack-logo-512.png" alt={SITE_TITLE} width="64" height="64" />
+      <Image class="hero-logo" src={logo} alt={SITE_TITLE} width={64} height={64} loading="eager" />
       <h1 class="hero-title">FuryStack</h1>
       <p class="hero-description">{SITE_DESCRIPTION}</p>
       <div class="hero-actions">
@@ -33,7 +35,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
       {featured && (
         <section class="featured-section">
           <span class="section-label">Latest</span>
-          <PostCard post={featured} large />
+            <PostCard post={featured} large eager />
         </section>
       )}
 
@@ -41,7 +43,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
         <section class="posts-section">
           <span class="section-label">All Posts</span>
           <div class="posts-grid">
-            {rest.map(post => <PostCard post={post} />)}
+            {rest.map((post, i) => <PostCard post={post} eager={i < 3} />)}
           </div>
         </section>
       )}

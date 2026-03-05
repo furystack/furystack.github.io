@@ -42,7 +42,7 @@ const title = `${author.id} - ${SITE_TITLE}`;
 <BaseLayout title={title} description={author.bio} ogType="profile">
   <header class="author-header">
     <div class="author-header-inner">
-      <img class="author-avatar" src={author.avatar} alt={author.id} width="80" height="80" />
+      <img class="author-avatar" src={author.avatar} alt={author.id} width="80" height="80" loading="eager" />
       <div class="author-info">
         <h1>{author.id}</h1>
         {author.bio && <p class="author-bio">{author.bio}</p>}
@@ -59,7 +59,7 @@ const title = `${author.id} - ${SITE_TITLE}`;
   <main id="main-content" class="author-main">
     <div class="inner">
       <div class="posts-grid">
-        {posts.map(post => <PostCard post={post} />)}
+        {posts.map((post, i) => <PostCard post={post} eager={i === 0} />)}
       </div>
     </div>
   </main>

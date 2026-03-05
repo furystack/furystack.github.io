@@ -1,7 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { SOCIAL, SITE_TITLE } from '../consts';
 import GitHubIcon from './icons/GitHubIcon.astro';
 import XIcon from './icons/XIcon.astro';
+import logo from '../../public/images/furystack-logo-512.png';
 
 interface Props {
   isHome?: boolean;
@@ -14,7 +16,7 @@ const { isHome = false } = Astro.props;
   <div class="site-nav-left">
     {!isHome && (
       <a class="site-nav-logo" href="/">
-        <img src="/images/furystack-logo-512.png" alt={SITE_TITLE} />
+        <Image src={logo} alt={SITE_TITLE} width={24} height={24} loading="eager" />
         <span>FuryStack</span>
       </a>
     )}
@@ -32,12 +34,12 @@ const { isHome = false } = Astro.props;
   </div>
   <div class="site-nav-right">
     {SOCIAL.github && (
-      <a class="social-link" href={SOCIAL.github} target="_blank" rel="noopener noreferrer" title="GitHub">
+      <a class="social-link" href={SOCIAL.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
         <GitHubIcon />
       </a>
     )}
     {SOCIAL.x && (
-      <a class="social-link" href={SOCIAL.x} target="_blank" rel="noopener noreferrer" title="X (Twitter)">
+      <a class="social-link" href={SOCIAL.x} target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
         <XIcon />
       </a>
     )}
@@ -88,7 +90,7 @@ const { isHome = false } = Astro.props;
     white-space: nowrap;
   }
   .site-nav-logo:hover { text-decoration: none; opacity: 0.9; }
-  .site-nav-logo img { width: 24px; height: 24px; border-radius: 4px; }
+  .site-nav-logo :global(img) { width: 24px; height: 24px; border-radius: 4px; }
 
   .nav-toggle {
     display: none;

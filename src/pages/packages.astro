@@ -47,7 +47,7 @@ const packages = [
                 <a href={`https://www.npmjs.com/package/${pkg}`} target="_blank" rel="noopener noreferrer">{pkg}</a>
               </div>
               <div class="pkg-badge">
-                <img src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`} alt={`${pkg} version`} loading="lazy" />
+                <img src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`} alt={`${pkg} version`} loading="lazy" decoding="async" />
               </div>
               <a class="pkg-posts-link" href={`/tags/${shortName}/`}>Posts &rarr;</a>
             </div>

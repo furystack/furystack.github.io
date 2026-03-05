@@ -6,9 +6,10 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   post: CollectionEntry<'posts'>;
   large?: boolean;
+  eager?: boolean;
 }
 
-const { post, large = false } = Astro.props;
+const { post, large = false, eager = false } = Astro.props;
 const { title, date, tags, excerpt, image, author } = post.data;
 
 const datetime = format(date, 'yyyy-MM-dd');
@@ -23,7 +24,7 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
 <article class:list={['post-card', { 'no-image': !image, 'post-card-large': large }]}>
   {image && (
     <div class="post-card-image">
-      <Image src={image} alt={`${title} cover image`} width={720} height={400} />
+      <Image src={image} alt={title} width={720} height={400} loading={eager ? 'eager' : 'lazy'} />
     </div>
   )}
   <div class="post-card-body">

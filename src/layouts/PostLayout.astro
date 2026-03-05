@@ -37,7 +37,7 @@ const primaryTag = tags?.[0];
         <div class="post-byline">
           {authorData.map(a => (
             <a class="byline-avatar" href={`/author/${a.id.toLowerCase()}/`}>
-              <img src={a.avatar} alt={a.id} width="36" height="36" />
+              <img src={a.avatar} alt={a.id} width="36" height="36" loading="eager" />
             </a>
           ))}
           <div class="byline-text">
@@ -60,7 +60,7 @@ const primaryTag = tags?.[0];
 
       {image && (
         <figure class="post-image">
-          <Image src={image} alt={title} width={1920} height={1080} format="jpg" />
+          <Image src={image} alt={title} width={1920} height={1080} format="jpg" loading="eager" />
         </figure>
       )}
 

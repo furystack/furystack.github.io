@@ -49,7 +49,7 @@ const description = tagData?.description ?? '';
   <main id="main-content" class="tag-main">
     <div class="inner">
       <div class="posts-grid">
-        {posts.map(post => <PostCard post={post} />)}
+        {posts.map((post, i) => <PostCard post={post} eager={i === 0} />)}
       </div>
     </div>
   </main>
