@@ -9,39 +9,39 @@
   description: The Boilerplate project is your best friend if you want to get familiar with FuryStack or start a new FuryStack project
   image: img/tag-boilerplate.jpg
 - id: core
-  description: "@furystack/core — the foundation with physical stores, store managers, and identity context"
+  description: '@furystack/core — the foundation with physical stores, store managers, and identity context'
 - id: inject
-  description: "@furystack/inject — dependency injection and IoC container"
+  description: '@furystack/inject — dependency injection and IoC container'
   image: img/tag-inject.jpg
 - id: logging
-  description: "@furystack/logging — scoped logging with custom loggers and levels"
+  description: '@furystack/logging — scoped logging with custom loggers and levels'
 - id: security
-  description: "@furystack/security — password management and authorization utilities"
+  description: '@furystack/security — password management and authorization utilities'
 - id: repository
-  description: "@furystack/repository — the Repository pattern with DataSets, authorization, and event callbacks"
+  description: '@furystack/repository — the Repository pattern with DataSets, authorization, and event callbacks'
 - id: rest
-  description: "@furystack/rest — type-safe REST API definitions and contracts"
+  description: '@furystack/rest — type-safe REST API definitions and contracts'
 - id: rest-service
-  description: "@furystack/rest-service — server-side REST implementation with authentication and static files"
+  description: '@furystack/rest-service — server-side REST implementation with authentication and static files'
 - id: rest-client-fetch
-  description: "@furystack/rest-client-fetch — browser REST client using native fetch"
+  description: '@furystack/rest-client-fetch — browser REST client using native fetch'
 - id: rest-client-got
-  description: "@furystack/rest-client-got — server-side REST client (legacy, no longer maintained)"
+  description: '@furystack/rest-client-got — server-side REST client (legacy, no longer maintained)'
 - id: json-schemas
-  description: "@furystack/json-schemas — JSON Schema validation for REST (legacy, no longer maintained)"
+  description: '@furystack/json-schemas — JSON Schema validation for REST (legacy, no longer maintained)'
 - id: filesystem-store
-  description: "@furystack/filesystem-store — file-based data store for development and testing"
+  description: '@furystack/filesystem-store — file-based data store for development and testing'
 - id: sequelize-store
-  description: "@furystack/sequelize-store — SQL databases via Sequelize ORM"
+  description: '@furystack/sequelize-store — SQL databases via Sequelize ORM'
 - id: mongodb-store
-  description: "@furystack/mongodb-store — MongoDB document store implementation"
+  description: '@furystack/mongodb-store — MongoDB document store implementation'
 - id: redis-store
-  description: "@furystack/redis-store — Redis key-value store implementation"
+  description: '@furystack/redis-store — Redis key-value store implementation'
 - id: websocket-api
-  description: "@furystack/websocket-api — WebSocket support for real-time communication"
+  description: '@furystack/websocket-api — WebSocket support for real-time communication'
 - id: shades
-  description: "@furystack/shades — a JSX-based UI library with unidirectional data binding"
+  description: '@furystack/shades — a JSX-based UI library with unidirectional data binding'
 - id: shades-common-components
-  description: "@furystack/shades-common-components — reusable UI components and CSS-variable theming"
+  description: '@furystack/shades-common-components — reusable UI components and CSS-variable theming'
 - id: shades-showcase-app
   description: The Shades Showcase App demonstrating UI components and patterns

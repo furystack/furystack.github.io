@@ -29,25 +29,33 @@ const primaryTag = tags?.[0];
   <main id="main-content" class="post-main">
     <article class="post-article">
       <header class="post-header">
-        {primaryTag && (
-          <a class="post-tag" href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>{primaryTag}</a>
-        )}
+        {
+          primaryTag && (
+            <a class="post-tag" href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>
+              {primaryTag}
+            </a>
+          )
+        }
         <h1 class="post-title">{title}</h1>
         {excerpt && <p class="post-excerpt">{excerpt}</p>}
         <div class="post-byline">
-          {authorData.map(a => (
-            <a class="byline-avatar" href={`/author/${a.id.toLowerCase()}/`}>
-              <img src={a.avatar} alt={a.id} width="36" height="36" loading="eager" />
-            </a>
-          ))}
+          {
+            authorData.map(a => (
+              <a class="byline-avatar" href={`/author/${a.id.toLowerCase()}/`}>
+                <img src={a.avatar} alt={a.id} width="36" height="36" loading="eager" />
+              </a>
+            ))
+          }
           <div class="byline-text">
             <span class="byline-authors">
-              {author.map((authorId, i) => (
-                <>
-                  <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
-                  {i < author.length - 1 && ', '}
-                </>
-              ))}
+              {
+                author.map((authorId, i) => (
+                  <>
+                    <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
+                    {i < author.length - 1 && ', '}
+                  </>
+                ))
+              }
             </span>
             <span class="byline-meta">
               <time datetime={datetime}>{displayDatetime}</time>
@@ -58,11 +66,20 @@ const primaryTag = tags?.[0];
         </div>
       </header>
 
-      {image && (
-        <figure class="post-image">
-          <Image src={image} alt={title} width={1920} height={1080} format="jpg" loading="eager" />
-        </figure>
-      )}
+      {
+        image && (
+          <figure class="post-image">
+            <Image
+              src={image}
+              alt={title}
+              width={1920}
+              height={1080}
+              format="jpg"
+              loading="eager"
+            />
+          </figure>
+        )
+      }
 
       <section class="post-content">
         <slot />
@@ -85,7 +102,11 @@ const primaryTag = tags?.[0];
     padding: calc(64px + 48px) 5vw 60px;
     background: #fff;
   }
-  @media (prefers-color-scheme: dark) { .post-main { background: var(--color-darkmode); } }
+  @media (prefers-color-scheme: dark) {
+    .post-main {
+      background: var(--color-darkmode);
+    }
+  }
 
   .post-article {
     max-width: 780px;
@@ -93,7 +114,9 @@ const primaryTag = tags?.[0];
   }
 
   /* Header */
-  .post-header { margin-bottom: 40px; }
+  .post-header {
+    margin-bottom: 40px;
+  }
 
   .post-tag {
     display: inline-block;
@@ -105,7 +128,9 @@ const primaryTag = tags?.[0];
     color: var(--color-accent);
     text-decoration: none;
   }
-  .post-tag:hover { text-decoration: underline; }
+  .post-tag:hover {
+    text-decoration: underline;
+  }
 
   .post-title {
     font-size: 4rem;
@@ -114,8 +139,16 @@ const primaryTag = tags?.[0];
     line-height: 1.15;
     margin-bottom: 16px;
   }
-  @media (max-width: 600px) { .post-title { font-size: 2.8rem; } }
-  @media (prefers-color-scheme: dark) { .post-title { color: rgba(255, 255, 255, 0.95); } }
+  @media (max-width: 600px) {
+    .post-title {
+      font-size: 2.8rem;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    .post-title {
+      color: rgba(255, 255, 255, 0.95);
+    }
+  }
 
   .post-excerpt {
     font-size: 2rem;
@@ -123,8 +156,16 @@ const primaryTag = tags?.[0];
     color: var(--color-midgrey);
     margin-bottom: 24px;
   }
-  @media (max-width: 600px) { .post-excerpt { font-size: 1.7rem; } }
-  @media (prefers-color-scheme: dark) { .post-excerpt { color: rgba(255, 255, 255, 0.5); } }
+  @media (max-width: 600px) {
+    .post-excerpt {
+      font-size: 1.7rem;
+    }
+  }
+  @media (prefers-color-scheme: dark) {
+    .post-excerpt {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
 
   .post-byline {
     display: flex;
@@ -133,7 +174,11 @@ const primaryTag = tags?.[0];
     padding-top: 20px;
     border-top: 1px solid var(--color-border);
   }
-  @media (prefers-color-scheme: dark) { .post-byline { border-top-color: var(--color-darkmode-border); } }
+  @media (prefers-color-scheme: dark) {
+    .post-byline {
+      border-top-color: var(--color-darkmode-border);
+    }
+  }
 
   .byline-avatar {
     display: block;
@@ -143,14 +188,35 @@ const primaryTag = tags?.[0];
     overflow: hidden;
     flex-shrink: 0;
   }
-  .byline-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .byline-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
 
-  .byline-text { display: flex; flex-direction: column; gap: 2px; }
+  .byline-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-  .byline-authors { font-size: 1.4rem; font-weight: 600; }
-  .byline-authors a { color: var(--color-darkgrey); text-decoration: none; }
-  .byline-authors a:hover { text-decoration: underline; }
-  @media (prefers-color-scheme: dark) { .byline-authors a { color: rgba(255, 255, 255, 0.85); } }
+  .byline-authors {
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+  .byline-authors a {
+    color: var(--color-darkgrey);
+    text-decoration: none;
+  }
+  .byline-authors a:hover {
+    text-decoration: underline;
+  }
+  @media (prefers-color-scheme: dark) {
+    .byline-authors a {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
 
   .byline-meta {
     display: flex;
@@ -166,8 +232,17 @@ const primaryTag = tags?.[0];
     overflow: hidden;
     max-height: 600px;
   }
-  .post-image :global(img) { width: 100%; height: 100%; object-fit: cover; }
-  @media (max-width: 800px) { .post-image { margin: 0 0 32px; max-height: 400px; } }
+  .post-image :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 800px) {
+    .post-image {
+      margin: 0 0 32px;
+      max-height: 400px;
+    }
+  }
 
   /* Content */
   .post-content {
@@ -175,7 +250,11 @@ const primaryTag = tags?.[0];
     line-height: 1.72;
     color: var(--color-body);
   }
-  @media (max-width: 600px) { .post-content { font-size: 1.7rem; } }
+  @media (max-width: 600px) {
+    .post-content {
+      font-size: 1.7rem;
+    }
+  }
 
   .post-content :global(h1),
   .post-content :global(h2),
@@ -202,10 +281,18 @@ const primaryTag = tags?.[0];
     color: var(--color-darkgrey);
     margin-top: 1.5em;
   }
-  .post-content :global(h1) { font-size: 3.6rem; }
-  .post-content :global(h2) { font-size: 2.8rem; }
-  .post-content :global(h3) { font-size: 2.2rem; }
-  .post-content :global(h4) { font-size: 2rem; }
+  .post-content :global(h1) {
+    font-size: 3.6rem;
+  }
+  .post-content :global(h2) {
+    font-size: 2.8rem;
+  }
+  .post-content :global(h3) {
+    font-size: 2.2rem;
+  }
+  .post-content :global(h4) {
+    font-size: 2rem;
+  }
   .post-content :global(h5) {
     font-size: 2.4rem;
     color: var(--color-accent);
@@ -221,9 +308,14 @@ const primaryTag = tags?.[0];
     text-underline-offset: 2px;
     transition: text-decoration-color 0.15s ease;
   }
-  .post-content :global(a:hover) { text-decoration-color: var(--color-accent); }
+  .post-content :global(a:hover) {
+    text-decoration-color: var(--color-accent);
+  }
 
-  .post-content :global(strong) { font-weight: 600; color: var(--color-darkgrey); }
+  .post-content :global(strong) {
+    font-weight: 600;
+    color: var(--color-darkgrey);
+  }
 
   .post-content :global(img),
   .post-content :global(video) {
@@ -248,14 +340,20 @@ const primaryTag = tags?.[0];
     font-size: 1.4rem;
     line-height: 1.55;
   }
-  .post-content :global(pre code) { padding: 0; background: transparent; font-size: inherit; }
+  .post-content :global(pre code) {
+    padding: 0;
+    background: transparent;
+    font-size: inherit;
+  }
 
   .post-content :global(blockquote) {
     padding: 0 0 0 1.5em;
     border-left: 3px solid var(--color-accent);
     color: var(--color-midgrey);
   }
-  .post-content :global(blockquote p) { font-style: italic; }
+  .post-content :global(blockquote p) {
+    font-style: italic;
+  }
 
   .post-content :global(table) {
     display: block;
@@ -280,18 +378,37 @@ const primaryTag = tags?.[0];
   }
 
   @media (prefers-color-scheme: dark) {
-    .post-content { color: rgba(255, 255, 255, 0.72); }
+    .post-content {
+      color: rgba(255, 255, 255, 0.72);
+    }
     .post-content :global(h1),
     .post-content :global(h2),
     .post-content :global(h3),
     .post-content :global(h4),
-    .post-content :global(h6) { color: rgba(255, 255, 255, 0.92); }
-    .post-content :global(strong) { color: rgba(255, 255, 255, 0.92); }
-    .post-content :global(a) { color: #60a5fa; text-decoration-color: rgba(96, 165, 250, 0.3); }
-    .post-content :global(a:hover) { text-decoration-color: #60a5fa; }
-    .post-content :global(code) { background: var(--color-darkmode-l08); color: rgba(255, 255, 255, 0.85); }
-    .post-content :global(table th) { background: var(--color-darkmode-l08); color: rgba(255, 255, 255, 0.85); }
+    .post-content :global(h6) {
+      color: rgba(255, 255, 255, 0.92);
+    }
+    .post-content :global(strong) {
+      color: rgba(255, 255, 255, 0.92);
+    }
+    .post-content :global(a) {
+      color: #60a5fa;
+      text-decoration-color: rgba(96, 165, 250, 0.3);
+    }
+    .post-content :global(a:hover) {
+      text-decoration-color: #60a5fa;
+    }
+    .post-content :global(code) {
+      background: var(--color-darkmode-l08);
+      color: rgba(255, 255, 255, 0.85);
+    }
+    .post-content :global(table th) {
+      background: var(--color-darkmode-l08);
+      color: rgba(255, 255, 255, 0.85);
+    }
     .post-content :global(table th),
-    .post-content :global(table td) { border-color: var(--color-darkmode-border); }
+    .post-content :global(table td) {
+      border-color: var(--color-darkmode-border);
+    }
   }
 </style>

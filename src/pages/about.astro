@@ -8,33 +8,30 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <h1>About FuryStack</h1>
       <div class="page-content">
         <p class="lead">
-          FuryStack is a flexible, end-to-end framework that allows you to build
-          complex services quickly and easily.
+          FuryStack is a flexible, end-to-end framework that allows you to build complex services
+          quickly and easily.
         </p>
         <p>
-          Written in TypeScript, FuryStack provides clean, readable public APIs
-          built on top of native Node.js calls with carefully selected dependencies.
-          You can create a backend in minutes with authentication, data stores,
-          custom actions, and more &mdash; without having to search for packages
-          for entry-level functionality.
+          Written in TypeScript, FuryStack provides clean, readable public APIs built on top of
+          native Node.js calls with carefully selected dependencies. You can create a backend in
+          minutes with authentication, data stores, custom actions, and more &mdash; without having
+          to search for packages for entry-level functionality.
         </p>
         <p>
-          The framework ships with everything you need to get started: dependency
-          injection, authentication, multiple data store backends (MongoDB, Redis,
-          Sequelize, filesystem), entity authorization, logging, caching, and
-          internationalization. If you only need a subset, every package can be
-          used independently.
+          The framework ships with everything you need to get started: dependency injection,
+          authentication, multiple data store backends (MongoDB, Redis, Sequelize, filesystem),
+          entity authorization, logging, caching, and internationalization. If you only need a
+          subset, every package can be used independently.
         </p>
         <p>
-          On the frontend, FuryStack includes <strong>Shades</strong> &mdash;
-          a custom JSX-based UI library with type-safe syntax and unidirectional
-          data binding, plus micro-frontend support. The same concepts and design
-          principles are shared between the frontend and backend: DI, logging,
-          disposables, and more work in the same way and from the same packages.
+          On the frontend, FuryStack includes <strong>Shades</strong> &mdash; a custom JSX-based UI library
+          with type-safe syntax and unidirectional data binding, plus micro-frontend support. The same
+          concepts and design principles are shared between the frontend and backend: DI, logging, disposables,
+          and more work in the same way and from the same packages.
         </p>
         <p>
-          Type-safe REST API definitions can be shared between server and client
-          in a monorepo, giving you end-to-end type checking across the full stack.
+          Type-safe REST API definitions can be shared between server and client in a monorepo,
+          giving you end-to-end type checking across the full stack.
         </p>
       </div>
     </div>
@@ -47,7 +44,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     padding: calc(64px + 48px) 5vw 80px;
     background: #fff;
   }
-  @media (prefers-color-scheme: dark) { .page-main { background: var(--color-darkmode); } }
+  @media (prefers-color-scheme: dark) {
+    .page-main {
+      background: var(--color-darkmode);
+    }
+  }
 
   .page-inner {
     max-width: 720px;
@@ -59,14 +60,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: 3.6rem;
     letter-spacing: -0.03em;
   }
-  @media (max-width: 600px) { .page-inner h1 { font-size: 2.6rem; } }
+  @media (max-width: 600px) {
+    .page-inner h1 {
+      font-size: 2.6rem;
+    }
+  }
 
   .page-content {
     font-size: 1.8rem;
     line-height: 1.7;
     color: var(--color-body);
   }
-  @media (prefers-color-scheme: dark) { .page-content { color: rgba(255, 255, 255, 0.72); } }
+  @media (prefers-color-scheme: dark) {
+    .page-content {
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
 
   .lead {
     font-size: 2.1rem;
@@ -74,5 +83,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--color-darkgrey);
     line-height: 1.5;
   }
-  @media (prefers-color-scheme: dark) { .lead { color: rgba(255, 255, 255, 0.85); } }
+  @media (prefers-color-scheme: dark) {
+    .lead {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
 </style>

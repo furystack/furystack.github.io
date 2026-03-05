@@ -16,31 +16,33 @@ const showRelatedPosts = relatedPosts.length > 1;
 const hasContent = showRelatedPosts || prevPost || nextPost;
 ---
 
-{hasContent && (
-  <aside class="read-next">
-    <div class="read-next-inner">
-      <h3 class="read-next-heading">Read Next</h3>
-      <div class="read-next-feed">
-        {showRelatedPosts && (
-          <ReadNextCard
-            currentSlug={currentSlug}
-            tags={tags}
-            relatedPosts={relatedPosts}
-          />
-        )}
-        {prevPost && <PostCard post={prevPost} />}
-        {nextPost && <PostCard post={nextPost} />}
+{
+  hasContent && (
+    <aside class="read-next">
+      <div class="read-next-inner">
+        <h3 class="read-next-heading">Read Next</h3>
+        <div class="read-next-feed">
+          {showRelatedPosts && (
+            <ReadNextCard currentSlug={currentSlug} tags={tags} relatedPosts={relatedPosts} />
+          )}
+          {prevPost && <PostCard post={prevPost} />}
+          {nextPost && <PostCard post={nextPost} />}
+        </div>
       </div>
-    </div>
-  </aside>
-)}
+    </aside>
+  )
+}
 
 <style>
   .read-next {
     padding: 48px 5vw 64px;
     background: var(--color-whitegrey);
   }
-  @media (prefers-color-scheme: dark) { .read-next { background: var(--color-darkmode-l04); } }
+  @media (prefers-color-scheme: dark) {
+    .read-next {
+      background: var(--color-darkmode-l04);
+    }
+  }
 
   .read-next-inner {
     max-width: 1120px;
@@ -61,5 +63,9 @@ const hasContent = showRelatedPosts || prevPost || nextPost;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 24px;
   }
-  @media (max-width: 600px) { .read-next-feed { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .read-next-feed {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

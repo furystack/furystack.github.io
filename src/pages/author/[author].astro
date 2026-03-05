@@ -42,15 +42,34 @@ const title = `${author.id} - ${SITE_TITLE}`;
 <BaseLayout title={title} description={author.bio} ogType="profile">
   <header class="author-header">
     <div class="author-header-inner">
-      <img class="author-avatar" src={author.avatar} alt={author.id} width="80" height="80" loading="eager" />
+      <img
+        class="author-avatar"
+        src={author.avatar}
+        alt={author.id}
+        width="80"
+        height="80"
+        loading="eager"
+      />
       <div class="author-info">
         <h1>{author.id}</h1>
         {author.bio && <p class="author-bio">{author.bio}</p>}
         <div class="author-meta">
           {author.location && <span>{author.location}</span>}
           <span>{totalCount} {totalCount === 1 ? 'post' : 'posts'}</span>
-          {author.website && <a href={author.website} target="_blank" rel="noopener noreferrer">Website</a>}
-          {author.twitter && <a href={`https://x.com/${author.twitter}`} target="_blank" rel="noopener noreferrer">X (Twitter)</a>}
+          {
+            author.website && (
+              <a href={author.website} target="_blank" rel="noopener noreferrer">
+                Website
+              </a>
+            )
+          }
+          {
+            author.twitter && (
+              <a href={`https://x.com/${author.twitter}`} target="_blank" rel="noopener noreferrer">
+                X (Twitter)
+              </a>
+            )
+          }
         </div>
       </div>
     </div>
@@ -79,7 +98,12 @@ const title = `${author.id} - ${SITE_TITLE}`;
     max-width: 1120px;
     margin: 0 auto;
   }
-  @media (max-width: 600px) { .author-header-inner { flex-direction: column; text-align: center; } }
+  @media (max-width: 600px) {
+    .author-header-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
 
   .author-avatar {
     width: 80px;
@@ -110,14 +134,23 @@ const title = `${author.id} - ${SITE_TITLE}`;
     color: rgba(255, 255, 255, 0.45);
     flex-wrap: wrap;
   }
-  .author-meta a { color: rgba(255, 255, 255, 0.65); text-decoration: none; }
-  .author-meta a:hover { color: #fff; text-decoration: underline; }
+  .author-meta a {
+    color: rgba(255, 255, 255, 0.65);
+    text-decoration: none;
+  }
+  .author-meta a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
 
   .author-main {
     flex-grow: 1;
     padding: 40px 5vw 80px;
     background: var(--color-whitegrey);
   }
-  @media (prefers-color-scheme: dark) { .author-main { background: var(--color-darkmode); } }
-
+  @media (prefers-color-scheme: dark) {
+    .author-main {
+      background: var(--color-darkmode);
+    }
+  }
 </style>

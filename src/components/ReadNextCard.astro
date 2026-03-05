@@ -12,9 +12,7 @@ const { currentSlug, tags, relatedPosts } = Astro.props;
 const tag = tags[0];
 const tagSlug = tag?.toLowerCase().replace(/\s+/g, '-');
 
-const filteredPosts = relatedPosts
-  .filter(p => p.id !== currentSlug)
-  .slice(0, 3);
+const filteredPosts = relatedPosts.filter(p => p.id !== currentSlug).slice(0, 3);
 ---
 
 <div class="related-card">
@@ -23,23 +21,26 @@ const filteredPosts = relatedPosts
     <a href={`/tags/${tagSlug}/`}>{tag}</a>
   </header>
   <ul class="related-list">
-    {filteredPosts.map(post => {
-      const d = new Date(post.data.date);
-      const words = (post.body?.split(/\s+/).length) ?? 0;
-      const readingTime = Math.max(1, Math.ceil(words / 265));
-      return (
-        <li>
-          <a href={`/posts/${post.id}/`}>{post.data.title}</a>
-          <span class="related-meta">
-            {format(d, 'dd LLL yyyy')} &middot; {readingTime} min read
-          </span>
-        </li>
-      );
-    })}
+    {
+      filteredPosts.map(post => {
+        const d = new Date(post.data.date);
+        const words = post.body?.split(/\s+/).length ?? 0;
+        const readingTime = Math.max(1, Math.ceil(words / 265));
+        return (
+          <li>
+            <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+            <span class="related-meta">
+              {format(d, 'dd LLL yyyy')} &middot; {readingTime} min read
+            </span>
+          </li>
+        );
+      })
+    }
   </ul>
   <footer class="related-footer">
     <a href={`/tags/${tagSlug}/`}>
-      See all {relatedPosts.length} {relatedPosts.length === 1 ? 'post' : 'posts'} &rarr;
+      See all {relatedPosts.length}
+      {relatedPosts.length === 1 ? 'post' : 'posts'} &rarr;
     </a>
   </footer>
 </div>
@@ -73,7 +74,9 @@ const filteredPosts = relatedPosts
     text-decoration: none;
     font-weight: 700;
   }
-  .related-header a:hover { text-decoration: underline; }
+  .related-header a:hover {
+    text-decoration: underline;
+  }
 
   .related-list {
     list-style: none;
@@ -83,7 +86,11 @@ const filteredPosts = relatedPosts
     flex-direction: column;
     gap: 12px;
   }
-  .related-list li { display: flex; flex-direction: column; gap: 2px; }
+  .related-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
   .related-list li a {
     font-size: 1.5rem;
     font-weight: 600;
@@ -91,8 +98,14 @@ const filteredPosts = relatedPosts
     text-decoration: none;
     line-height: 1.35;
   }
-  .related-list li a:hover { color: var(--color-accent); }
-  @media (prefers-color-scheme: dark) { .related-list li a { color: rgba(255, 255, 255, 0.85); } }
+  .related-list li a:hover {
+    color: var(--color-accent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .related-list li a {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
 
   .related-meta {
     font-size: 1.2rem;
@@ -105,5 +118,7 @@ const filteredPosts = relatedPosts
     color: var(--color-accent);
     text-decoration: none;
   }
-  .related-footer a:hover { text-decoration: underline; }
+  .related-footer a:hover {
+    text-decoration: underline;
+  }
 </style>

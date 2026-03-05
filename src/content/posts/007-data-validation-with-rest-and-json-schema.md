@@ -2,7 +2,15 @@
 layout: post
 title: Data validation with REST and json-schemas
 author: [gallayl]
-tags: ['Getting Started', 'rest', 'rest-service', 'rest-client-fetch', 'rest-client-got', 'json-schemas']
+tags:
+  [
+    'Getting Started',
+    'rest',
+    'rest-service',
+    'rest-client-fetch',
+    'rest-client-got',
+    'json-schemas',
+  ]
 image: img/007-data-validation-cover.jpg
 date: '2021-06-23T13:58:20.257Z'
 draft: false
@@ -22,13 +30,16 @@ But there's a solution that can be easily adopted - JSON Schemas
 ![the relatime interface usage](img/007-impossible.jpg)
 
 So the plan is:
+
 1. Design the API
 1. Create a JSON Schema from the API definitions
 1. Wire some validation logic on the Backend
 
 ### Generating the Schema
+
 FuryStack offers some help when it comes to defining / designing the API interface - as mentioned in the last article. There is a nice tool that will help us create the JSON Schema - [ts-json-schema-generator](https://github.com/vega/ts-json-schema-generator)
-So if we have an interface ready, we can generate the JSON schema with a simple command from an NPM script: 
+So if we have an interface ready, we can generate the JSON schema with a simple command from an NPM script:
+
 ```sh
 yarn ts-json-schema-generator -f tsconfig.json --no-type-check -p common/src/path/to/my/api.schema.ts -o common/src/path/to/my/api.schema.json
 ```
@@ -36,10 +47,9 @@ yarn ts-json-schema-generator -f tsconfig.json --no-type-check -p common/src/pat
 Once it is done, you can access / re-export it in your `common` package - maybe you have to enable `resolveJsonModule` in your tsconfig.
 
 ```ts
-import * as mySchema from './path/to/my/api.schema.json'
-export { mySchema }
+import * as mySchema from './path/to/my/api.schema.json';
+export { mySchema };
 ```
-
 
 ### Validation in the Service
 
@@ -60,7 +70,7 @@ const customHeadersEndpoint: RequestAction<CustomHeaders> = Validate({
 
 ### The Gotchas
 
- - All input data (query, headers, url, body) will be validated - **in depth**
- - You can define nested types, string literals, optional parameters, type intersections, nearly everything that Typescript can offer. You can throw errors on additional parameters as well.
- - You will automatically get nice 400 responses with detailed error messages if you miss something
- - Schema can be re-generated as your API changes
+- All input data (query, headers, url, body) will be validated - **in depth**
+- You can define nested types, string literals, optional parameters, type intersections, nearly everything that Typescript can offer. You can throw errors on additional parameters as well.
+- You will automatically get nice 400 responses with detailed error messages if you miss something
+- Schema can be re-generated as your API changes

@@ -32,21 +32,27 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
 
   <main id="main-content" class="main-content">
     <div class="inner">
-      {featured && (
-        <section class="featured-section">
-          <span class="section-label">Latest</span>
+      {
+        featured && (
+          <section class="featured-section">
+            <span class="section-label">Latest</span>
             <PostCard post={featured} large eager />
-        </section>
-      )}
+          </section>
+        )
+      }
 
-      {rest.length > 0 && (
-        <section class="posts-section">
-          <span class="section-label">All Posts</span>
-          <div class="posts-grid">
-            {rest.map((post, i) => <PostCard post={post} eager={i < 3} />)}
-          </div>
-        </section>
-      )}
+      {
+        rest.length > 0 && (
+          <section class="posts-section">
+            <span class="section-label">All Posts</span>
+            <div class="posts-grid">
+              {rest.map((post, i) => (
+                <PostCard post={post} eager={i < 3} />
+              ))}
+            </div>
+          </section>
+        )
+      }
     </div>
   </main>
 </BaseLayout>
@@ -90,7 +96,11 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     color: #fff;
     margin-bottom: 12px;
   }
-  @media (max-width: 600px) { .hero-title { font-size: 3.2rem; } }
+  @media (max-width: 600px) {
+    .hero-title {
+      font-size: 3.2rem;
+    }
+  }
 
   .hero-description {
     font-size: 1.9rem;
@@ -99,7 +109,11 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     margin-bottom: 32px;
     font-weight: 400;
   }
-  @media (max-width: 600px) { .hero-description { font-size: 1.6rem; } }
+  @media (max-width: 600px) {
+    .hero-description {
+      font-size: 1.6rem;
+    }
+  }
 
   .hero-actions {
     display: flex;
@@ -119,13 +133,17 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     transition: all 0.2s ease;
     white-space: nowrap;
   }
-  .btn:hover { text-decoration: none; }
+  .btn:hover {
+    text-decoration: none;
+  }
 
   .btn-primary {
     background: var(--color-accent);
     color: #fff;
   }
-  .btn-primary:hover { background: var(--color-accent-hover); }
+  .btn-primary:hover {
+    background: var(--color-accent-hover);
+  }
 
   .btn-ghost {
     background: rgba(255, 255, 255, 0.08);
@@ -144,7 +162,9 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     background: var(--color-whitegrey);
   }
   @media (prefers-color-scheme: dark) {
-    .main-content { background: var(--color-darkmode); }
+    .main-content {
+      background: var(--color-darkmode);
+    }
   }
 
   .section-label {

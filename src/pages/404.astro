@@ -17,14 +17,18 @@ const recentPosts = allPosts
       <a href="/" class="back-link">Back to home &rarr;</a>
     </div>
 
-    {recentPosts.length > 0 && (
-      <div class="recent-posts inner">
-        <h2>Recent posts</h2>
-        <div class="posts-grid">
-          {recentPosts.map(post => <PostCard post={post} />)}
+    {
+      recentPosts.length > 0 && (
+        <div class="recent-posts inner">
+          <h2>Recent posts</h2>
+          <div class="posts-grid">
+            {recentPosts.map(post => (
+              <PostCard post={post} />
+            ))}
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
   </main>
 </BaseLayout>
 
@@ -34,7 +38,11 @@ const recentPosts = allPosts
     padding: calc(64px + 48px) 5vw 80px;
     background: var(--color-whitegrey);
   }
-  @media (prefers-color-scheme: dark) { .error-main { background: var(--color-darkmode); } }
+  @media (prefers-color-scheme: dark) {
+    .error-main {
+      background: var(--color-darkmode);
+    }
+  }
 
   .error-inner {
     text-align: center;
@@ -47,7 +55,11 @@ const recentPosts = allPosts
     line-height: 1;
     margin-bottom: 8px;
   }
-  @media (prefers-color-scheme: dark) { .error-inner h1 { color: var(--color-darkmode-l15); } }
+  @media (prefers-color-scheme: dark) {
+    .error-inner h1 {
+      color: var(--color-darkmode-l15);
+    }
+  }
 
   .error-inner p {
     font-size: 1.8rem;
@@ -61,9 +73,15 @@ const recentPosts = allPosts
     color: var(--color-accent);
     text-decoration: none;
   }
-  .back-link:hover { text-decoration: underline; }
+  .back-link:hover {
+    text-decoration: underline;
+  }
 
-  .recent-posts { padding-top: 40px; }
-  .recent-posts h2 { font-size: 2rem; margin-bottom: 24px; }
-
+  .recent-posts {
+    padding-top: 40px;
+  }
+  .recent-posts h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
 </style>

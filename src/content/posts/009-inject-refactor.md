@@ -17,25 +17,28 @@ In short: "[The emitDecoratorMetadata flag is intentionally not supported.](http
 
 ## Emm ok, what now? 😕
 
-We had a feature in `Inject` that *was* build on a top of emitting type data and that was *constructor injection*. The syntax was like:
+We had a feature in `Inject` that _was_ build on a top of emitting type data and that was _constructor injection_. The syntax was like:
 
 ```ts
-const injector = new Injector()
+const injector = new Injector();
 @Injectable()
 class Service1 {
-  constructor(public service2: Service2, public service3: Service3) {}
+  constructor(
+    public service2: Service2,
+    public service3: Service3,
+  ) {}
 }
 @Injectable()
 class Service2 {
-  public value = 'foo'
+  public value = 'foo';
 }
 @Injectable()
 class Service3 {
-  public value = 'bar'
+  public value = 'bar';
 }
 
-expect(injector.getInstance(Service1).service2.value).toBe('foo')
-expect(injector.getInstance(Service1).service2.value).toBe('bar')
+expect(injector.getInstance(Service1).service2.value).toBe('foo');
+expect(injector.getInstance(Service1).service2.value).toBe('bar');
 ```
 
 That's clear that we can't use this if we loose type data at runtime, so the idea was to pass down the constructor object at runtime - and try to maintain the simplicity of the old API.
@@ -46,33 +49,35 @@ That's clear that we can't use this if we loose type data at runtime, so the ide
 The very same behavior with the new API looks like this:
 
 ```ts
-const injector = new Injector()
+const injector = new Injector();
 @Injectable()
 class Service1 {
   @Injected(Service2)
-  public service2!: Service2
+  public service2!: Service2;
 
   @Injected(Service3)
-  public service2!: Service3
+  public service2!: Service3;
 }
 @Injectable()
 class Service2 {
-  public value = 'foo'
+  public value = 'foo';
 }
 @Injectable()
 class Service3 {
-  public value = 'bar'
+  public value = 'bar';
 }
 
-expect(injector.getInstance(Service1).service2.value).toBe('foo')
-expect(injector.getInstance(Service1).service2.value).toBe('bar')
+expect(injector.getInstance(Service1).service2.value).toBe('foo');
+expect(injector.getInstance(Service1).service2.value).toBe('bar');
 ```
 
 ### Some pros 👌
- - The consrtuctor instance is passed down as a variable - without emitting non-standard metadata and other black magic
- - The main behavior (lifetime, recursive resolution, etc...) remains the same
+
+- The consrtuctor instance is passed down as a variable - without emitting non-standard metadata and other black magic
+- The main behavior (lifetime, recursive resolution, etc...) remains the same
 
 ### ...and a few drawbacks 😿
- - Properties will be injected **after** constructing the instance - it means that you cannot use them in the constructor
- - A breaking change - again...
- - See the `!` operator? Yeah, it's a kind of "shortcut" for now...
+
+- Properties will be injected **after** constructing the instance - it means that you cannot use them in the constructor
+- A breaking change - again...
+- See the `!` operator? Yeah, it's a kind of "shortcut" for now...

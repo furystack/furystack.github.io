@@ -22,13 +22,16 @@ No suprise, you can find it on a public [Github repo](https://github.com/furysta
 The Boilerplate is basically a monorepo built with [Yarn Workspaces](https://classic.yarnpkg.com/blog/2017/08/02/introducing-workspaces/) and it includes 3 workspace by default: common, frontend and service.
 
 ### Common
+
 You can share models, interfaces and logic between your frontend and the backend.
 In the Boilerplate, there is a User and Session model and a REST API definition for login / logout.
 
 ### Frontend
+
 A Single Page App, based on [Shades](https://github.com/furystack/furystack/tree/develop/packages/shades). It contains a basic layout with header and body, a basic service for login / logout management and login / logout functionality, some placeholder pages and a basic routing. The frontend is bundled with Webpack. The service URL is passed as an environment variable called `SERVICE_URL`.
 
 ### Service
+
 The backend service, based entirely on FuryStack. It contains a filesystem-based store for users and an in-memory-store for sessions. It has implemented the example API (with login / logout) and has some other example implementations.
 
 ## Getting started
@@ -65,9 +68,10 @@ The boilerplate also includes end-to-end testing with [Cypress](https://www.cypr
 There is an [Azure Pipelines](https://azure.microsoft.com/en-us/services/devops/pipelines/) setup included - you can check how this looks like [here](https://dev.azure.com/furystack/FuryStack/_build?definitionId=3).
 
 The Pipeline contains the following steps:
- - Install dependencies
- - Run eslint (+prettier)
- - Build the project
- - Run the Unit tests (and publishes the results)
- - Runs the Seed(as it contains data that's needed for the e2e tests)
- - Start up the frontend, the service and run the Cypress E2E tests
+
+- Install dependencies
+- Run eslint (+prettier)
+- Build the project
+- Run the Unit tests (and publishes the results)
+- Runs the Seed(as it contains data that's needed for the e2e tests)
+- Start up the frontend, the service and run the Cypress E2E tests

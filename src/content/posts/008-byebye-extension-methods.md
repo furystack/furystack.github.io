@@ -2,7 +2,21 @@
 layout: post
 title: Bye-bye extension methods
 author: [gallayl]
-tags: ['FuryStack', 'core', 'filesystem-store', 'logging', 'mongodb-store', 'redis-store', 'repository', 'rest-service', 'security', 'sequelize-store', 'websocket-api', 'inject']
+tags:
+  [
+    'FuryStack',
+    'core',
+    'filesystem-store',
+    'logging',
+    'mongodb-store',
+    'redis-store',
+    'repository',
+    'rest-service',
+    'security',
+    'sequelize-store',
+    'websocket-api',
+    'inject',
+  ]
 image: img/008-byebye-extension-methods.jpg
 date: '2022-04-30T18:00:00.257Z'
 draft: false

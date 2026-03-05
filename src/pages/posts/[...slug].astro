@@ -39,7 +39,7 @@ interface Props {
 const { post, prev, next, relatedPosts, authorData } = Astro.props;
 const { Content } = await render(post);
 
-const words = (post.body?.split(/\s+/).length) ?? 0;
+const words = post.body?.split(/\s+/).length ?? 0;
 const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
 ---
 

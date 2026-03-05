@@ -17,34 +17,46 @@ const displayDatetime = format(date, 'dd LLL yyyy');
 
 const slug = `/posts/${post.id}/`;
 const primaryTag = tags?.[0];
-const words = (post.body?.split(/\s+/).length) ?? 0;
+const words = post.body?.split(/\s+/).length ?? 0;
 const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
 ---
 
 <article class:list={['post-card', { 'no-image': !image, 'post-card-large': large }]}>
-  {image && (
-    <div class="post-card-image">
-      <Image src={image} alt={title} width={720} height={400} loading={eager ? 'eager' : 'lazy'} />
-    </div>
-  )}
+  {
+    image && (
+      <div class="post-card-image">
+        <Image
+          src={image}
+          alt={title}
+          width={720}
+          height={400}
+          loading={eager ? 'eager' : 'lazy'}
+        />
+      </div>
+    )
+  }
   <div class="post-card-body">
-    {primaryTag && (
-      <span class="post-card-tag">
-        <a href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>{primaryTag}</a>
-      </span>
-    )}
+    {
+      primaryTag && (
+        <span class="post-card-tag">
+          <a href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>{primaryTag}</a>
+        </span>
+      )
+    }
     <h2 class="post-card-title">
       <a href={slug} class="post-card-link">{title}</a>
     </h2>
     {excerpt && <p class="post-card-excerpt">{excerpt}</p>}
     <footer class="post-card-meta">
       <span class="post-card-authors">
-        {author.map((authorId, i) => (
-          <>
-            <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
-            {i < author.length - 1 && ', '}
-          </>
-        ))}
+        {
+          author.map((authorId, i) => (
+            <>
+              <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
+              {i < author.length - 1 && ', '}
+            </>
+          ))
+        }
       </span>
       <time datetime={datetime}>{displayDatetime}</time>
       <span class="post-card-reading-time">{readingTime}</span>
@@ -60,11 +72,17 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-    transition: box-shadow 0.25s ease, transform 0.25s ease;
+    box-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.08),
+      0 1px 2px rgba(0, 0, 0, 0.06);
+    transition:
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
   }
   .post-card:hover {
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.08);
+    box-shadow:
+      0 12px 28px rgba(0, 0, 0, 0.12),
+      0 4px 10px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
   }
 
@@ -84,7 +102,9 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     min-height: 320px;
   }
   @media (max-width: 800px) {
-    .post-card-large { flex-direction: column; }
+    .post-card-large {
+      flex-direction: column;
+    }
   }
 
   /* Stretched link: the title <a> covers the entire card */
@@ -122,10 +142,14 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     aspect-ratio: auto;
   }
   @media (max-width: 800px) {
-    .post-card-large .post-card-image { aspect-ratio: 16 / 9; }
+    .post-card-large .post-card-image {
+      aspect-ratio: 16 / 9;
+    }
   }
   @media (prefers-color-scheme: dark) {
-    .post-card-image { background: var(--color-darkmode); }
+    .post-card-image {
+      background: var(--color-darkmode);
+    }
   }
 
   .post-card-body {
@@ -140,7 +164,9 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     padding: 32px 36px;
   }
   @media (max-width: 800px) {
-    .post-card-large .post-card-body { padding: 20px 24px 24px; }
+    .post-card-large .post-card-body {
+      padding: 20px 24px 24px;
+    }
   }
 
   .post-card-tag {
@@ -173,7 +199,9 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     font-size: 2.8rem;
   }
   @media (prefers-color-scheme: dark) {
-    .post-card-title { color: rgba(255, 255, 255, 0.92); }
+    .post-card-title {
+      color: rgba(255, 255, 255, 0.92);
+    }
   }
 
   .post-card-excerpt {
@@ -187,7 +215,9 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     font-size: 1.6rem;
   }
   @media (prefers-color-scheme: dark) {
-    .post-card-excerpt { color: rgba(255, 255, 255, 0.55); }
+    .post-card-excerpt {
+      color: rgba(255, 255, 255, 0.55);
+    }
   }
 
   .post-card-meta {
@@ -198,7 +228,9 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     color: var(--color-midgrey-l10);
     letter-spacing: 0.2px;
   }
-  .post-card-meta time { white-space: nowrap; }
+  .post-card-meta time {
+    white-space: nowrap;
+  }
   .post-card-meta time::before {
     content: '\00b7';
     margin-right: 6px;
@@ -212,8 +244,12 @@ const readingTime = `${Math.max(1, Math.ceil(words / 265))} min read`;
     font-weight: 600;
     text-decoration: none;
   }
-  .post-card-authors a:hover { text-decoration: underline; }
+  .post-card-authors a:hover {
+    text-decoration: underline;
+  }
   @media (prefers-color-scheme: dark) {
-    .post-card-authors a { color: rgba(255, 255, 255, 0.75); }
+    .post-card-authors a {
+      color: rgba(255, 255, 255, 0.75);
+    }
   }
 </style>

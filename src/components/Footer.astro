@@ -24,8 +24,20 @@ import logo from '../../public/images/furystack-logo-512.png';
         </div>
         <div class="footer-nav-group">
           <h4>Connect</h4>
-          {SOCIAL.github && <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer">GitHub</a>}
-          {SOCIAL.x && <a href={SOCIAL.x} target="_blank" rel="noopener noreferrer">X (Twitter)</a>}
+          {
+            SOCIAL.github && (
+              <a href={SOCIAL.github} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            )
+          }
+          {
+            SOCIAL.x && (
+              <a href={SOCIAL.x} target="_blank" rel="noopener noreferrer">
+                X (Twitter)
+              </a>
+            )
+          }
           <a href="/rss.xml">RSS Feed</a>
         </div>
       </nav>
@@ -56,10 +68,15 @@ import logo from '../../public/images/furystack-logo-512.png';
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
   @media (max-width: 600px) {
-    .footer-top { flex-direction: column; gap: 32px; }
+    .footer-top {
+      flex-direction: column;
+      gap: 32px;
+    }
   }
 
-  .footer-brand { max-width: 280px; }
+  .footer-brand {
+    max-width: 280px;
+  }
 
   .footer-logo {
     display: inline-flex;
@@ -71,8 +88,13 @@ import logo from '../../public/images/furystack-logo-512.png';
     text-decoration: none;
     margin-bottom: 8px;
   }
-  .footer-logo:hover { text-decoration: none; color: #fff; }
-  .footer-logo :global(img) { border-radius: 4px; }
+  .footer-logo:hover {
+    text-decoration: none;
+    color: #fff;
+  }
+  .footer-logo :global(img) {
+    border-radius: 4px;
+  }
 
   .footer-tagline {
     font-size: 1.35rem;
@@ -85,7 +107,11 @@ import logo from '../../public/images/furystack-logo-512.png';
     display: flex;
     gap: 56px;
   }
-  @media (max-width: 400px) { .footer-nav { gap: 32px; } }
+  @media (max-width: 400px) {
+    .footer-nav {
+      gap: 32px;
+    }
+  }
 
   .footer-nav-group {
     display: flex;
@@ -106,7 +132,10 @@ import logo from '../../public/images/furystack-logo-512.png';
     text-decoration: none;
     transition: color 0.15s ease;
   }
-  .footer-nav-group a:hover { color: rgba(255, 255, 255, 0.9); text-decoration: none; }
+  .footer-nav-group a:hover {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+  }
 
   .footer-bottom {
     padding-top: 24px;
