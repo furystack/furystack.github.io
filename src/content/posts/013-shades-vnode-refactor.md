@@ -10,16 +10,16 @@ excerpt: Shades v12 replaces the rendering engine with a VNode-based reconciler 
 
 ## Why rewrite the renderer
 
-Shades has always had a simple rendering model: your `render()` function returns real DOM elements, the framework diffs them against the current tree, and patches the differences. It works — but it has a cost. Every render cycle creates a full shadow DOM tree just to compare it with the one on screen, even if nothing meaningful changed. That's a lot of allocation pressure and GC work for what often amounts to updating a single text node.
+Shades had a beautifully dumb rendering model: your `render()` function spits out real DOM elements, the framework diffs them against what's already on screen, and patches the differences. Simple, honest, easy to reason about... and wasteful. Every single render cycle spun up a full shadow DOM tree _just to throw it away after comparison_. That's a lot of garbage collection for what often boils down to changing one text node.
 
-The v12 release replaces this with a **VNode-based reconciler**. Instead of creating real DOM elements during render, the JSX factory produces lightweight descriptor objects. A reconciler diffs the previous VNode tree against the new one and applies surgical DOM updates using tracked element references. No throwaway DOM trees, no redundant element creation.
+v12 rips that out and replaces it with a **VNode-based reconciler**. Now the JSX factory produces lightweight descriptor objects — plain JS, no DOM involved. The reconciler diffs the old VNode tree against the new one and pokes the real DOM only where something actually changed. No throwaway trees. No phantom elements. Just surgical updates.
 
-## New hooks, fewer lifecycle callbacks
+## Hooks in, lifecycle callbacks out
 
-The old API surface had three separate lifecycle entry points: `constructed`, `onAttach`, and `onDetach`. Each had its own timing semantics and cleanup patterns. In v12, all three are gone — replaced by a single, composable primitive: **`useDisposable`**.
+The old API had three separate lifecycle hooks: `constructed`, `onAttach`, and `onDetach`. Three places to scatter your setup and teardown logic, three sets of timing semantics to keep in your head. In v12, they're all gone — consolidated into one composable primitive: **`useDisposable`**.
 
 ```typescript
-// Before — scattered lifecycle management
+// Before — lifecycle spaghetti
 Shade({
   shadowDomName: 'my-component',
   constructed: ({ element }) => {
@@ -30,7 +30,7 @@ Shade({
   render: () => <div>Hello</div>,
 })
 
-// After — setup and teardown live together in render
+// After — setup and cleanup live together, right where you use them
 Shade({
   shadowDomName: 'my-component',
   render: ({ useDisposable }) => {
@@ -44,7 +44,7 @@ Shade({
 })
 ```
 
-The `element` parameter — direct access to the host custom element — is also gone. Imperatively mutating the host was always a bit at odds with a declarative component model. The replacement is **`useHostProps`**, which lets you set attributes, styles (including CSS custom properties), ARIA attributes, and event handlers declaratively:
+The `element` parameter is also gone. Reaching into the host element and mutating it imperatively was always a bit... rebellious for a declarative framework. Say hello to **`useHostProps`** instead — it lets you declare attributes, styles, CSS custom properties, ARIA attrs, and event handlers without ever touching the DOM yourself:
 
 ```typescript
 render: ({ useHostProps, props }) => {
@@ -56,7 +56,7 @@ render: ({ useHostProps, props }) => {
 }
 ```
 
-There's also a new **`useRef`** hook for capturing child element references — no more querying the shadow DOM manually:
+And for those moments when you _do_ need a handle on a child element (focusing an input, measuring a bounding rect), there's **`useRef`** — no more `querySelector` treasure hunts through the shadow DOM:
 
 ```typescript
 render: ({ useRef }) => {
@@ -66,17 +66,17 @@ render: ({ useRef }) => {
 }
 ```
 
-## Batched updates
+## Batched updates (a.k.a. stop re-rendering so much)
 
-`updateComponent()` used to render synchronously. Call it three times in a row and you'd get three render passes. In v12, updates are scheduled via `queueMicrotask` and coalesced — multiple observable changes within the same synchronous block produce a single render pass. The new `flushUpdates()` utility gives tests a reliable way to wait for pending renders without arbitrary `sleepAsync` calls.
+`updateComponent()` used to be synchronous. Fire three observable changes in a row? Enjoy your three render passes. In v12, updates go through `queueMicrotask` and get coalesced — hammer as many observables as you want within a synchronous block and the component renders _once_. The new `flushUpdates()` utility lets tests await pending renders properly, so you can finally delete those sketchy `sleepAsync(50)` calls.
 
-## SVG support
+## SVG — for real this time
 
-Shades now handles SVG elements natively. Elements are created with `createElementNS` under the correct namespace, and attributes are applied via `setAttribute` instead of property assignment. A full set of typed SVG attribute interfaces covers shapes, gradients, filters, and animations — so you get proper autocompletion in your editor.
+Shades now handles SVG elements as first-class citizens. Elements are created with `createElementNS` under the correct namespace, attributes go through `setAttribute` instead of property assignment (because SVG is picky like that), and there's a full set of typed interfaces covering shapes, gradients, filters, and animations. Your editor's autocomplete will thank you.
 
-## Migration at a glance
+## Migration cheat sheet
 
-| Removed                         | Replacement                              |
+| Gone                            | Use this instead                         |
 | ------------------------------- | ---------------------------------------- |
 | `constructed` callback          | `useDisposable` in `render`              |
 | `element` in render options     | `useHostProps` hook                      |
@@ -85,6 +85,6 @@ Shades now handles SVG elements natively. Elements are created with `createEleme
 
 ## What's next
 
-The subsequent v12.x releases have already landed dependency tracking for `useDisposable`, a `css` property for component-level styling with pseudo-selectors, and a brand new routing system. The framework is moving fast — stay tuned for a dedicated post on the new `NestedRouter`.
+The v12.x train keeps rolling — we've already shipped dependency tracking for `useDisposable`, a `css` property for component-level styling with pseudo-selectors, and a brand new routing system. Stay tuned for a dedicated post on the `NestedRouter`.
 
-If you want to try it out: `npm install @furystack/shades@latest` and check the [changelog](https://github.com/furystack/furystack/blob/develop/packages/shades/CHANGELOG.md#1220---2026-02-22) for the full details.
+Want to take it for a spin? `npm install @furystack/shades@latest` and check the [changelog](https://github.com/furystack/furystack/blob/develop/packages/shades/CHANGELOG.md#1220---2026-02-22) for all the gory details.
