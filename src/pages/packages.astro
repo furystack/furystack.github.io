@@ -1,7 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SiteNav from '../components/SiteNav.astro';
-import Footer from '../components/Footer.astro';
 
 const packages = [
   '@furystack/auth-google',
@@ -36,43 +34,31 @@ const packages = [
 ---
 
 <BaseLayout title="Packages">
-  <div class="page-template">
-    <div class="site-nav-main">
-      <div class="inner" style="padding: 0 5vw;">
-        <SiteNav />
+  <main id="main-content" class="page-main">
+    <div class="page-inner">
+      <h1>Packages</h1>
+      <p class="page-subtitle">All FuryStack packages published on npm.</p>
+      <div class="packages-list">
+        {packages.map(pkg => {
+          const shortName = pkg.split('/')[1];
+          return (
+            <div class="pkg-row">
+              <div class="pkg-name">
+                <a href={`https://www.npmjs.com/package/${pkg}`} target="_blank" rel="noopener noreferrer">{pkg}</a>
+              </div>
+              <div class="pkg-badge">
+                <img src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`} alt={`${pkg} version`} loading="lazy" />
+              </div>
+              <a class="pkg-posts-link" href={`/tags/${shortName}/`}>Posts &rarr;</a>
+            </div>
+          );
+        })}
       </div>
     </div>
-
-    <main class="page-main">
-      <div class="page-inner">
-        <h1>Packages</h1>
-        <p class="page-subtitle">All FuryStack packages published on npm.</p>
-        <div class="packages-list">
-          {packages.map(pkg => {
-            const shortName = pkg.split('/')[1];
-            return (
-              <div class="pkg-row">
-                <div class="pkg-name">
-                  <a href={`https://www.npmjs.com/package/${pkg}`} target="_blank" rel="noopener noreferrer">{pkg}</a>
-                </div>
-                <div class="pkg-badge">
-                  <img src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`} alt={`${pkg} version`} loading="lazy" />
-                </div>
-                <a class="pkg-posts-link" href={`/tags/${shortName}/`}>Posts &rarr;</a>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </main>
-
-    <Footer />
-  </div>
+  </main>
 </BaseLayout>
 
 <style>
-  .page-template { display: flex; flex-direction: column; min-height: 100vh; }
-
   .page-main {
     flex-grow: 1;
     padding: calc(64px + 48px) 5vw 80px;

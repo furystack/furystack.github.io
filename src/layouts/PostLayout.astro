@@ -1,7 +1,5 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import SiteNav from '../components/SiteNav.astro';
-import Footer from '../components/Footer.astro';
 import ReadNext from '../components/ReadNext.astro';
 import { Image } from 'astro:assets';
 import { format } from 'date-fns';
@@ -27,73 +25,61 @@ const ogImage = image ? new URL(image.src, SITE_URL).toString() : undefined;
 const primaryTag = tags?.[0];
 ---
 
-<BaseLayout title={title} description={excerpt} ogImage={ogImage} ogType="article">
-  <div class="post-template">
-    <div class="site-nav-main">
-      <div class="inner" style="padding: 0 5vw;">
-        <SiteNav />
-      </div>
-    </div>
-
-    <main class="post-main">
-      <article class="post-article">
-        <header class="post-header">
-          {primaryTag && (
-            <a class="post-tag" href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>{primaryTag}</a>
-          )}
-          <h1 class="post-title">{title}</h1>
-          {excerpt && <p class="post-excerpt">{excerpt}</p>}
-          <div class="post-byline">
-            {authorData.map(a => (
-              <a class="byline-avatar" href={`/author/${a.id.toLowerCase()}/`}>
-                <img src={a.avatar} alt={a.id} width="36" height="36" />
-              </a>
-            ))}
-            <div class="byline-text">
-              <span class="byline-authors">
-                {author.map((authorId, i) => (
-                  <>
-                    <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
-                    {i < author.length - 1 && ', '}
-                  </>
-                ))}
-              </span>
-              <span class="byline-meta">
-                <time datetime={datetime}>{displayDatetime}</time>
-                <span>&middot;</span>
-                <span>{readingTime}</span>
-              </span>
-            </div>
-          </div>
-        </header>
-
-        {image && (
-          <figure class="post-image">
-            <Image src={image} alt={title} width={1920} height={1080} />
-          </figure>
+<BaseLayout title={title} description={excerpt ?? undefined} ogImage={ogImage} ogType="article">
+  <main id="main-content" class="post-main">
+    <article class="post-article">
+      <header class="post-header">
+        {primaryTag && (
+          <a class="post-tag" href={`/tags/${primaryTag.toLowerCase().replace(/\s+/g, '-')}/`}>{primaryTag}</a>
         )}
+        <h1 class="post-title">{title}</h1>
+        {excerpt && <p class="post-excerpt">{excerpt}</p>}
+        <div class="post-byline">
+          {authorData.map(a => (
+            <a class="byline-avatar" href={`/author/${a.id.toLowerCase()}/`}>
+              <img src={a.avatar} alt={a.id} width="36" height="36" />
+            </a>
+          ))}
+          <div class="byline-text">
+            <span class="byline-authors">
+              {author.map((authorId, i) => (
+                <>
+                  <a href={`/author/${authorId.toLowerCase()}/`}>{authorId}</a>
+                  {i < author.length - 1 && ', '}
+                </>
+              ))}
+            </span>
+            <span class="byline-meta">
+              <time datetime={datetime}>{displayDatetime}</time>
+              <span>&middot;</span>
+              <span>{readingTime}</span>
+            </span>
+          </div>
+        </div>
+      </header>
 
-        <section class="post-content">
-          <slot />
-        </section>
-      </article>
-    </main>
+      {image && (
+        <figure class="post-image">
+          <Image src={image} alt={title} width={1920} height={1080} format="jpg" />
+        </figure>
+      )}
 
-    <ReadNext
-      currentSlug={post.id}
-      tags={tags || []}
-      relatedPosts={relatedPosts}
-      prevPost={prevPost}
-      nextPost={nextPost}
-    />
+      <section class="post-content">
+        <slot />
+      </section>
+    </article>
+  </main>
 
-    <Footer />
-  </div>
+  <ReadNext
+    currentSlug={post.id}
+    tags={tags || []}
+    relatedPosts={relatedPosts}
+    prevPost={prevPost}
+    nextPost={nextPost}
+  />
 </BaseLayout>
 
 <style>
-  .post-template { display: flex; flex-direction: column; min-height: 100vh; }
-
   .post-main {
     flex-grow: 1;
     padding: calc(64px + 48px) 5vw 60px;

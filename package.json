@@ -7,6 +7,7 @@
   "author": "Gallay Lajos <gallay.lajos@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "check": "astro check",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
@@ -19,6 +20,7 @@
   },
   "packageManager": "yarn@4.13.0",
   "dependencies": {
+    "@astrojs/check": "^0.9.6",
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "astro": "^5.18.0",

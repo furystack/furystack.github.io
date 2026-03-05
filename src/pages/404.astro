@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SiteNav from '../components/SiteNav.astro';
 import PostCard from '../components/PostCard.astro';
-import Footer from '../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
@@ -12,37 +10,25 @@ const recentPosts = allPosts
 ---
 
 <BaseLayout title="Page not found">
-  <div class="error-template">
-    <div class="site-nav-main">
-      <div class="inner" style="padding: 0 5vw;">
-        <SiteNav />
-      </div>
+  <main id="main-content" class="error-main">
+    <div class="error-inner">
+      <h1>404</h1>
+      <p>This page could not be found.</p>
+      <a href="/" class="back-link">Back to home &rarr;</a>
     </div>
 
-    <main class="error-main">
-      <div class="error-inner">
-        <h1>404</h1>
-        <p>This page could not be found.</p>
-        <a href="/" class="back-link">Back to home &rarr;</a>
-      </div>
-
-      {recentPosts.length > 0 && (
-        <div class="recent-posts inner">
-          <h2>Recent posts</h2>
-          <div class="posts-grid">
-            {recentPosts.map(post => <PostCard post={post} />)}
-          </div>
+    {recentPosts.length > 0 && (
+      <div class="recent-posts inner">
+        <h2>Recent posts</h2>
+        <div class="posts-grid">
+          {recentPosts.map(post => <PostCard post={post} />)}
         </div>
-      )}
-    </main>
-
-    <Footer />
-  </div>
+      </div>
+    )}
+  </main>
 </BaseLayout>
 
 <style>
-  .error-template { display: flex; flex-direction: column; min-height: 100vh; }
-
   .error-main {
     flex-grow: 1;
     padding: calc(64px + 48px) 5vw 80px;
@@ -80,9 +66,4 @@ const recentPosts = allPosts
   .recent-posts { padding-top: 40px; }
   .recent-posts h2 { font-size: 2rem; margin-bottom: 24px; }
 
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-  }
 </style>

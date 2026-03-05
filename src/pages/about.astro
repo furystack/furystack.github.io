@@ -1,61 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SiteNav from '../components/SiteNav.astro';
-import Footer from '../components/Footer.astro';
 ---
 
 <BaseLayout title="About FuryStack">
-  <div class="page-template">
-    <div class="site-nav-main">
-      <div class="inner" style="padding: 0 5vw;">
-        <SiteNav />
+  <main id="main-content" class="page-main">
+    <div class="page-inner">
+      <h1>About FuryStack</h1>
+      <div class="page-content">
+        <p class="lead">
+          FuryStack is a flexible, end-to-end framework that allows you to build
+          complex services quickly and easily.
+        </p>
+        <p>
+          Written in TypeScript, FuryStack provides clean, readable public APIs
+          built on top of native Node.js calls with carefully selected dependencies.
+          You can create a backend in minutes with authentication, data stores,
+          custom actions, and more &mdash; without having to search for packages
+          for entry-level functionality.
+        </p>
+        <p>
+          The framework ships with everything you need to get started: dependency
+          injection, authentication, multiple data store backends (MongoDB, Redis,
+          Sequelize, filesystem), entity authorization, logging, caching, and
+          internationalization. If you only need a subset, every package can be
+          used independently.
+        </p>
+        <p>
+          On the frontend, FuryStack includes <strong>Shades</strong> &mdash;
+          a custom JSX-based UI library with type-safe syntax and unidirectional
+          data binding, plus micro-frontend support. The same concepts and design
+          principles are shared between the frontend and backend: DI, logging,
+          disposables, and more work in the same way and from the same packages.
+        </p>
+        <p>
+          Type-safe REST API definitions can be shared between server and client
+          in a monorepo, giving you end-to-end type checking across the full stack.
+        </p>
       </div>
     </div>
-
-    <main class="page-main">
-      <div class="page-inner">
-        <h1>About FuryStack</h1>
-        <div class="page-content">
-          <p class="lead">
-            FuryStack is a flexible, end-to-end framework that allows you to build
-            complex services quickly and easily.
-          </p>
-          <p>
-            Written in TypeScript, FuryStack provides clean, readable public APIs
-            built on top of native Node.js calls with carefully selected dependencies.
-            You can create a backend in minutes with authentication, data stores,
-            custom actions, and more &mdash; without having to search for packages
-            for entry-level functionality.
-          </p>
-          <p>
-            The framework ships with everything you need to get started: dependency
-            injection, authentication, multiple data store backends (MongoDB, Redis,
-            Sequelize, filesystem), entity authorization, logging, caching, and
-            internationalization. If you only need a subset, every package can be
-            used independently.
-          </p>
-          <p>
-            On the frontend, FuryStack includes <strong>Shades</strong> &mdash;
-            a custom JSX-based UI library with type-safe syntax and unidirectional
-            data binding, plus micro-frontend support. The same concepts and design
-            principles are shared between the frontend and backend: DI, logging,
-            disposables, and more work in the same way and from the same packages.
-          </p>
-          <p>
-            Type-safe REST API definitions can be shared between server and client
-            in a monorepo, giving you end-to-end type checking across the full stack.
-          </p>
-        </div>
-      </div>
-    </main>
-
-    <Footer />
-  </div>
+  </main>
 </BaseLayout>
 
 <style>
-  .page-template { display: flex; flex-direction: column; min-height: 100vh; }
-
   .page-main {
     flex-grow: 1;
     padding: calc(64px + 48px) 5vw 80px;

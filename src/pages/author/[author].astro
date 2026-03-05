@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SiteNav from '../../components/SiteNav.astro';
 import PostCard from '../../components/PostCard.astro';
-import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE } from '../../consts';
 
@@ -42,44 +40,32 @@ const title = `${author.id} - ${SITE_TITLE}`;
 ---
 
 <BaseLayout title={title} description={author.bio} ogType="profile">
-  <div class="author-template">
-    <div class="site-nav-main">
-      <div class="inner" style="padding: 0 5vw;">
-        <SiteNav />
+  <header class="author-header">
+    <div class="author-header-inner">
+      <img class="author-avatar" src={author.avatar} alt={author.id} width="80" height="80" />
+      <div class="author-info">
+        <h1>{author.id}</h1>
+        {author.bio && <p class="author-bio">{author.bio}</p>}
+        <div class="author-meta">
+          {author.location && <span>{author.location}</span>}
+          <span>{totalCount} {totalCount === 1 ? 'post' : 'posts'}</span>
+          {author.website && <a href={author.website} target="_blank" rel="noopener noreferrer">Website</a>}
+          {author.twitter && <a href={`https://x.com/${author.twitter}`} target="_blank" rel="noopener noreferrer">X (Twitter)</a>}
+        </div>
       </div>
     </div>
+  </header>
 
-    <header class="author-header">
-      <div class="author-header-inner">
-        <img class="author-avatar" src={author.avatar} alt={author.id} width="80" height="80" />
-        <div class="author-info">
-          <h1>{author.id}</h1>
-          {author.bio && <p class="author-bio">{author.bio}</p>}
-          <div class="author-meta">
-            {author.location && <span>{author.location}</span>}
-            <span>{totalCount} {totalCount === 1 ? 'post' : 'posts'}</span>
-            {author.website && <a href={author.website} target="_blank" rel="noopener noreferrer">Website</a>}
-            {author.twitter && <a href={`https://x.com/${author.twitter}`} target="_blank" rel="noopener noreferrer">X (Twitter)</a>}
-          </div>
-        </div>
+  <main id="main-content" class="author-main">
+    <div class="inner">
+      <div class="posts-grid">
+        {posts.map(post => <PostCard post={post} />)}
       </div>
-    </header>
-
-    <main class="author-main">
-      <div class="inner">
-        <div class="posts-grid">
-          {posts.map(post => <PostCard post={post} />)}
-        </div>
-      </div>
-    </main>
-
-    <Footer />
-  </div>
+    </div>
+  </main>
 </BaseLayout>
 
 <style>
-  .author-template { display: flex; flex-direction: column; min-height: 100vh; }
-
   .author-header {
     padding: calc(64px + 48px) 5vw 40px;
     background: var(--color-nav-bg);
@@ -134,10 +120,4 @@ const title = `${author.id} - ${SITE_TITLE}`;
   }
   @media (prefers-color-scheme: dark) { .author-main { background: var(--color-darkmode); } }
 
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 28px;
-  }
-  @media (max-width: 600px) { .posts-grid { grid-template-columns: 1fr; gap: 20px; } }
 </style>

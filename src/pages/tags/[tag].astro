@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SiteNav from '../../components/SiteNav.astro';
 import PostCard from '../../components/PostCard.astro';
-import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE } from '../../consts';
 
@@ -39,37 +37,25 @@ const description = tagData?.description ?? '';
 ---
 
 <BaseLayout title={title} description={description}>
-  <div class="tag-template">
-    <div class="site-nav-main">
-      <div class="inner" style="padding: 0 5vw;">
-        <SiteNav />
+  <header class="tag-header">
+    <div class="tag-header-inner">
+      <h1>{tag}</h1>
+      <p>
+        {tagData?.description || `A collection of ${totalCount} ${totalCount === 1 ? 'post' : 'posts'}`}
+      </p>
+    </div>
+  </header>
+
+  <main id="main-content" class="tag-main">
+    <div class="inner">
+      <div class="posts-grid">
+        {posts.map(post => <PostCard post={post} />)}
       </div>
     </div>
-
-    <header class="tag-header">
-      <div class="tag-header-inner">
-        <h1>{tag}</h1>
-        <p>
-          {tagData?.description || `A collection of ${totalCount} ${totalCount === 1 ? 'post' : 'posts'}`}
-        </p>
-      </div>
-    </header>
-
-    <main class="tag-main">
-      <div class="inner">
-        <div class="posts-grid">
-          {posts.map(post => <PostCard post={post} />)}
-        </div>
-      </div>
-    </main>
-
-    <Footer />
-  </div>
+  </main>
 </BaseLayout>
 
 <style>
-  .tag-template { display: flex; flex-direction: column; min-height: 100vh; }
-
   .tag-header {
     padding: calc(64px + 48px) 5vw 40px;
     background: var(--color-nav-bg);
@@ -104,10 +90,4 @@ const description = tagData?.description ?? '';
   }
   @media (prefers-color-scheme: dark) { .tag-main { background: var(--color-darkmode); } }
 
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 28px;
-  }
-  @media (max-width: 600px) { .posts-grid { grid-template-columns: 1fr; gap: 20px; } }
 </style>
