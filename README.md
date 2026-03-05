@@ -1,6 +1,6 @@
 # furystack.github.io
 
-The official website and blog for [FuryStack](https://github.com/furystack/furystack) — an open-source full-stack web framework for Node.js.
+The official website and blog for [FuryStack](https://github.com/furystack/furystack) — a flexible end-to-end framework for building complex services with Node.js.
 
 **Live site:** [https://furystack.github.io](https://furystack.github.io)
 
