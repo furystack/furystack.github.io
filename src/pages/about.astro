@@ -17,21 +17,33 @@ import Footer from '../components/Footer.astro';
         <h1>About FuryStack</h1>
         <div class="page-content">
           <p class="lead">
-            FuryStack is an open-source full-stack framework designed to build complex web solutions fast and easily.
+            FuryStack is a flexible, end-to-end framework that allows you to build
+            complex services quickly and easily.
           </p>
           <p>
-            The main goal of FuryStack is to bring enterprise-grade architecture to the NodeJS Ecosystem with a pack of separated but perfectly matched parts.
-            You can build a modern scalable backend service in no-time and a responsive SPA frontend without bloating your app with 3rd party
-            and low quality, often abandoned dependencies. Developer experience is the main focus while the framework also tries to encourage keeping the code
-            clean and decoupled.
+            Written in TypeScript, FuryStack provides clean, readable public APIs
+            built on top of native Node.js calls with carefully selected dependencies.
+            You can create a backend in minutes with authentication, data stores,
+            custom actions, and more &mdash; without having to search for packages
+            for entry-level functionality.
           </p>
           <p>
-            FuryStack contains all the basic parts that you need to start with &mdash; like DI/IOC, authentication, data stores, entity authorization, logging, etc.
-            If you want to use only a subset of the layers (e.g. only the Dependency Injection) you can also pick the one you like.
+            The framework ships with everything you need to get started: dependency
+            injection, authentication, multiple data store backends (MongoDB, Redis,
+            Sequelize, filesystem), entity authorization, logging, caching, and
+            internationalization. If you only need a subset, every package can be
+            used independently.
           </p>
           <p>
-            In FuryStack, there are some concepts that are not very common nowadays &mdash; like sharing REST API definitions
-            with type checking between the service and the frontend in a monorepo.
+            On the frontend, FuryStack includes <strong>Shades</strong> &mdash;
+            a custom JSX-based UI library with type-safe syntax and unidirectional
+            data binding, plus micro-frontend support. The same concepts and design
+            principles are shared between the frontend and backend: DI, logging,
+            disposables, and more work in the same way and from the same packages.
+          </p>
+          <p>
+            Type-safe REST API definitions can be shared between server and client
+            in a monorepo, giving you end-to-end type checking across the full stack.
           </p>
         </div>
       </div>
