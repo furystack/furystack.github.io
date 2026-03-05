@@ -13,10 +13,21 @@ export async function getStaticPaths() {
   return sorted.map((post, index) => {
     const prev = index > 0 ? sorted[index - 1] : null;
     const next = index < sorted.length - 1 ? sorted[index + 1] : null;
-    const primaryTag = post.data.tags?.[0];
-    const relatedPosts = primaryTag
-      ? sorted.filter(p => p.data.tags?.includes(primaryTag) && p.id !== post.id)
-      : [];
+    const currentTags = post.data.tags ?? [];
+    const relatedPosts =
+      currentTags.length > 0
+        ? sorted
+            .filter(p => p.id !== post.id && p.data.tags?.some(t => currentTags.includes(t)))
+            .map(p => ({
+              post: p,
+              overlap: (p.data.tags ?? []).filter(t => currentTags.includes(t)).length,
+            }))
+            .sort(
+              (a, b) =>
+                b.overlap - a.overlap || b.post.data.date.valueOf() - a.post.data.date.valueOf(),
+            )
+            .map(r => r.post)
+        : [];
     const authorData = post.data.author
       .map(authorId => authors.find(a => a.data.id === authorId)?.data)
       .filter(Boolean);
