@@ -12,52 +12,142 @@ const { size = 96 } = Astro.props;
   height={size}
   viewBox="0 0 512 512"
   aria-hidden="true"
+  class="furystack-logo"
 >
   <title>FuryStack</title>
   <defs>
-    <linearGradient id="fs-light" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#dce6f2"></stop>
-      <stop offset="100%" stop-color="#aabdd1"></stop>
+    <linearGradient id="fs-silver" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"></stop>
+      <stop offset="40%" stop-color="#f1f5f9"></stop>
+      <stop offset="100%" stop-color="#cbd5e1"></stop>
     </linearGradient>
-    <linearGradient id="fs-mid" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#c4d4e4"></stop>
-      <stop offset="100%" stop-color="#8ba3bc"></stop>
+
+    <linearGradient id="fs-blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#60a5fa"></stop>
+      <stop offset="100%" stop-color="#2563eb"></stop>
     </linearGradient>
+
     <linearGradient id="fs-dark" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#abc0d6"></stop>
-      <stop offset="100%" stop-color="#7694b0"></stop>
+      <stop offset="0%" stop-color="#475569"></stop>
+      <stop offset="100%" stop-color="#1e293b"></stop>
     </linearGradient>
-    <filter id="fs-shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.15"
-      ></feDropShadow>
+
+    <filter id="fs-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" result="blur"></feGaussianBlur>
+      <feFlood flood-color="#3b82f6" flood-opacity="0.25" result="color"></feFlood>
+      <feComposite in="color" in2="blur" operator="in" result="shadow"></feComposite>
+      <feComposite in="SourceGraphic" in2="shadow" operator="over"></feComposite>
     </filter>
   </defs>
-  <g
-    stroke="#f0f6fc"
-    stroke-width="3"
-    stroke-linejoin="round"
-    stroke-linecap="round"
-    filter="url(#fs-shadow)"
-  >
+
+  <g filter="url(#fs-glow)" stroke="none">
     <!-- Left Pillar -->
-    <path d="M12 48 L90 126 V448 H12 Z" fill="url(#fs-light)"></path>
+    <path d="M20 60 L100 140 V442 A6 6 0 0 1 94 448 H26 A6 6 0 0 1 20 442 Z" fill="url(#fs-silver)"
+    ></path>
 
-    <!-- Middle-Left Block -->
-    <path d="M114 150 L192 228 V330 L114 252 Z" fill="url(#fs-mid)"></path>
+    <!-- Bottom-Left Triangle (Aligned to Pillar) -->
+    <path d="M120 448 H204 A6 6 0 0 0 210 442 V358 L120 448 Z" fill="url(#fs-silver)"></path>
 
-    <!-- Bottom-Left Triangle -->
-    <path d="M114 370 L192 448 H114 Z" fill="url(#fs-light)"></path>
+    <!-- Center Inverted Triangle (Symmetrical Gap) -->
+    <path
+      d="M180 120 H332 A4 4 0 0 1 335 127 L262 195 A8 8 0 0 1 250 195 L177 127 A4 4 0 0 1 180 120 Z"
+      fill="url(#fs-silver)"></path>
 
-    <!-- Center Inverted Triangle -->
-    <path d="M192 126 H318 L255 189 Z" fill="url(#fs-light)"></path>
+    <!-- Middle-Left Bridge (Centered between pillar and stack) -->
+    <path d="M120 170 L210 260 L120 350 Z" fill="url(#fs-blue)"></path>
 
-    <!-- Right Stack 1 (Short) -->
-    <path d="M216 330 L294 252 V448 H216 Z" fill="url(#fs-mid)"></path>
+    <!-- Right Stack 1 -->
+    <path
+      d="M230 330 L310 250 V442 A6 6 0 0 1 304 448 H236 A6 6 0 0 1 230 442 Z"
+      fill="url(#fs-blue)"></path>
 
-    <!-- Right Stack 2 (Medium) -->
-    <path d="M318 228 L396 150 V448 H318 Z" fill="url(#fs-mid)"></path>
+    <!-- Right Stack 2 -->
+    <path
+      d="M330 230 L410 150 V442 A6 6 0 0 1 404 448 H336 A6 6 0 0 1 330 442 Z"
+      fill="url(#fs-blue)"></path>
 
-    <!-- Right Stack 3 (Tall) -->
-    <path d="M420 126 L498 48 V448 H420 Z" fill="url(#fs-dark)"></path>
+    <!-- Right Stack 3 (Dark Anchor) -->
+    <path
+      d="M430 130 L510 50 V442 A6 6 0 0 1 504 448 H436 A6 6 0 0 1 430 442 Z"
+      fill="url(#fs-dark)"></path>
   </g>
 </svg>
+
+<style>
+  /* Base transitions for hover effects if needed later */
+  .furystack-logo {
+    overflow: visible; /* Allow glow to spill out */
+  }
+
+  /* Animations */
+  @media (prefers-reduced-motion: no-preference) {
+    .fs-shape {
+      transform-box: fill-box;
+      transform-origin: bottom center;
+      opacity: 0;
+      animation-duration: 0.8s;
+      animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+      animation-fill-mode: forwards;
+    }
+
+    .fs-slide-right {
+      animation-name: fs-slide-right;
+      transform-origin: center center;
+    }
+
+    .fs-fade-down {
+      animation-name: fs-fade-down;
+      transform-origin: top center;
+    }
+
+    .fs-grow-up {
+      animation-name: fs-grow-up;
+    }
+
+    .fs-delay-1 {
+      animation-delay: 0.1s;
+    }
+    .fs-delay-2 {
+      animation-delay: 0.2s;
+    }
+    .fs-delay-3 {
+      animation-delay: 0.3s;
+    }
+    .fs-delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes fs-slide-right {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fs-fade-down {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fs-grow-up {
+      from {
+        opacity: 0;
+        transform: scaleY(0.4);
+      }
+      to {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+  }
+</style>
