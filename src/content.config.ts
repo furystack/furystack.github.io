@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob, file } from 'astro/loaders';
 
 const posts = defineCollection({
@@ -23,7 +24,7 @@ const authors = defineCollection({
     bio: z.string(),
     twitter: z.string().optional(),
     facebook: z.string().optional(),
-    website: z.string().url().optional(),
+    website: z.url().optional(),
     location: z.string().optional(),
     profile_image: z.string().optional(),
   }),
