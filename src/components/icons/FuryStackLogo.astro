@@ -1,0 +1,63 @@
+---
+interface Props {
+  size?: number;
+}
+
+const { size = 96 } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width={size}
+  height={size}
+  viewBox="0 0 512 512"
+  aria-hidden="true"
+>
+  <title>FuryStack</title>
+  <defs>
+    <linearGradient id="fs-light" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dce6f2"></stop>
+      <stop offset="100%" stop-color="#aabdd1"></stop>
+    </linearGradient>
+    <linearGradient id="fs-mid" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c4d4e4"></stop>
+      <stop offset="100%" stop-color="#8ba3bc"></stop>
+    </linearGradient>
+    <linearGradient id="fs-dark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#abc0d6"></stop>
+      <stop offset="100%" stop-color="#7694b0"></stop>
+    </linearGradient>
+    <filter id="fs-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.15"
+      ></feDropShadow>
+    </filter>
+  </defs>
+  <g
+    stroke="#f0f6fc"
+    stroke-width="3"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+    filter="url(#fs-shadow)"
+  >
+    <!-- Left Pillar -->
+    <path d="M12 48 L90 126 V448 H12 Z" fill="url(#fs-light)"></path>
+
+    <!-- Middle-Left Block -->
+    <path d="M114 150 L192 228 V330 L114 252 Z" fill="url(#fs-mid)"></path>
+
+    <!-- Bottom-Left Triangle -->
+    <path d="M114 370 L192 448 H114 Z" fill="url(#fs-light)"></path>
+
+    <!-- Center Inverted Triangle -->
+    <path d="M192 126 H318 L255 189 Z" fill="url(#fs-light)"></path>
+
+    <!-- Right Stack 1 (Short) -->
+    <path d="M216 330 L294 252 V448 H216 Z" fill="url(#fs-mid)"></path>
+
+    <!-- Right Stack 2 (Medium) -->
+    <path d="M318 228 L396 150 V448 H318 Z" fill="url(#fs-mid)"></path>
+
+    <!-- Right Stack 3 (Tall) -->
+    <path d="M420 126 L498 48 V448 H420 Z" fill="url(#fs-dark)"></path>
+  </g>
+</svg>

@@ -1,11 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import GitHubIcon from '../components/icons/GitHubIcon.astro';
+import FuryStackLogo from '../components/icons/FuryStackLogo.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SOCIAL } from '../consts';
-import logo from '../../public/images/furystack-logo-512.png';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -19,7 +18,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   <section class="hero">
     <div class="hero-aurora"></div>
     <div class="hero-inner">
-      <Image class="hero-logo" src={logo} alt={SITE_TITLE} width={96} height={96} loading="eager" />
+      <div class="hero-logo"><FuryStackLogo size={96} /></div>
       <h1 class="hero-title">FuryStack</h1>
       <p class="hero-description">{SITE_DESCRIPTION}</p>
       <div class="hero-actions">
@@ -240,10 +239,8 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     width: 96px;
     height: 96px;
     margin: 0 auto 24px;
-    border-radius: var(--radius-md);
-    box-shadow:
-      0 0 40px rgba(59, 130, 246, 0.35),
-      0 0 80px rgba(99, 102, 241, 0.15);
+    filter: drop-shadow(0 0 24px rgba(59, 130, 246, 0.4))
+      drop-shadow(0 0 56px rgba(99, 102, 241, 0.18));
   }
 
   .hero-title {
