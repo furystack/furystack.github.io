@@ -1,23 +1,24 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import GitHubIcon from '../components/icons/GitHubIcon.astro';
+import FuryStackLogo from '../components/icons/FuryStackLogo.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SOCIAL } from '../consts';
-import logo from '../../public/images/furystack-logo-512.png';
 
 const allPosts = await getCollection('posts', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const [featured, ...rest] = posts;
+const displayedPosts = rest.slice(0, 6);
 
 const ogImage = `${SITE_URL}/images/blog-cover.png`;
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION} ogImage={ogImage} isHome>
   <section class="hero">
+    <div class="hero-aurora"></div>
     <div class="hero-inner">
-      <Image class="hero-logo" src={logo} alt={SITE_TITLE} width={64} height={64} loading="eager" />
+      <div class="hero-logo"><FuryStackLogo size={96} /></div>
       <h1 class="hero-title">FuryStack</h1>
       <p class="hero-description">{SITE_DESCRIPTION}</p>
       <div class="hero-actions">
@@ -25,7 +26,117 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
         <a href={SOCIAL.github} class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
           <GitHubIcon />
           <span style="margin-left: 6px;">GitHub</span>
+          <img
+            class="github-stars"
+            src="https://img.shields.io/github/stars/furystack/furystack?style=social&label="
+            alt="GitHub stars"
+            loading="eager"
+          />
         </a>
+      </div>
+      <div class="quick-start">
+        <code>npm install @furystack/core</code>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="inner">
+      <div class="features-grid">
+        <div class="feature-card reveal" style="transition-delay: 0s;">
+          <div class="feature-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"
+              ></line></svg
+            >
+          </div>
+          <h3>Type-Safe End-to-End</h3>
+          <p>
+            Share REST definitions between server and client with full type checking across the
+            stack.
+          </p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+          <div class="feature-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"
+              ></rect><rect x="14" y="14" width="7" height="7"></rect><rect
+                x="3"
+                y="14"
+                width="7"
+                height="7"></rect></svg
+            >
+          </div>
+          <h3>Modular by Design</h3>
+          <p>
+            Use the whole framework or pick individual packages a la carte — every module works
+            standalone.
+          </p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+          <div class="feature-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline
+                points="22 4 12 14.01 9 11.01"></polyline></svg
+            >
+          </div>
+          <h3>Batteries Included</h3>
+          <p>
+            Auth, DI, data stores, logging, caching, and i18n — everything you need out of the box.
+          </p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.3s;">
+          <div class="feature-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line
+                x1="8"
+                y1="21"
+                x2="16"
+                y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg
+            >
+          </div>
+          <h3>Frontend Ready</h3>
+          <p>
+            Shades: a JSX-based UI library with unidirectional data binding and micro-frontend
+            support.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -34,7 +145,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     <div class="inner">
       {
         featured && (
-          <section class="featured-section">
+          <section class="featured-section reveal">
             <span class="section-label">Latest</span>
             <PostCard post={featured} large eager />
           </section>
@@ -42,14 +153,23 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
       }
 
       {
-        rest.length > 0 && (
+        displayedPosts.length > 0 && (
           <section class="posts-section">
             <span class="section-label">All Posts</span>
             <div class="posts-grid">
-              {rest.map((post, i) => (
-                <PostCard post={post} eager={i < 3} />
+              {displayedPosts.map((post, i) => (
+                <div class="reveal" style={`transition-delay: ${i * 0.08}s;`}>
+                  <PostCard post={post} eager={i < 3} />
+                </div>
               ))}
             </div>
+            {rest.length > 6 && (
+              <div class="view-all-wrapper">
+                <a href="/tags/" class="btn btn-outline">
+                  View all posts
+                </a>
+              </div>
+            )}
           </section>
         )
       }
@@ -57,8 +177,25 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   </main>
 </BaseLayout>
 
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 },
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  });
+</script>
+
 <style>
-  /* Hero */
+  /* ── Hero ── */
   .hero {
     position: relative;
     padding: calc(64px + 6vw) 5vw 6vw;
@@ -67,12 +204,28 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     text-align: center;
     overflow: hidden;
   }
-  .hero::after {
-    content: '';
+
+  .hero-aurora {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+    inset: -50% -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 220deg at 50% 50%,
+      rgba(59, 130, 246, 0.18) 0deg,
+      rgba(99, 102, 241, 0.14) 72deg,
+      rgba(139, 92, 246, 0.12) 144deg,
+      rgba(59, 130, 246, 0.18) 216deg,
+      rgba(37, 99, 235, 0.1) 288deg,
+      rgba(59, 130, 246, 0.18) 360deg
+    );
+    animation: aurora-rotate 20s linear infinite;
     pointer-events: none;
+  }
+  @keyframes aurora-rotate {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .hero-inner {
@@ -83,22 +236,26 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   }
 
   .hero-logo {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 20px;
-    border-radius: var(--radius-md);
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 24px;
+    filter: drop-shadow(0 0 24px rgba(59, 130, 246, 0.4))
+      drop-shadow(0 0 56px rgba(99, 102, 241, 0.18));
   }
 
   .hero-title {
-    font-size: 4.8rem;
+    font-size: 5.2rem;
     font-weight: 800;
     letter-spacing: -0.03em;
-    color: #fff;
     margin-bottom: 12px;
+    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #818cf8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   @media (max-width: 600px) {
     .hero-title {
-      font-size: 3.2rem;
+      font-size: 3.6rem;
     }
   }
 
@@ -130,19 +287,26 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     font-weight: 600;
     border-radius: 8px;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease,
+      color 0.2s ease;
     white-space: nowrap;
   }
   .btn:hover {
     text-decoration: none;
+    transform: translateY(-1px) scale(1.02);
   }
 
   .btn-primary {
     background: var(--color-accent);
     color: #fff;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
   }
   .btn-primary:hover {
     background: var(--color-accent-hover);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
   }
 
   .btn-ghost {
@@ -153,12 +317,151 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   .btn-ghost:hover {
     background: rgba(255, 255, 255, 0.14);
     color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.06);
   }
 
-  /* Main content */
+  .github-stars {
+    display: inline;
+    height: 18px;
+    margin-left: 8px;
+    vertical-align: middle;
+    filter: brightness(0) invert(0.85);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--color-accent);
+    border: 1.5px solid var(--color-accent);
+  }
+  .btn-outline:hover {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+  }
+
+  /* ── Quick start ── */
+  .quick-start {
+    margin-top: 28px;
+    display: inline-block;
+    padding: 10px 24px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+  }
+  .quick-start code {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: transparent;
+    padding: 0;
+    letter-spacing: 0.01em;
+  }
+
+  /* ── Features ── */
+  .features {
+    position: relative;
+    padding: 64px 5vw;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .features {
+      background: var(--color-darkmode);
+    }
+  }
+  .features::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--color-nav-bg), var(--color-whitegrey));
+    pointer-events: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .features::before {
+      background: linear-gradient(to bottom, var(--color-nav-bg), var(--color-darkmode));
+    }
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 500px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .feature-card {
+    padding: 28px 24px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    .feature-card {
+      background: var(--color-darkmode-l04);
+      border-color: var(--color-darkmode-border);
+    }
+    .feature-card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .feature-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    border-radius: var(--radius-md);
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--color-accent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .feature-icon {
+      background: rgba(59, 130, 246, 0.15);
+    }
+  }
+
+  .feature-card h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .feature-card p {
+    font-size: 1.4rem;
+    line-height: 1.55;
+    color: var(--color-midgrey);
+    margin: 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    .feature-card p {
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  /* ── Main content ── */
   .main-content {
+    position: relative;
     flex-grow: 1;
-    padding: 48px 5vw 80px;
+    padding: 64px 5vw 80px;
     background: var(--color-whitegrey);
   }
   @media (prefers-color-scheme: dark) {
@@ -178,10 +481,29 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   }
 
   .featured-section {
-    margin-bottom: 48px;
+    margin-bottom: 64px;
   }
 
   .posts-section {
     margin-bottom: 24px;
+  }
+
+  .view-all-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+
+  /* ── Scroll reveal ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>
