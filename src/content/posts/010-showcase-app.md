@@ -2,7 +2,15 @@
 layout: post
 title: Showcase-time
 author: [gallayl]
-tags: ['shades', 'shades-common-components', 'shades-showcase-app']
+tags:
+  [
+    'Frontend',
+    'showcase',
+    'ui-components',
+    'shades',
+    'shades-common-components',
+    'shades-showcase-app',
+  ]
 image: img/010-showcase-app.jpg
 date: '2022-08-16T21:00:00.257Z'
 draft: false

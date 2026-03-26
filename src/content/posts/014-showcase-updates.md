@@ -1,7 +1,15 @@
 ---
 title: 'The Showcase Strikes Back'
 author: [gallayl]
-tags: ['shades', 'shades-common-components', 'shades-showcase-app']
+tags:
+  [
+    'Frontend',
+    'showcase',
+    'ui-components',
+    'shades',
+    'shades-common-components',
+    'shades-showcase-app',
+  ]
 date: '2026-03-07T12:00:00.000Z'
 draft: false
 image: img/014-showcase-updates.jpg

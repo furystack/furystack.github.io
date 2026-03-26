@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="88 88 336 336">
+  <defs>
+    <linearGradient id="fv-g1" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="fv-g2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="fv-g3" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="fv-g4" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+    <radialGradient id="fv-core" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#93c5fd"/>
+    </radialGradient>
+  </defs>
+  <rect x="104" y="104" width="304" height="304" rx="24" fill="url(#fv-g1)"/>
+  <rect x="138" y="138" width="236" height="236" rx="18" fill="url(#fv-g2)" transform="rotate(15, 256, 256)"/>
+  <rect x="172" y="172" width="168" height="168" rx="14" fill="url(#fv-g3)" transform="rotate(30, 256, 256)"/>
+  <rect x="206" y="206" width="100" height="100" rx="10" fill="url(#fv-g4)" transform="rotate(45, 256, 256)"/>
+  <circle cx="256" cy="256" r="20" fill="url(#fv-core)"/>
+</svg>

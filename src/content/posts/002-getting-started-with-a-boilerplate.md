@@ -2,12 +2,14 @@
 layout: post
 title: 'Getting started with the Boilerplate 🏁'
 author: [gallayl]
-tags: ['Getting Started', 'boilerplate']
+tags: ['Getting Started', 'tutorial', 'boilerplate']
 image: img/002-getting-started-with-a-boilerplate-cover.jpg
 date: '2021-06-23T08:48:20.257Z'
 draft: false
 excerpt: So this framework really kicks ass? And how can I start using it?
 ---
+
+> **Note:** This post is outdated. For up-to-date instructions, see the [Getting Started with the Boilerplate](/getting-started/boilerplate/) guide.
 
 ## Why can it be good for you?
 
