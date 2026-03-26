@@ -1,7 +1,7 @@
 ---
 title: 'Cache Me If You Can'
 author: [gallayl]
-tags: ['cache', 'shades-common-components', 'shades-showcase-app']
+tags: ['Architecture', 'ui-components', 'cache', 'shades-common-components', 'shades-showcase-app']
 date: '2026-03-26T12:00:00.000Z'
 draft: false
 image: img/017-cache-system.jpg
@@ -129,8 +129,14 @@ The `get()` method returns a plain `Promise<TData>` — great for one-shot fetch
 ```typescript
 const observable = cache.getObservable('user-42');
 
-observable.subscribe(({ status, value, updatedAt }) => {
-  console.log(`Status: ${status}, value:`, value);
+observable.subscribe(result => {
+  if (hasCacheValue(result)) {
+    console.log(`Got data (${result.status}):`, result.value);
+  } else if (isFailedCacheResult(result)) {
+    console.error('Load failed:', result.error);
+  } else {
+    console.log('Loading...');
+  }
 });
 ```
 
