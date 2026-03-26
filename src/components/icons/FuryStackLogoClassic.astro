@@ -1,0 +1,68 @@
+---
+interface Props {
+  size?: number;
+}
+
+const { size = 96 } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  width={size}
+  height={size}
+  aria-hidden="true"
+  class="furystack-logo-classic"
+>
+  <title>FuryStack (Classic)</title>
+  <defs>
+    <linearGradient id="fsc-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"></stop>
+      <stop offset="100%" stop-color="#94A3B8"></stop>
+    </linearGradient>
+
+    <linearGradient id="fsc-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"></stop>
+      <stop offset="100%" stop-color="#1D4ED8"></stop>
+    </linearGradient>
+
+    <linearGradient id="fsc-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"></stop>
+      <stop offset="100%" stop-color="#0F172A"></stop>
+    </linearGradient>
+
+    <filter id="fsc-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"></feGaussianBlur>
+      <feOffset dx="0" dy="4" result="offsetBlur"></feOffset>
+      <feFlood flood-color="#3B82F6" flood-opacity="0.2" result="glowColor"></feFlood>
+      <feComposite in="glowColor" in2="offsetBlur" operator="in" result="shadow"></feComposite>
+      <feMerge>
+        <feMergeNode in="shadow"></feMergeNode>
+        <feMergeNode in="SourceGraphic"></feMergeNode>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#fsc-glow)">
+    <path
+      d="M40 80 L120 160 V440 A8 8 0 0 1 112 448 H48 A8 8 0 0 1 40 440 Z"
+      fill="url(#fsc-silver)"></path>
+    <path d="M140 180 L220 260 L140 340 Z" fill="url(#fsc-blue)"></path>
+    <path
+      d="M230 320 L310 240 V440 A8 8 0 0 1 302 448 H238 A8 8 0 0 1 230 440 Z"
+      fill="url(#fsc-blue)"></path>
+    <path
+      d="M330 220 L410 140 V440 A8 8 0 0 1 402 448 H338 A8 8 0 0 1 330 440 Z"
+      fill="url(#fsc-blue)"></path>
+    <path
+      d="M430 120 L510 40 V440 A8 8 0 0 1 502 448 H438 A8 8 0 0 1 430 440 Z"
+      fill="url(#fsc-dark)"></path>
+    <path d="M180 120 H340 L260 200 Z" fill="url(#fsc-silver)" opacity="0.9"></path>
+    <path d="M140 448 H210 L140 378 Z" fill="url(#fsc-silver)"></path>
+  </g>
+</svg>
+<style>
+  .furystack-logo-classic {
+    overflow: visible;
+  }
+</style>

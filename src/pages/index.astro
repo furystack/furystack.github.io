@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import GitHubIcon from '../components/icons/GitHubIcon.astro';
 import FuryStackLogo from '../components/icons/FuryStackLogo.astro';
+import ShadesLogo from '../components/icons/ShadesLogo.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SOCIAL } from '../consts';
 
@@ -18,9 +19,20 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   <section class="hero">
     <div class="hero-aurora"></div>
     <div class="hero-inner">
-      <div class="hero-logo"><FuryStackLogo size={96} /></div>
-      <h1 class="hero-title">FuryStack</h1>
-      <p class="hero-description">{SITE_DESCRIPTION}</p>
+      <div class="hero-brands">
+        <div class="hero-brand-card">
+          <FuryStackLogo size={100} />
+          <span class="hero-brand-name">FuryStack</span>
+          <span class="hero-brand-tagline">End-to-end framework</span>
+        </div>
+        <span class="hero-brand-plus">+</span>
+        <div class="hero-brand-card">
+          <ShadesLogo size={100} />
+          <span class="hero-brand-name">Shades</span>
+          <span class="hero-brand-tagline">Frontend UI library</span>
+        </div>
+      </div>
+      <h1 class="hero-description">{SITE_DESCRIPTION}</h1>
       <div class="hero-actions">
         <a href="/tags/getting-started/" class="btn btn-primary">Get Started</a>
         <a href={SOCIAL.github} class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
@@ -207,55 +219,131 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
 
   .hero-aurora {
     position: absolute;
-    inset: -50% -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-      from 220deg at 50% 50%,
-      rgba(59, 130, 246, 0.18) 0deg,
-      rgba(99, 102, 241, 0.14) 72deg,
-      rgba(139, 92, 246, 0.12) 144deg,
-      rgba(59, 130, 246, 0.18) 216deg,
-      rgba(37, 99, 235, 0.1) 288deg,
-      rgba(59, 130, 246, 0.18) 360deg
-    );
-    animation: aurora-rotate 20s linear infinite;
+    inset: 0;
+    overflow: hidden;
     pointer-events: none;
+    background: radial-gradient(ellipse at 65% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 55%);
   }
-  @keyframes aurora-rotate {
+
+  .hero-aurora::before,
+  .hero-aurora::after {
+    content: '';
+    position: absolute;
+    width: 50vmax;
+    height: 50vmax;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+
+  .hero-aurora::before {
+    top: -15vmax;
+    left: -10vmax;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+    animation: aurora-drift-1 14s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora::after {
+    bottom: -10vmax;
+    right: -8vmax;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+    animation: aurora-drift-2 18s ease-in-out infinite alternate;
+  }
+
+  @keyframes aurora-drift-1 {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
     to {
-      transform: rotate(360deg);
+      transform: translate(15vw, 10vh) scale(1.1);
+    }
+  }
+
+  @keyframes aurora-drift-2 {
+    from {
+      transform: translate(0, 0) scale(1);
+    }
+    to {
+      transform: translate(-12vw, -8vh) scale(1.15);
     }
   }
 
   .hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 640px;
+    max-width: 780px;
     margin: 0 auto;
   }
 
-  .hero-logo {
-    width: 96px;
-    height: 96px;
-    margin: 0 auto 24px;
-    filter: drop-shadow(0 0 24px rgba(59, 130, 246, 0.4))
-      drop-shadow(0 0 56px rgba(99, 102, 241, 0.18));
-  }
-
-  .hero-title {
-    font-size: 5.2rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 12px;
-    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #818cf8 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+  .hero-brands {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin: 0 auto 36px;
   }
   @media (max-width: 600px) {
-    .hero-title {
-      font-size: 3.6rem;
+    .hero-brands {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  .hero-brand-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 32px 40px 24px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(8px);
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .hero-brand-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+  }
+  @media (max-width: 600px) {
+    .hero-brand-card {
+      flex-direction: row;
+      gap: 20px;
+      padding: 20px 28px;
+      width: 100%;
+    }
+  }
+
+  .hero-brand-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+  }
+
+  .hero-brand-tagline {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 400;
+  }
+  @media (max-width: 600px) {
+    .hero-brand-tagline {
+      display: none;
+    }
+  }
+
+  .hero-brand-plus {
+    font-size: 2rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.25);
+    flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    .hero-brand-plus {
+      display: none;
     }
   }
 
