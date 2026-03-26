@@ -11,7 +11,7 @@ excerpt: Emitting decorator type data is doomed :(
 
 ## Why
 
-As you can see, in FuryStack I've tried to take some steps to use only standardized APIs to maintain the supportability. As I started to work with new tools and framework, I've found some bottlenecks. The first big bad was the hacky [extension method support](/008-byebye-extension-methods/) that I've introduced in the beginning of the project, but I've found an another black sheep in the heart of the Typescript ecosystem - Decorator support.
+As you can see, in FuryStack I've tried to take some steps to use only standardized APIs to maintain the supportability. As I started to work with new tools and framework, I've found some bottlenecks. The first big bad was the hacky [extension method support](/posts/008-byebye-extension-methods/) that I've introduced in the beginning of the project, but I've found an another black sheep in the heart of the Typescript ecosystem - Decorator support.
 
 In short: "[The emitDecoratorMetadata flag is intentionally not supported.](https://github.com/evanw/esbuild/issues/257#issuecomment-658053616)"
 
