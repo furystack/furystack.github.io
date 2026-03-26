@@ -62,10 +62,10 @@ The package defines four types of lifecycle:
 
 ## ~~Extension methods~~
 
-[(We have already said goodbye to extension methods)](/008-byebye-extension-methods/)
+[(We have already said goodbye to extension methods)](/posts/008-byebye-extension-methods/)
 
 A simple injector can be easily extended by 3rd party packages with extension methods, just like the FuryStack packages. These extension methods usually provides a _shortcut_ of an instance or sets up a preconfigured explicit instance of a service. You can build clean and nice fluent API-s in that way - you can get the idea from one of the [FuryStack Injector Extensions](https://github.com/furystack/furystack/blob/develop/packages/rest-service/src/injector-extensions.ts)
 
-You find more inject-related articles [here](/tags/inject) or check out the package at NPM
+You find more inject-related articles [here](/tags/inject/) or check out the package at NPM
 
 [![npm](https://img.shields.io/npm/v/@furystack/inject.svg?maxAge=3600)](https://www.npmjs.com/package/@furystack/inject)

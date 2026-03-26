@@ -84,3 +84,9 @@
   description: The Shades Showcase App demonstrating UI components and patterns
 - id: cache
   description: '@furystack/cache — observable async cache with state machine, deduplication, and LRU eviction'
+- id: entity-sync
+  description: '@furystack/entity-sync — shared protocol types for real-time entity synchronization over WebSocket'
+- id: entity-sync-client
+  description: '@furystack/entity-sync-client — client-side reactive entity sync with auto-reconnect and local caching'
+- id: entity-sync-service
+  description: '@furystack/entity-sync-service — server-side change tracking and push notifications for entity sync'
