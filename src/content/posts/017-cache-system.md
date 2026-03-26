@@ -146,6 +146,8 @@ This is what makes the cache reactive rather than just a glorified `Map`. In a f
 
 And here's the cherry on top: calling `getObservable()` on an entry that doesn't exist yet _automatically triggers a load_. You don't need to call `get()` first. Just subscribe, and the cache takes care of the rest. Lazy loading via subscription — because eagerness is overrated.
 
+One nuance worth knowing: this auto-load only kicks in for _new_ entries (which start in the `loading` state). If an entry previously failed, `getObservable()` returns the failed observable as-is — it won't auto-retry. That's intentional: blindly retrying a persistent failure would just burn through requests. To retry, call `get()` or `reload()` explicitly. `CacheView` handles this for you with a retry button in the error UI.
+
 ## Request deduplication: the silent hero
 
 This is one of those features that's invisible until it saves your bacon. If three components call `cache.get('user-42')` simultaneously — before the first request has returned — the cache fires _one_ network request and resolves all three promises with the same result.
@@ -221,7 +223,7 @@ This is incredibly useful for optimistic updates: update the cache with the expe
 
 When a `load()` call throws, the cache catches the error, sets the entry to `failed` state (preserving any previously loaded value), and re-throws so that `get()` and `reload()` callers can handle it in their own try/catch.
 
-But what about `getObservable()`? That triggers a load in the background — there's no caller to catch the error. For that, the `Cache` extends `EventHub` and emits an `onLoadError` event:
+But what about `getObservable()`? That triggers a load in the background — there's no caller to catch the error. For those background loads, the `Cache` extends `EventHub` and emits an `onLoadError` event:
 
 ```typescript
 cache.addListener('onLoadError', ({ args, error }) => {
@@ -229,7 +231,7 @@ cache.addListener('onLoadError', ({ args, error }) => {
 });
 ```
 
-Wire this up to your logging, your monitoring, your Slack webhook — whatever helps you sleep at night. The point is: errors don't silently vanish into the void.
+Note that `onLoadError` only fires for loads triggered by `getObservable()` — not for direct `get()` or `reload()` calls, since those throw the error to the caller where you can catch it yourself. Wire this up to your logging, your monitoring, your Slack webhook — whatever helps you sleep at night. The point is: background errors don't silently vanish into the void.
 
 ## Service-level example: the API memoizer
 
@@ -411,7 +413,7 @@ const ProductWithActions = Shade<{
 />
 ```
 
-The `contentProps` are _type-checked_ against the content component's props (minus `data`, which CacheView provides). If your content component expects `{ data: CacheWithValue<Product>; label: string }`, then `contentProps` _must_ include `label: string`. TypeScript enforces this at compile time. No "oops, I forgot a prop" at runtime.
+Here's where the type system really earns its keep: `contentProps` isn't just optional — it's _conditionally required_. If your content component only expects `data`, you don't need `contentProps` at all. But the moment your component has extra props (like `onEdit` or `showPrice` above), TypeScript _forces_ you to provide `contentProps` with exactly those fields. Forget one, and you get a compile error — not a runtime mystery. CacheView provides `data` automatically, so `contentProps` only needs to cover the rest.
 
 ### View transitions
 
