@@ -1,10 +1,47 @@
+## Category tags (displayed as primary tag on post cards)
 - id: Getting Started
   description: Guides about basic concepts
   image: img/tag-getting-started.jpg
+- id: Announcement
+  description: News, introductions, and site updates about FuryStack
+- id: Architecture
+  description: Design decisions, refactoring, and framework internals
+- id: Frontend
+  description: Shades UI library, components, routing, and theming
+
+## Thematic tags (cross-cutting topics for related post discovery)
+- id: tutorial
+  description: Step-by-step instructional posts
+- id: refactoring
+  description: Posts about code or API refactoring
+- id: breaking-changes
+  description: Posts covering breaking API changes
+- id: dependency-injection
+  description: Dependency injection and Inversion of Control patterns
+- id: data-storage
+  description: Data stores, repositories, and the data layer
+- id: rest-api
+  description: REST API design, implementation, and consumption
+- id: ui-components
+  description: UI components, theming, and layout systems
+- id: showcase
+  description: The Shades Showcase App and its evolution
+- id: routing
+  description: Client-side routing concepts and implementations
+- id: migration
+  description: Migration stories and upgrade guides
+- id: site
+  description: Posts about this blog and the FuryStack website
+- id: validation
+  description: Data validation and schema enforcement
+
+## General tags
 - id: FuryStack
   description: General announcements and updates about the FuryStack framework
 - id: Welcome
   description: Introductory posts about the FuryStack site and project
+
+## Package tags
 - id: boilerplate
   description: The Boilerplate project is your best friend if you want to get familiar with FuryStack or start a new FuryStack project
   image: img/tag-boilerplate.jpg
