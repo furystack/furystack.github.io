@@ -82,3 +82,5 @@
   description: '@furystack/shades-common-components — reusable UI components and CSS-variable theming'
 - id: shades-showcase-app
   description: The Shades Showcase App demonstrating UI components and patterns
+- id: cache
+  description: '@furystack/cache — observable async cache with state machine, deduplication, and LRU eviction'

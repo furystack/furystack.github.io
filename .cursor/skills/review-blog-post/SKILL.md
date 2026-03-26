@@ -32,7 +32,8 @@ Check:
 - All required fields present: `title`, `author`, `tags`, `date`, `draft`, `excerpt`.
 - `date` is a valid ISO 8601 string.
 - `excerpt` is concise (1-2 sentences) — it appears on post cards and in the RSS feed.
-- `image` path (if present) points to an existing file in `src/content/posts/img/`.
+- `image` path (if present) is noted for asset verification (see section 3).
+- `tags` are noted for tag existence verification (see section 4).
 - File numbering is sequential (check surrounding files for gaps or collisions).
 
 ## 2. Tagging review
@@ -88,7 +89,39 @@ Only tag packages that are a **primary focus** of the post.
 
 If a new thematic tag is warranted, suggest it along with a description for `src/data/tags.yaml`.
 
-## 3. Content review
+## 3. Asset verification
+
+Verify that all referenced assets exist:
+
+- If `image` is set in the frontmatter, check that the file exists at `src/content/posts/img/{filename}`.
+- Check for any other image references in the Markdown body (e.g. `![alt](img/...)`) and verify those files exist too.
+- Flag missing assets as **Critical** — the build will break or produce broken images.
+
+## 4. Tag existence verification
+
+Read `src/data/tags.yaml` and verify **every** tag listed in the post's `tags` frontmatter field exists in that file.
+
+- Compare each tag against the `id` values in `tags.yaml`.
+- Flag any tag that does not have a matching entry — it will not render correctly on the site.
+- If a missing tag seems intentional (new topic), suggest adding it to `tags.yaml` with an appropriate description.
+
+## 5. Implementation accuracy check
+
+Cross-reference code examples and API descriptions in the post against the actual FuryStack / Shades codebase (in the `furystack` workspace).
+
+Check for:
+
+- **Class / function names** — do they exist and are they spelled correctly?
+- **Function signatures** — do parameters, return types, and generics match the current implementation?
+- **Import paths** — are `@furystack/*` package imports valid?
+- **Hook / render API** — does the Shades `render` destructuring (`useObservable`, `useDisposable`, `useHostProps`, `useRef`, `injector`, `props`, etc.) match the current `ShadeOptions` API?
+- **Removed or renamed APIs** — flag any references to APIs that no longer exist (e.g. `element` in render, `onAttach`/`onDetach` callbacks).
+- **Constructor / decorator patterns** — verify `@Injectable`, `@Injected`, `Injector` usage matches the current DI API.
+- **Behavioral claims** — if the post states how something works (e.g. "the cache invalidates after 5 minutes"), spot-check against the source code.
+
+Use the `furystack` workspace to look up actual source files. Focus on packages mentioned in the post's package tags, but also check any `@furystack/*` import that appears in code blocks.
+
+## 6. Content review
 
 - `##` should be the top heading level (the `title` field renders as `<h1>`).
 - Links to other posts use relative paths: `/posts/{slug}/`.
@@ -96,20 +129,21 @@ If a new thematic tag is warranted, suggest it along with a description for `src
 - No broken links to GitHub or internal pages.
 - Tone matches existing posts: informal, direct, first person, occasional humor.
 
-## 4. Review output format
+## 7. Review output format
 
-```
-## Tagging
-- ...issues or suggestions...
+**1. Summary:** Brief overview of the post and one-line verdict (ready to publish / needs changes).
 
-## Frontmatter
-- ...issues or suggestions...
+**2. Issues by Priority:**
 
-## Content
-- ...issues or suggestions...
+- 💀 **Critical:** Must fix before publish (missing assets, broken builds, incorrect API usage)
+- 🔥 **High:** Should fix before publish (wrong code examples, outdated API references, missing tags)
+- 🤔 **Medium:** Consider addressing (tone inconsistencies, missing thematic tags, minor inaccuracies)
+- 💚 **Low:** Nice to have (style suggestions, tag ordering, wording tweaks)
 
-## Summary
-[One-line verdict: ready to publish / needs changes]
-```
+For each issue, be specific: section/line, what's wrong, and how to fix it.
+
+**3. Tag Review:** List the post's tags and confirm each exists in `tags.yaml`. Flag missing or misordered tags.
+
+**4. Implementation Accuracy:** List any code examples or API references that don't match the current FuryStack source. Include the relevant source file path for reference.
 
 Omit sections with no issues. Always include the Summary.
