@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import { SITE_TITLE, SOCIAL } from '../consts';
-import logo from '../../public/images/furystack-logo-512.png';
+import FuryStackLogo from './icons/FuryStackLogo.astro';
 ---
 
 <footer class="site-footer">
@@ -9,7 +8,7 @@ import logo from '../../public/images/furystack-logo-512.png';
     <div class="footer-top">
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          <Image src={logo} alt={SITE_TITLE} width={24} height={24} loading="eager" />
+          <FuryStackLogo size={24} />
           <span>FuryStack</span>
         </a>
         <p class="footer-tagline">A flexible end-to-end framework for building complex services</p>
@@ -18,7 +17,7 @@ import logo from '../../public/images/furystack-logo-512.png';
         <div class="footer-nav-group">
           <h4>Site</h4>
           <a href="/">Home</a>
-          <a href="/tags/getting-started/">Getting Started</a>
+          <a href="/getting-started/">Getting Started</a>
           <a href="/packages/">Packages</a>
           <a href="/about/">About</a>
         </div>
@@ -92,8 +91,10 @@ import logo from '../../public/images/furystack-logo-512.png';
     text-decoration: none;
     color: #fff;
   }
-  .footer-logo :global(img) {
-    border-radius: 4px;
+  .footer-logo :global(svg) {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
   }
 
   .footer-tagline {

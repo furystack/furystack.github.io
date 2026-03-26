@@ -1,9 +1,8 @@
 ---
-import { Image } from 'astro:assets';
-import { SOCIAL, SITE_TITLE } from '../consts';
+import { SOCIAL } from '../consts';
 import GitHubIcon from './icons/GitHubIcon.astro';
 import XIcon from './icons/XIcon.astro';
-import logo from '../../public/images/furystack-logo-512.png';
+import FuryStackLogo from './icons/FuryStackLogo.astro';
 
 interface Props {
   isHome?: boolean;
@@ -17,7 +16,7 @@ const { isHome = false } = Astro.props;
     {
       !isHome && (
         <a class="site-nav-logo" href="/">
-          <Image src={logo} alt={SITE_TITLE} width={24} height={24} loading="eager" />
+          <FuryStackLogo size={24} />
           <span>FuryStack</span>
         </a>
       )
@@ -29,7 +28,7 @@ const { isHome = false } = Astro.props;
     </button>
     <ul class="nav" role="menu">
       <li role="menuitem"><a href="/">Home</a></li>
-      <li role="menuitem"><a href="/tags/getting-started/">Getting Started</a></li>
+      <li role="menuitem"><a href="/getting-started/">Getting Started</a></li>
       <li role="menuitem"><a href="/packages/">Packages</a></li>
       <li role="menuitem"><a href="/about/">About</a></li>
     </ul>
@@ -111,10 +110,10 @@ const { isHome = false } = Astro.props;
     text-decoration: none;
     opacity: 0.9;
   }
-  .site-nav-logo :global(img) {
+  .site-nav-logo :global(svg) {
     width: 24px;
     height: 24px;
-    border-radius: 4px;
+    flex-shrink: 0;
   }
 
   .nav-toggle {

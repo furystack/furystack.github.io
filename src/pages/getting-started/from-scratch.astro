@@ -1,0 +1,595 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Build a FuryStack Project from Scratch">
+  <main id="main-content" class="page-main">
+    <div class="page-inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/getting-started/">Getting Started</a>
+        <span aria-hidden="true">/</span>
+        <span>From Scratch</span>
+      </nav>
+
+      <h1>Build from Scratch</h1>
+      <div class="page-content">
+        <p class="lead">
+          Set up a full-stack FuryStack monorepo step by step &mdash; shared models, a backend
+          service, and a Shades frontend &mdash; learning every piece along the way.
+        </p>
+
+        <nav class="toc">
+          <h4>On this page</h4>
+          <ol>
+            <li><a href="#workspace-setup">Workspace setup</a></li>
+            <li><a href="#common">Common &mdash; shared models &amp; API</a></li>
+            <li><a href="#service">Service &mdash; the backend</a></li>
+            <li><a href="#frontend">Frontend &mdash; Shades UI</a></li>
+            <li><a href="#build-and-run">Build and run</a></li>
+          </ol>
+        </nav>
+
+        <hr />
+
+        <!-- ───────── 1. Workspace setup ───────── -->
+        <h2 id="workspace-setup">1. Workspace setup</h2>
+        <p>
+          Create a new directory and initialize a Yarn 4 monorepo with three workspaces:
+          <code>common</code>, <code>service</code>, and <code>frontend</code>.
+        </p>
+
+        <pre><code>mkdir my-furystack-app &amp;&amp; cd my-furystack-app
+yarn init -p
+mkdir common service frontend</code></pre>
+
+        <p>
+          Edit the root <code>package.json</code> to configure workspaces, ESM, and a few convenience
+          scripts:
+        </p>
+
+        <pre><code>&#123;
+  "name": "my-furystack-app",
+  "private": true,
+  "type": "module",
+  "workspaces": &#123;
+    "packages": ["common", "service", "frontend"]
+  &#125;,
+  "scripts": &#123;
+    "build": "tsc -b common service frontend &amp;&amp; yarn workspace frontend build",
+    "start:service": "yarn workspace service start",
+    "start:frontend": "yarn workspace frontend start"
+  &#125;,
+  "devDependencies": &#123;
+    "typescript": "^5.9.0"
+  &#125;
+&#125;</code></pre>
+
+        <p>
+          Create a root <code>tsconfig.json</code> with project references so
+          <code>tsc&nbsp;-b</code> builds everything in the right order:
+        </p>
+
+        <pre><code>&#123;
+  "compilerOptions": &#123;
+    "composite": true,
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es2022",
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  &#125;,
+  "references": [
+    &#123; "path": "common" &#125;,
+    &#123; "path": "service" &#125;,
+    &#123; "path": "frontend" &#125;
+  ],
+  "files": []
+&#125;</code></pre>
+
+        <hr />
+
+        <!-- ───────── 2. Common ───────── -->
+        <h2 id="common">2. Common &mdash; shared models &amp; API</h2>
+        <p>
+          The <code>common</code> workspace holds models and the REST API type definition. Both <code
+            >service</code
+          > and <code>frontend</code> depend on it, so API changes are instantly visible on both sides.
+        </p>
+
+        <h3>common/package.json</h3>
+        <pre><code>&#123;
+  "name": "common",
+  "private": true,
+  "type": "module",
+  "exports": &#123;
+    ".": &#123;
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    &#125;
+  &#125;,
+  "dependencies": &#123;
+    "@furystack/rest": "^8.1.0"
+  &#125;
+&#125;</code></pre>
+
+        <h3>common/tsconfig.json</h3>
+        <pre><code>&#123;
+  "extends": "../tsconfig.json",
+  "compilerOptions": &#123;
+    "outDir": "dist",
+    "rootDir": "src"
+  &#125;,
+  "include": ["src"]
+&#125;</code></pre>
+
+        <h3>common/src/index.ts</h3>
+        <p>
+          Define a <code>TodoItem</code> model and a REST API contract:
+        </p>
+        <pre><code>import type &#123; RestApi &#125; from '@furystack/rest'
+
+export interface TodoItem &#123;
+  id: string
+  title: string
+  completed: boolean
+&#125;
+
+export interface MyApi extends RestApi &#123;
+  GET: &#123;
+    '/todos': &#123; result: TodoItem[] &#125;
+    '/todos/:id': &#123; url: &#123; id: string &#125;; result: TodoItem &#125;
+  &#125;
+  POST: &#123;
+    '/todos': &#123;
+      body: &#123; title: string &#125;
+      result: TodoItem
+    &#125;
+  &#125;
+&#125;</code></pre>
+
+        <hr />
+
+        <!-- ───────── 3. Service ───────── -->
+        <h2 id="service">3. Service &mdash; the backend</h2>
+        <p>
+          The service is a Node.js process that uses FuryStack to set up an HTTP API driven by the
+          shared <code>MyApi</code> type.
+        </p>
+
+        <h3>service/package.json</h3>
+        <pre><code>&#123;
+  "name": "service",
+  "private": true,
+  "type": "module",
+  "scripts": &#123;
+    "start": "yarn node ./dist/index.js"
+  &#125;,
+  "dependencies": &#123;
+    "@furystack/core": "^15.2.0",
+    "@furystack/inject": "^12.0.0",
+    "@furystack/logging": "^8.1.0",
+    "@furystack/repository": "^10.1.0",
+    "@furystack/rest-service": "^12.3.0",
+    "common": "workspace:^"
+  &#125;
+&#125;</code></pre>
+
+        <h3>service/tsconfig.json</h3>
+        <pre><code>&#123;
+  "extends": "../tsconfig.json",
+  "compilerOptions": &#123;
+    "outDir": "dist",
+    "rootDir": "src"
+  &#125;,
+  "include": ["src"],
+  "references": [
+    &#123; "path": "../common" &#125;
+  ]
+&#125;</code></pre>
+
+        <h3>service/src/index.ts</h3>
+        <p>
+          Create an <code>Injector</code>, set up an in-memory store for todos, and start the REST
+          server:
+        </p>
+        <pre><code>import &#123; Injector &#125; from '@furystack/inject'
+import &#123; addStore, InMemoryStore &#125; from '@furystack/core'
+import &#123; useLogging, VerboseConsoleLogger &#125; from '@furystack/logging'
+import &#123; getRepository &#125; from '@furystack/repository'
+import &#123; JsonResult, useRestService &#125; from '@furystack/rest-service'
+import type &#123; MyApi, TodoItem &#125; from 'common'
+
+const injector = new Injector()
+useLogging(injector, VerboseConsoleLogger)
+
+addStore(injector, new InMemoryStore(&#123;
+  model: Object as unknown as &#123; new(): TodoItem &#125;,
+  primaryKey: 'id',
+&#125;))
+
+getRepository(injector).createDataSet(
+  Object as unknown as &#123; new(): TodoItem &#125;,
+  'id',
+)
+
+let nextId = 1
+
+await useRestService&lt;MyApi&gt;(&#123;
+  injector,
+  port: 3000,
+  root: 'api',
+  name: 'My FuryStack Service',
+  api: &#123;
+    GET: &#123;
+      '/todos': async (&#123; injector: i &#125;) =&gt; &#123;
+        const dataSet = getRepository(i).getDataSetFor(
+          Object as unknown as &#123; new(): TodoItem &#125;,
+          'id',
+        )
+        const entries = await dataSet.find(i, &#123;&#125;)
+        return JsonResult(entries)
+      &#125;,
+      '/todos/:id': async (&#123; injector: i, getUrlParams &#125;) =&gt; &#123;
+        const &#123; id &#125; = getUrlParams()
+        const dataSet = getRepository(i).getDataSetFor(
+          Object as unknown as &#123; new(): TodoItem &#125;,
+          'id',
+        )
+        const [entry] = await dataSet.find(i, &#123; filter: &#123; id: &#123; $eq: id &#125; &#125; &#125;)
+        return JsonResult(entry)
+      &#125;,
+    &#125;,
+    POST: &#123;
+      '/todos': async (&#123; injector: i, getBody &#125;) =&gt; &#123;
+        const body = await getBody()
+        const todo: TodoItem = &#123;
+          id: String(nextId++),
+          title: body.title,
+          completed: false,
+        &#125;
+        const dataSet = getRepository(i).getDataSetFor(
+          Object as unknown as &#123; new(): TodoItem &#125;,
+          'id',
+        )
+        await dataSet.add(i, todo)
+        return JsonResult(todo)
+      &#125;,
+    &#125;,
+  &#125;,
+&#125;)
+
+console.log('Service listening on http://localhost:3000')</code></pre>
+
+        <hr />
+
+        <!-- ───────── 4. Frontend ───────── -->
+        <h2 id="frontend">4. Frontend &mdash; Shades UI</h2>
+        <p>
+          The frontend uses
+          <a
+            href="https://github.com/furystack/furystack/tree/develop/packages/shades"
+            target="_blank"
+            rel="noopener noreferrer">Shades</a
+          >, FuryStack&rsquo;s JSX-based UI library, bundled with
+          <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">Vite</a>.
+        </p>
+
+        <h3>frontend/package.json</h3>
+        <pre><code>&#123;
+  "name": "frontend",
+  "private": true,
+  "type": "module",
+  "scripts": &#123;
+    "build": "tsc -b &amp;&amp; yarn vite build",
+    "start": "yarn vite --port 8080"
+  &#125;,
+  "dependencies": &#123;
+    "@furystack/inject": "^12.0.0",
+    "@furystack/shades": "^13.0.0",
+    "@furystack/rest-client-fetch": "^8.1.0",
+    "common": "workspace:^"
+  &#125;,
+  "devDependencies": &#123;
+    "vite": "^7.3.0"
+  &#125;
+&#125;</code></pre>
+
+        <h3>frontend/tsconfig.json</h3>
+        <pre><code>&#123;
+  "extends": "../tsconfig.json",
+  "compilerOptions": &#123;
+    "outDir": "dist",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@furystack/shades"
+  &#125;,
+  "include": ["src"],
+  "references": [
+    &#123; "path": "../common" &#125;
+  ]
+&#125;</code></pre>
+
+        <h3>frontend/index.html</h3>
+        <p>Vite needs an HTML entry point in the workspace root:</p>
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;My FuryStack App&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div id="root"&gt;&lt;/div&gt;
+    &lt;script type="module" src="/src/index.tsx"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h3>frontend/src/index.tsx</h3>
+        <p>
+          Initialize the Shades root and render a simple todo list that fetches data from the
+          service:
+        </p>
+        <pre><code>import &#123; Injector &#125; from '@furystack/inject'
+import &#123; createComponent, initializeShadeRoot &#125; from '@furystack/shades'
+import &#123; TodoApp &#125; from './components/todo-app.js'
+
+const shadeInjector = new Injector()
+
+const rootElement = document.getElementById('root') as HTMLDivElement
+
+initializeShadeRoot(&#123;
+  injector: shadeInjector,
+  rootElement,
+  jsxElement: &lt;TodoApp /&gt;,
+&#125;)</code></pre>
+
+        <h3>frontend/src/components/todo-app.tsx</h3>
+        <p>
+          A Shade component that uses <code>@furystack/rest-client-fetch</code> for type-safe API calls:
+        </p>
+        <pre><code>import &#123; createComponent, Shade &#125; from '@furystack/shades'
+import &#123; createClient &#125; from '@furystack/rest-client-fetch'
+import type &#123; MyApi, TodoItem &#125; from 'common'
+
+export const TodoApp = Shade(&#123;
+  customElementName: 'todo-app',
+  render: (&#123; useState, element &#125;) =&gt; &#123;
+    const client = createClient&lt;MyApi&gt;(&#123;
+      endpointUrl: 'http://localhost:3000/api',
+    &#125;)
+
+    const [todos, setTodos] = useState&lt;TodoItem[]&gt;('todos', [])
+    const [input, setInput] = useState('input', '')
+
+    const loadTodos = async () =&gt; &#123;
+      const result = await client(&#123;
+        method: 'GET',
+        action: '/todos',
+      &#125;)
+      setTodos(result)
+    &#125;
+
+    void loadTodos()
+
+    const addTodo = async () =&gt; &#123;
+      if (!input) return
+      await client(&#123;
+        method: 'POST',
+        action: '/todos',
+        body: &#123; title: input &#125;,
+      &#125;)
+      setInput('')
+      void loadTodos()
+    &#125;
+
+    return (
+      &lt;div&gt;
+        &lt;h1&gt;Todos&lt;/h1&gt;
+        &lt;div&gt;
+          &lt;input
+            value=&#123;input&#125;
+            oninput=&#123;(e: Event) =&gt;
+              setInput((e.target as HTMLInputElement).value)&#125;
+            placeholder="What needs to be done?"
+          /&gt;
+          &lt;button onclick=&#123;addTodo&#125;&gt;Add&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;ul&gt;
+          &#123;todos.map((todo) =&gt; (
+            &lt;li&gt;&#123;todo.title&#125;&lt;/li&gt;
+          ))&#125;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    )
+  &#125;,
+&#125;)</code></pre>
+
+        <hr />
+
+        <!-- ───────── 5. Build and run ───────── -->
+        <h2 id="build-and-run">5. Build and run</h2>
+        <p>From the monorepo root, install dependencies and build:</p>
+        <pre><code>yarn install
+yarn build</code></pre>
+
+        <p>Then start the service and the frontend in separate terminals:</p>
+        <pre><code># Terminal 1
+yarn start:service
+
+# Terminal 2
+yarn start:frontend</code></pre>
+
+        <p>
+          Open <a href="http://localhost:8080/" target="_blank" rel="noopener noreferrer"
+            >http://localhost:8080/</a
+          >
+          &mdash; you should see the todo app. Adding items calls the service API, which stores them in
+          memory via <code>InMemoryStore</code>.
+        </p>
+
+        <hr />
+
+        <h2>What&rsquo;s next?</h2>
+        <p>You now have a working full-stack FuryStack application. From here you can:</p>
+        <ul>
+          <li>
+            Swap <code>InMemoryStore</code> for <code>FileSystemStore</code> or <code
+              >MongodbStore</code
+            > to persist data
+          </li>
+          <li>
+            Add authentication with <code>@furystack/auth-jwt</code> and <code
+              >@furystack/security</code>
+          </li>
+          <li>Add authorization rules to your data sets via <code>@furystack/repository</code></li>
+          <li>
+            Explore the <a href="/getting-started/">Getting Started hub</a> for guided deep-dives into
+            each package
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-main {
+    flex-grow: 1;
+    padding: calc(64px + 48px) 5vw 80px;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-main {
+      background: var(--color-darkmode);
+    }
+  }
+
+  .page-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 1.4rem;
+    color: var(--color-midgrey);
+  }
+  .breadcrumb a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .page-inner h1 {
+    margin-bottom: 24px;
+    font-size: 3.6rem;
+    letter-spacing: -0.03em;
+  }
+  @media (max-width: 600px) {
+    .page-inner h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .page-content {
+    font-size: 1.8rem;
+    line-height: 1.7;
+    color: var(--color-body);
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-content {
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
+
+  .lead {
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: var(--color-darkgrey);
+    line-height: 1.5;
+  }
+  @media (prefers-color-scheme: dark) {
+    .lead {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  .toc {
+    margin: 24px 0;
+    padding: 20px 24px;
+    background: var(--color-whitegrey);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+  }
+  @media (prefers-color-scheme: dark) {
+    .toc {
+      background: var(--color-darkmode-l04);
+      border-color: var(--color-darkmode-border);
+    }
+  }
+  .toc h4 {
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-midgrey);
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 1.4em;
+    font-size: 1.5rem;
+  }
+  .toc li {
+    margin: 4px 0;
+  }
+
+  .page-content h2 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .page-content h3 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 1.8rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--color-midgrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-content h3 {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .page-content pre {
+    margin: 16px 0 24px;
+    background: var(--color-darkgrey);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-content pre {
+      background: var(--color-darkmode-l04);
+    }
+  }
+
+  .page-content ol,
+  .page-content ul {
+    margin-bottom: 24px;
+  }
+  .page-content li {
+    margin-bottom: 6px;
+  }
+</style>

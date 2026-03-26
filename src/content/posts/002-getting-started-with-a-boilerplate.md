@@ -9,6 +9,8 @@ draft: false
 excerpt: So this framework really kicks ass? And how can I start using it?
 ---
 
+> **Note:** This post is outdated. For up-to-date instructions, see the [Getting Started with the Boilerplate](/getting-started/boilerplate/) guide.
+
 ## Why can it be good for you?
 
 If you want to try out the framework without digging deep all of its how-and-whys, you can simply clone the repo and start hacking in no time.
