@@ -2,7 +2,7 @@
 layout: post
 title: 'DI / IOC with @furystack/inject 💉'
 author: [gallayl]
-tags: ['Getting Started', 'inject']
+tags: ['Getting Started', 'tutorial', 'dependency-injection', 'inject']
 image: img/003-getting-started-with-inject-cover.jpg
 date: '2021-06-23T08:58:20.257Z'
 draft: false

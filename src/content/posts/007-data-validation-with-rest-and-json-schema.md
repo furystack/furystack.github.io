@@ -5,6 +5,9 @@ author: [gallayl]
 tags:
   [
     'Getting Started',
+    'tutorial',
+    'rest-api',
+    'validation',
     'rest',
     'rest-service',
     'rest-client-fetch',

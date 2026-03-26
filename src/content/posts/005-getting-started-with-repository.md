@@ -2,7 +2,7 @@
 layout: post
 title: Build a business layer with a Repository
 author: [gallayl]
-tags: ['Getting Started', 'repository']
+tags: ['Getting Started', 'tutorial', 'data-storage', 'repository']
 image: img/005-getting-started-with-repository-cover.jpg
 date: '2021-06-23T10:58:20.257Z'
 draft: false

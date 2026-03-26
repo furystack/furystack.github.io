@@ -1,0 +1,295 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Getting Started with the Boilerplate">
+  <main id="main-content" class="page-main">
+    <div class="page-inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/getting-started/">Getting Started</a>
+        <span aria-hidden="true">/</span>
+        <span>Boilerplate</span>
+      </nav>
+
+      <h1>Getting Started with the Boilerplate</h1>
+      <div class="page-content">
+        <p class="lead">
+          The fastest way to start a FuryStack project. Clone a ready-made template with
+          authentication, REST API, and a Shades frontend &mdash; all wired up.
+        </p>
+
+        <p>
+          The <a
+            href="https://github.com/furystack/boilerplate"
+            target="_blank"
+            rel="noopener noreferrer">Boilerplate repository</a
+          >
+          is a GitHub template you can use to create your own repo in seconds. It is a
+          <a
+            href="https://yarnpkg.com/features/workspaces"
+            target="_blank"
+            rel="noopener noreferrer">Yarn workspaces</a
+          >
+          monorepo with three packages: <strong>common</strong>, <strong>service</strong>, and <strong
+            >frontend</strong
+          >.
+        </p>
+
+        <h2>Quick start</h2>
+        <ol>
+          <li>
+            Open the <a
+              href="https://github.com/furystack/boilerplate"
+              target="_blank"
+              rel="noopener noreferrer">boilerplate repo</a
+            >
+            and click <strong>Use this template</strong> to create your own repository.
+          </li>
+          <li>
+            Clone your new repo and install dependencies:
+            <pre><code>git clone https://github.com/your-user/your-repo.git
+cd your-repo
+yarn install</code></pre>
+          </li>
+          <li>
+            Build all workspaces:
+            <pre><code>yarn build</code></pre>
+          </li>
+          <li>
+            Start the backend and frontend (in separate terminals):
+            <pre><code>yarn start:service
+yarn start:frontend</code></pre>
+          </li>
+          <li>
+            Open <a href="http://localhost:8080/" target="_blank" rel="noopener noreferrer"
+              >http://localhost:8080/</a
+            > in your browser.
+          </li>
+        </ol>
+
+        <hr />
+
+        <h2>Project structure</h2>
+        <p>
+          The monorepo is managed with <strong>Yarn 4</strong> workspaces. Every package uses ESM (<code
+            >"type": "module"</code
+          >) and TypeScript with project references (<code>tsc&nbsp;-b</code>).
+        </p>
+
+        <h3>common</h3>
+        <p>
+          Shared models and type-safe REST API definitions. Both the service and the frontend depend
+          on this package via <code>"common": "workspace:^"</code>.
+        </p>
+        <p>
+          The API contract is defined as a TypeScript interface that extends <code>RestApi</code>
+          from <code>@furystack/rest</code>:
+        </p>
+        <pre><code>import type &#123; RestApi &#125; from '@furystack/rest'
+import type &#123; User &#125; from './models/index.js'
+
+export interface BoilerplateApi extends RestApi &#123;
+  GET: &#123;
+    '/isAuthenticated': &#123; result: &#123; isAuthenticated: boolean &#125; &#125;
+    '/currentUser': &#123; result: User &#125;
+    '/testQuery': &#123; query: &#123; param1: string &#125;; result: &#123; param1Value: string &#125; &#125;
+  &#125;
+  POST: &#123;
+    '/login': &#123; result: User; body: &#123; username: string; password: string &#125; &#125;
+    '/logout': &#123; result: unknown &#125;
+  &#125;
+&#125;</code></pre>
+        <p>
+          This single interface drives both the server routing and the client&rsquo;s typed fetch
+          calls, giving you end-to-end type safety.
+        </p>
+
+        <h3>service</h3>
+        <p>The Node.js backend, built entirely on FuryStack packages:</p>
+        <ul>
+          <li>
+            <code>@furystack/core</code> &mdash; <code>InMemoryStore</code>, <code>addStore</code>
+          </li>
+          <li>
+            <code>@furystack/inject</code> &mdash; dependency injection via <code>Injector</code>
+          </li>
+          <li><code>@furystack/repository</code> &mdash; data sets with authorization hooks</li>
+          <li>
+            <code>@furystack/rest-service</code> &mdash; <code>useRestService</code> to spin up an HTTP
+            server from the API type
+          </li>
+          <li><code>@furystack/auth-jwt</code> &mdash; JWT login / logout / refresh</li>
+          <li><code>@furystack/security</code> &mdash; password hashing and policies</li>
+          <li><code>@furystack/filesystem-store</code> &mdash; persist entities to JSON files</li>
+          <li><code>@furystack/logging</code> &mdash; structured logging</li>
+        </ul>
+        <p>The entry point wires everything together:</p>
+        <pre><code>import &#123; injector &#125; from './root-injector.js'
+import &#123; attachShutdownHandler &#125; from './shutdown-handler.js'
+import &#123; setupStore &#125; from './setup-store.js'
+import &#123; setupRestApi &#125; from './setup-rest-api.js'
+
+void attachShutdownHandler(injector)
+setupStore(injector)
+
+setupRestApi(injector).catch((err) =&gt; &#123;
+  console.error(err)
+  process.exit(1)
+&#125;)</code></pre>
+
+        <h3>frontend</h3>
+        <p>
+          A single-page app built with
+          <a
+            href="https://github.com/furystack/furystack/tree/develop/packages/shades"
+            target="_blank"
+            rel="noopener noreferrer">Shades</a
+          >, FuryStack&rsquo;s own JSX-based UI library. It is bundled with
+          <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">Vite</a>
+          and includes:
+        </p>
+        <ul>
+          <li>A basic layout with header, body, and routing</li>
+          <li>Login / logout using <code>@furystack/auth-jwt</code></li>
+          <li>Type-safe API calls via <code>@furystack/rest-client-fetch</code></li>
+          <li>Theming with <code>@furystack/shades-common-components</code></li>
+        </ul>
+
+        <hr />
+
+        <h2>Tooling</h2>
+        <ul>
+          <li>
+            <strong>Linting:</strong> ESLint with <code>@furystack/eslint-plugin</code> + Prettier
+          </li>
+          <li>
+            <strong>Unit tests:</strong>
+            <a href="https://vitest.dev" target="_blank" rel="noopener noreferrer">Vitest</a> &mdash;
+            run with <code>yarn test</code>
+          </li>
+          <li>
+            <strong>E2E tests:</strong>
+            <a href="https://playwright.dev" target="_blank" rel="noopener noreferrer">Playwright</a
+            > &mdash; run with <code>yarn test:e2e</code>
+          </li>
+          <li>
+            <strong>Seed data:</strong>
+            <code>yarn seed</code> creates a test user for development
+          </li>
+          <li>
+            <strong>Git hooks:</strong> Husky + lint-staged for pre-commit linting and formatting
+          </li>
+        </ul>
+
+        <hr />
+
+        <h2>What&rsquo;s next?</h2>
+        <p>
+          Now that your project is running, explore the codebase and start adding your own models,
+          endpoints, and pages. For deeper understanding of individual packages, check out the
+          <a href="/getting-started/">Getting Started hub</a> for guided learning paths.
+        </p>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-main {
+    flex-grow: 1;
+    padding: calc(64px + 48px) 5vw 80px;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-main {
+      background: var(--color-darkmode);
+    }
+  }
+
+  .page-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    font-size: 1.4rem;
+    color: var(--color-midgrey);
+  }
+  .breadcrumb a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .page-inner h1 {
+    margin-bottom: 24px;
+    font-size: 3.6rem;
+    letter-spacing: -0.03em;
+  }
+  @media (max-width: 600px) {
+    .page-inner h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .page-content {
+    font-size: 1.8rem;
+    line-height: 1.7;
+    color: var(--color-body);
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-content {
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
+
+  .lead {
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: var(--color-darkgrey);
+    line-height: 1.5;
+  }
+  @media (prefers-color-scheme: dark) {
+    .lead {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  .page-content h2 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+
+  .page-content h3 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+
+  .page-content pre {
+    margin: 16px 0 24px;
+    background: var(--color-darkgrey);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-content pre {
+      background: var(--color-darkmode-l04);
+    }
+  }
+
+  .page-content ol,
+  .page-content ul {
+    margin-bottom: 24px;
+  }
+  .page-content li {
+    margin-bottom: 6px;
+  }
+  .page-content li pre {
+    margin-top: 8px;
+  }
+</style>

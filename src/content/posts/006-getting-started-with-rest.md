@@ -2,7 +2,16 @@
 layout: post
 title: REST in peace
 author: [gallayl]
-tags: ['Getting Started', 'rest', 'rest-service', 'rest-client-fetch', 'rest-client-got']
+tags:
+  [
+    'Getting Started',
+    'tutorial',
+    'rest-api',
+    'rest',
+    'rest-service',
+    'rest-client-fetch',
+    'rest-client-got',
+  ]
 image: img/006-getting-started-with-rest-cover.jpg
 date: '2021-06-23T12:58:20.257Z'
 draft: false

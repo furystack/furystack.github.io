@@ -3,7 +3,16 @@ layout: post
 title: Let's store some freaking data 📦
 author: [gallayl]
 tags:
-  ['Getting Started', 'core', 'filesystem-store', 'sequelize-store', 'mongodb-store', 'redis-store']
+  [
+    'Getting Started',
+    'tutorial',
+    'data-storage',
+    'core',
+    'filesystem-store',
+    'sequelize-store',
+    'mongodb-store',
+    'redis-store',
+  ]
 image: img/004-getting-started-with-data-stores-cover.jpg
 date: '2021-06-23T09:58:20.257Z'
 draft: false

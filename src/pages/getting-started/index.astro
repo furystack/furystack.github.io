@@ -1,0 +1,250 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Getting Started with FuryStack">
+  <main id="main-content" class="page-main">
+    <div class="page-inner">
+      <h1>Getting Started</h1>
+      <div class="page-content">
+        <p class="lead">
+          FuryStack is a flexible, end-to-end TypeScript framework for building complex services.
+          Choose the path that fits your needs.
+        </p>
+
+        <div class="cards">
+          <a href="/getting-started/boilerplate/" class="card">
+            <div class="card-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <line x1="12" y1="6" x2="12" y2="14"></line>
+                <line x1="8" y1="10" x2="16" y2="10"></line>
+              </svg>
+            </div>
+            <h2>Use the Boilerplate</h2>
+            <p>
+              Clone a ready-made template repository with authentication, a REST API, and a Shades
+              frontend &mdash; all wired up and ready to hack on.
+            </p>
+            <span class="card-cta">Get started &rarr;</span>
+          </a>
+
+          <a href="/getting-started/from-scratch/" class="card">
+            <div class="card-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <h2>Build from Scratch</h2>
+            <p>
+              Set up a Yarn monorepo step by step: shared models, a FuryStack backend, and a Shades
+              frontend &mdash; understanding every piece along the way.
+            </p>
+            <span class="card-cta">Start building &rarr;</span>
+          </a>
+        </div>
+
+        <hr />
+
+        <h2>Next steps</h2>
+        <p>Once you have a project running, dive deeper into individual FuryStack concepts:</p>
+        <ul class="next-steps">
+          <li>
+            <a href="/posts/003-getting-started-with-inject/">Dependency Injection</a>
+            &mdash; understand the <code>Injector</code> and service lifecycle
+          </li>
+          <li>
+            <a href="/posts/004-getting-started-with-data-stores/">Data Stores</a>
+            &mdash; in-memory, filesystem, MongoDB, and more
+          </li>
+          <li>
+            <a href="/posts/005-getting-started-with-repository/">Repository</a>
+            &mdash; data sets, authorization, and event hooks
+          </li>
+          <li>
+            <a href="/posts/006-getting-started-with-rest/">REST</a>
+            &mdash; type-safe API definitions shared across the stack
+          </li>
+          <li>
+            <a href="/posts/007-data-validation-with-rest-and-json-schema/">Data Validation</a>
+            &mdash; JSON Schema validation for your endpoints
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .page-main {
+    flex-grow: 1;
+    padding: calc(64px + 48px) 5vw 80px;
+    background: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-main {
+      background: var(--color-darkmode);
+    }
+  }
+
+  .page-inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .page-inner h1 {
+    margin-bottom: 24px;
+    font-size: 3.6rem;
+    letter-spacing: -0.03em;
+  }
+  @media (max-width: 600px) {
+    .page-inner h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .page-content {
+    font-size: 1.8rem;
+    line-height: 1.7;
+    color: var(--color-body);
+  }
+  @media (prefers-color-scheme: dark) {
+    .page-content {
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
+
+  .lead {
+    font-size: 2.1rem;
+    font-weight: 500;
+    color: var(--color-darkgrey);
+    line-height: 1.5;
+    margin-bottom: 36px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .lead {
+      color: rgba(255, 255, 255, 0.85);
+    }
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 650px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-accent);
+    text-decoration: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    .card {
+      background: var(--color-darkmode-l04);
+      border-color: var(--color-darkmode-border);
+    }
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      border-color: var(--color-accent);
+    }
+  }
+
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+    border-radius: var(--radius-md);
+    background: rgba(59, 130, 246, 0.08);
+    color: var(--color-accent);
+  }
+  @media (prefers-color-scheme: dark) {
+    .card-icon {
+      background: rgba(59, 130, 246, 0.15);
+    }
+  }
+
+  .card h2 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 1.5rem;
+    line-height: 1.55;
+    color: var(--color-midgrey);
+    margin: 0 0 auto;
+    padding-bottom: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    .card p {
+      color: rgba(255, 255, 255, 0.55);
+    }
+  }
+
+  .card-cta {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .page-content h2 {
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+
+  .next-steps {
+    font-size: 1.6rem;
+  }
+  .next-steps li {
+    margin-bottom: 8px;
+  }
+  .next-steps code {
+    font-size: 0.88em;
+  }
+</style>

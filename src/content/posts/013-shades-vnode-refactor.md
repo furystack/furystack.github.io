@@ -1,7 +1,7 @@
 ---
 title: 'Shades 12: The VNode Refactor'
 author: [gallayl]
-tags: ['shades']
+tags: ['Architecture', 'Frontend', 'refactoring', 'shades']
 date: '2026-03-05T18:00:00.000Z'
 draft: false
 image: img/013-vnode.jpg
