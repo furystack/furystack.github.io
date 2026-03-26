@@ -2,7 +2,7 @@
 layout: post
 title: 'Welcome to FuryStack, Gatsby 💙'
 author: [gallayl]
-tags: ['Welcome']
+tags: ['Announcement', 'Welcome', 'site']
 image: img/001-welcome-cover.jpg
 date: '2021-06-23T08:38:20.257Z'
 draft: false

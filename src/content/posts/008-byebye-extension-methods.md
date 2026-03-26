@@ -4,6 +4,9 @@ title: Bye-bye extension methods
 author: [gallayl]
 tags:
   [
+    'Architecture',
+    'refactoring',
+    'breaking-changes',
     'FuryStack',
     'core',
     'filesystem-store',

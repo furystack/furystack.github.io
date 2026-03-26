@@ -1,7 +1,15 @@
 ---
 title: 'Routing, But Make It Nested'
 author: [gallayl]
-tags: ['shades', 'shades-common-components', 'shades-showcase-app']
+tags:
+  [
+    'Frontend',
+    'routing',
+    'ui-components',
+    'shades',
+    'shades-common-components',
+    'shades-showcase-app',
+  ]
 date: '2026-03-12T12:00:00.000Z'
 draft: false
 image: img/015-nested-router.jpg

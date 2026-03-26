@@ -2,7 +2,7 @@
 layout: post
 title: A little bit of Inject refactor
 author: [gallayl]
-tags: ['inject']
+tags: ['Architecture', 'refactoring', 'breaking-changes', 'dependency-injection', 'inject']
 image: img/009-inject-refactor.jpg
 date: '2022-08-12T18:00:00.257Z'
 draft: false
