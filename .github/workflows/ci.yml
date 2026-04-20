@@ -32,6 +32,9 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: TypeScript check
+        run: yarn tsc --noEmit
+
       - name: Format check
         run: yarn prettier --check .
 
