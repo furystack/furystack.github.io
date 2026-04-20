@@ -32,6 +32,8 @@
   description: Migration stories and upgrade guides
 - id: site
   description: Posts about this blog and the FuryStack website
+- id: tooling
+  description: Developer tooling, build workflows, release automation, and CI helpers
 - id: validation
   description: Data validation and schema enforcement
 

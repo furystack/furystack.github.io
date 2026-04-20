@@ -1,7 +1,7 @@
 ---
 title: 'Bye Gatsby, Hello Astro 🚀'
 author: [gallayl]
-tags: ['Announcement', 'migration', 'site', 'FuryStack']
+tags: ['Announcement', 'migration', 'tooling', 'site', 'FuryStack']
 date: '2026-03-05T12:00:00.000Z'
 draft: false
 image: img/012-astro-migration.jpg
