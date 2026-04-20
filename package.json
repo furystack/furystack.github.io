@@ -13,6 +13,7 @@
     "preview": "astro preview",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
+    "typescript": "tsc --noEmit",
     "format": "prettier --write .",
     "prepare": "husky"
   },
