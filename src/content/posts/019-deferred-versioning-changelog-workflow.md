@@ -5,7 +5,7 @@ tags: ['Architecture', 'tooling', 'site']
 date: '2026-04-20T18:00:00.000Z'
 draft: false
 image: img/019-changelogs.webp
-excerpt: "How FuryStack turns Yarn deferred versioning into changelog entries without guessing, vibes, or heroic memory."
+excerpt: 'How FuryStack turns Yarn deferred versioning into changelog entries without guessing, vibes, or heroic memory.'
 ---
 
 At some point in every monorepo, you ask a simple question: _"What changed in this release?"_ Then everyone stares at each other, opens 17 tabs, and starts reconstructing history like a low-budget detective show.
