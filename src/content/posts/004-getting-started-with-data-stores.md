@@ -16,6 +16,8 @@ tags:
 image: img/004-getting-started-with-data-stores-cover.jpg
 date: '2021-06-23T09:58:20.257Z'
 draft: false
+deprecated: true
+supersededBy: /getting-started/data-stores/
 excerpt: Where should you store your data? SQL, NOSQL, InMemory or on a sticky note on the back of your pillow? Doesn't matter if you have a PhysicalStore implementation...
 ---
 

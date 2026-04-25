@@ -6,6 +6,8 @@ tags: ['Getting Started', 'tutorial', 'dependency-injection', 'inject']
 image: img/003-getting-started-with-inject-cover.jpg
 date: '2021-06-23T08:58:20.257Z'
 draft: false
+deprecated: true
+supersededBy: /getting-started/inject/
 excerpt: Dependency injection and Inversion of control is a common practice that tries to protect you from insanity that would happen when you realize that you can't refactor and test a giant global static app structure. @furystack/inject is a simple but powerful tool that you can use in NodeJs and in the browser.
 ---
 

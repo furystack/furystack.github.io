@@ -26,7 +26,7 @@ tags:
   ]
 date: '2026-04-25T12:00:00.000Z'
 draft: false
-image: img/018-functional-di.jpg
+image: img/020-functional-di.jpg
 excerpt: "The latest FuryStack update throws @Injectable in the bin, replaces classes with tokens, and finally clears the runway for the next big TypeScript upgrade. Here's what changed and why your @Injected properties are about to get really lonely."
 ---
 

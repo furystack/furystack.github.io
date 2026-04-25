@@ -127,6 +127,8 @@ Two things to notice here. First, the theme is `DeepPartial<Theme>` — you can 
 
 The `ThemeProviderService` wraps this into an injectable singleton with event emission:
 
+> ⚠️ **Outdated API.** `ThemeProviderService` was declassed in the functional-DI rewrite and is now a plain-object factory behind a singleton token. The API surface (`setAssignedTheme`, `themeChanged` events, the `theme` accessor) is unchanged; only the declaration shape moved. See the [Dependency Injection](/getting-started/inject/) guide for the current pattern.
+
 ```typescript
 @Injectable({ lifetime: 'singleton' })
 export class ThemeProviderService extends EventHub<{ themeChanged: DeepPartial<Theme> }> {

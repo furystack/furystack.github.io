@@ -6,6 +6,8 @@ tags: ['Getting Started', 'tutorial', 'data-storage', 'repository']
 image: img/005-getting-started-with-repository-cover.jpg
 date: '2021-06-23T10:58:20.257Z'
 draft: false
+deprecated: true
+supersededBy: /getting-started/repository/
 excerpt: A Repository is the next layer above the data stores. When setting up a repository, you can create DataSets that can rely on a previously configured physical store. The difference is that while PhysicalStore focuses on the data, DataSet focuses on business logic. You can authorize, check permissions, subscribe to entity changes, etc...
 ---
 
