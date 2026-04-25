@@ -15,6 +15,8 @@ tags:
 image: img/006-getting-started-with-rest-cover.jpg
 date: '2021-06-23T12:58:20.257Z'
 draft: false
+deprecated: true
+supersededBy: /getting-started/rest/
 excerpt: Designing and implementing APIs can be hard and consuming them can be frustrating, if they doesn't work as expected. REST API as a Typescript interface to the rescue!
 ---
 

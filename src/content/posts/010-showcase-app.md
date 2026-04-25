@@ -21,6 +21,8 @@ excerpt: Updates on Shades - Kick-ass DataGrid updates, fragments and a brand ne
 
 Using [fragments](https://reactjs.org/docs/fragments.html) in React is not a new concept so I've implemented this also in Shades. The concept is the same - you can avoid unneccessary DOM nesting with them. The syntax is also the same - you can check out some [common component code](https://github.com/furystack/furystack/blob/e6edd24c9a196f56ba5b3b2dd65f062c8d68cdd5/packages/shades-common-components/src/components/data-grid/body.tsx#L52) to get the idea.
 
+> ⚠️ **Outdated API.** The factory is now spelled `Shade(...)` (singular), and the option is `customElementName`. Fragments still work the same way. See the current [Shades source](https://github.com/furystack/furystack/tree/develop/packages/shades) for the up-to-date shape.
+
 ```tsx
 export const HelloWorld = Shades({
   shadowDomName: 'shades-hello-world',

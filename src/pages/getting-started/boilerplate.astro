@@ -108,21 +108,34 @@ export interface BoilerplateApi extends RestApi &#123;
         <p>The Node.js backend, built entirely on FuryStack packages:</p>
         <ul>
           <li>
-            <code>@furystack/core</code> &mdash; <code>InMemoryStore</code>, <code>addStore</code>
+            <code>@furystack/core</code> &mdash; <code>InMemoryStore</code> + <code
+              >defineStore</code
+            > to declare physical store tokens
           </li>
           <li>
-            <code>@furystack/inject</code> &mdash; dependency injection via <code>Injector</code>
+            <code>@furystack/inject</code> &mdash; functional DI via <code>defineService</code>,
+            <code>createInjector</code>, and disposable scopes
           </li>
-          <li><code>@furystack/repository</code> &mdash; data sets with authorization hooks</li>
+          <li>
+            <code>@furystack/repository</code> &mdash; <code>defineDataSet</code> for authorization hooks,
+            modifiers, and change events
+          </li>
           <li>
             <code>@furystack/rest-service</code> &mdash; <code>useRestService</code> to spin up an HTTP
             server from the API type
           </li>
           <li><code>@furystack/auth-jwt</code> &mdash; JWT login / logout / refresh</li>
           <li><code>@furystack/security</code> &mdash; password hashing and policies</li>
-          <li><code>@furystack/filesystem-store</code> &mdash; persist entities to JSON files</li>
+          <li>
+            <code>@furystack/filesystem-store</code> &mdash; <code>defineFileSystemStore</code> to persist
+            entities to JSON files
+          </li>
           <li><code>@furystack/logging</code> &mdash; structured logging</li>
         </ul>
+        <p>
+          For details on each of these APIs, see the deep-dive guides linked from the
+          <a href="/getting-started/">Getting Started hub</a>.
+        </p>
         <p>The entry point wires everything together:</p>
         <pre><code>import &#123; injector &#125; from './root-injector.js'
 import &#123; attachShutdownHandler &#125; from './shutdown-handler.js'

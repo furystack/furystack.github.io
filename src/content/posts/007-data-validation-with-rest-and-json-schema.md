@@ -17,6 +17,8 @@ tags:
 image: img/007-data-validation-cover.jpg
 date: '2021-06-23T13:58:20.257Z'
 draft: false
+deprecated: true
+supersededBy: /getting-started/data-validation/
 excerpt: We have a strongly typed REST API interface with build-time type checking. Can we build runtime validation with a minimal effort? (Spoiler alert - yesss)
 ---
 

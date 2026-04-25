@@ -273,6 +273,8 @@ The capacity limit ensures you don't accidentally cache every user who's ever lo
 
 Now let's flip to the frontend. You have a list of items, and clicking one opens a detail view that fetches full data:
 
+> ⚠️ **Outdated API.** The `@Injectable` decorator no longer exists in `@furystack/inject`. The current shape declares the service via `defineService({ name, lifetime: 'singleton', factory: ... })` and resolves it with `injector.get(...)`. The cache itself is unchanged. See the [Dependency Injection](/getting-started/inject/) guide for the current pattern.
+
 ```typescript
 import { Cache } from '@furystack/cache';
 import { Injectable } from '@furystack/inject';

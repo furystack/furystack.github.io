@@ -133,6 +133,8 @@ It's a discriminated union, so TypeScript narrows the type for you. Check the `s
 
 Setting up entity sync on the server takes about as much code as you'd spend writing a TODO comment about how you should "add real-time updates later":
 
+> ⚠️ **Outdated API.** This snippet predates the functional-DI rewrite. The current shape uses `createInjector()`, `useWebSocketApi`, and `useEntitySync` with `DataSetToken`s — see the [REST](/getting-started/rest/) and [Repository](/getting-started/repository/) guides plus the [migration guide](https://github.com/furystack/furystack/blob/develop/docs/migrations/v7-functional-di.md) for the up-to-date entity-sync recipe.
+
 ```typescript
 import { Injector } from '@furystack/inject';
 import { useWebsockets } from '@furystack/websocket-api';
@@ -187,6 +189,8 @@ Each model registration accepts three optional settings:
 ## Client setup: subscribing to reality
 
 On the client side, you create an `EntitySyncService`, register your models, and start subscribing:
+
+> ⚠️ **Outdated API.** Client setup now goes through `defineEntitySyncService(opts)` (mints a per-app token) and `injector.bind(...)`. See the [Dependency Injection](/getting-started/inject/) guide and the [migration guide](https://github.com/furystack/furystack/blob/develop/docs/migrations/v7-functional-di.md) for the current shape.
 
 ```typescript
 import { EntitySyncService, createInMemoryCacheStore } from '@furystack/entity-sync-client';

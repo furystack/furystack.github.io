@@ -13,7 +13,20 @@ const posts = defineCollection({
       date: z.coerce.date(),
       draft: z.boolean().default(false),
       excerpt: z.string().nullable().optional(),
+      deprecated: z.boolean().default(false),
+      supersededBy: z.string().nullable().optional(),
     }),
+});
+
+const docs = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/docs' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    package: z.string().optional(),
+    lastVerified: z.coerce.date(),
+    order: z.number().default(0),
+  }),
 });
 
 const authors = defineCollection({
@@ -39,4 +52,4 @@ const tags = defineCollection({
   }),
 });
 
-export const collections = { posts, authors, tags };
+export const collections = { posts, docs, authors, tags };

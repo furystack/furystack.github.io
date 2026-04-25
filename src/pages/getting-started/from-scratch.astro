@@ -114,7 +114,7 @@ mkdir common service frontend</code></pre>
     &#125;
   &#125;,
   "dependencies": &#123;
-    "@furystack/rest": "^8.1.0"
+    "@furystack/rest": "^9.0.0"
   &#125;
 &#125;</code></pre>
 
@@ -171,11 +171,11 @@ export interface MyApi extends RestApi &#123;
     "start": "yarn node ./dist/index.js"
   &#125;,
   "dependencies": &#123;
-    "@furystack/core": "^15.2.0",
+    "@furystack/core": "^16.0.0",
     "@furystack/inject": "^12.0.0",
     "@furystack/logging": "^8.1.0",
     "@furystack/repository": "^10.1.0",
-    "@furystack/rest-service": "^12.3.0",
+    "@furystack/rest-service": "^13.0.0",
     "common": "workspace:^"
   &#125;
 &#125;</code></pre>
@@ -193,30 +193,53 @@ export interface MyApi extends RestApi &#123;
   ]
 &#125;</code></pre>
 
+        <h3>service/src/todo-dataset.ts</h3>
+        <p>
+          Declare the store and the dataset as module-scoped tokens. The runtime model is a class so
+          the framework has a stable identity for the entity type.
+        </p>
+        <pre><code>import &#123; defineStore, InMemoryStore &#125; from '@furystack/core'
+import &#123; defineDataSet &#125; from '@furystack/repository'
+import type &#123; TodoItem &#125; from 'common'
+
+class TodoModel implements TodoItem &#123;
+  declare id: string
+  declare title: string
+  declare completed: boolean
+&#125;
+
+export const TodoStore = defineStore&lt;TodoItem, 'id'&gt;(&#123;
+  name: 'my-app/TodoStore',
+  model: TodoModel,
+  primaryKey: 'id',
+  factory: () =&gt; new InMemoryStore(&#123; model: TodoModel, primaryKey: 'id' &#125;),
+&#125;)
+
+export const TodoDataSet = defineDataSet(&#123;
+  name: 'my-app/TodoDataSet',
+  store: TodoStore,
+&#125;)</code></pre>
+
         <h3>service/src/index.ts</h3>
         <p>
-          Create an <code>Injector</code>, set up an in-memory store for todos, and start the REST
-          server:
+          Wire everything together in a root injector and start the REST server. The endpoint
+          generators take the <code>DataSetToken</code> directly &mdash; no need to repeat the model and
+          primary key.
         </p>
-        <pre><code>import &#123; Injector &#125; from '@furystack/inject'
-import &#123; addStore, InMemoryStore &#125; from '@furystack/core'
+        <pre><code>import &#123; createInjector &#125; from '@furystack/inject'
 import &#123; useLogging, VerboseConsoleLogger &#125; from '@furystack/logging'
-import &#123; getRepository &#125; from '@furystack/repository'
-import &#123; JsonResult, useRestService &#125; from '@furystack/rest-service'
-import type &#123; MyApi, TodoItem &#125; from 'common'
+import &#123;
+  createGetCollectionEndpoint,
+  createGetEntityEndpoint,
+  createPostEndpoint,
+  JsonResult,
+  useRestService,
+&#125; from '@furystack/rest-service'
+import type &#123; MyApi &#125; from 'common'
+import &#123; TodoDataSet &#125; from './todo-dataset.js'
 
-const injector = new Injector()
+const injector = createInjector()
 useLogging(injector, VerboseConsoleLogger)
-
-addStore(injector, new InMemoryStore(&#123;
-  model: Object as unknown as &#123; new(): TodoItem &#125;,
-  primaryKey: 'id',
-&#125;))
-
-getRepository(injector).createDataSet(
-  Object as unknown as &#123; new(): TodoItem &#125;,
-  'id',
-)
 
 let nextId = 1
 
@@ -224,39 +247,16 @@ await useRestService&lt;MyApi&gt;(&#123;
   injector,
   port: 3000,
   root: 'api',
-  name: 'My FuryStack Service',
   api: &#123;
     GET: &#123;
-      '/todos': async (&#123; injector: i &#125;) =&gt; &#123;
-        const dataSet = getRepository(i).getDataSetFor(
-          Object as unknown as &#123; new(): TodoItem &#125;,
-          'id',
-        )
-        const entries = await dataSet.find(i, &#123;&#125;)
-        return JsonResult(entries)
-      &#125;,
-      '/todos/:id': async (&#123; injector: i, getUrlParams &#125;) =&gt; &#123;
-        const &#123; id &#125; = getUrlParams()
-        const dataSet = getRepository(i).getDataSetFor(
-          Object as unknown as &#123; new(): TodoItem &#125;,
-          'id',
-        )
-        const [entry] = await dataSet.find(i, &#123; filter: &#123; id: &#123; $eq: id &#125; &#125; &#125;)
-        return JsonResult(entry)
-      &#125;,
+      '/todos': createGetCollectionEndpoint(TodoDataSet),
+      '/todos/:id': createGetEntityEndpoint(TodoDataSet),
     &#125;,
     POST: &#123;
       '/todos': async (&#123; injector: i, getBody &#125;) =&gt; &#123;
         const body = await getBody()
-        const todo: TodoItem = &#123;
-          id: String(nextId++),
-          title: body.title,
-          completed: false,
-        &#125;
-        const dataSet = getRepository(i).getDataSetFor(
-          Object as unknown as &#123; new(): TodoItem &#125;,
-          'id',
-        )
+        const dataSet = i.get(TodoDataSet)
+        const todo = &#123; id: String(nextId++), title: body.title, completed: false &#125;
         await dataSet.add(i, todo)
         return JsonResult(todo)
       &#125;,
@@ -265,6 +265,12 @@ await useRestService&lt;MyApi&gt;(&#123;
 &#125;)
 
 console.log('Service listening on http://localhost:3000')</code></pre>
+
+        <p>
+          Each request gets its own scoped injector. Resolving <code>TodoDataSet</code> inside a handler
+          walks back to the root, where the dataset's singleton instance lives, while any per-request
+          services (like <code>HttpUserContext</code>) stay isolated to that request.
+        </p>
 
         <hr />
 
@@ -291,8 +297,9 @@ console.log('Service listening on http://localhost:3000')</code></pre>
   &#125;,
   "dependencies": &#123;
     "@furystack/inject": "^12.0.0",
-    "@furystack/shades": "^13.0.0",
+    "@furystack/shades": "^14.0.0",
     "@furystack/rest-client-fetch": "^8.1.0",
+    "@furystack/utils": "^4.0.0",
     "common": "workspace:^"
   &#125;,
   "devDependencies": &#123;
@@ -335,44 +342,47 @@ console.log('Service listening on http://localhost:3000')</code></pre>
           Initialize the Shades root and render a simple todo list that fetches data from the
           service:
         </p>
-        <pre><code>import &#123; Injector &#125; from '@furystack/inject'
-import &#123; createComponent, initializeShadeRoot &#125; from '@furystack/shades'
+        <pre><code>import &#123; createInjector &#125; from '@furystack/inject'
+import &#123; initializeShadeRoot &#125; from '@furystack/shades'
 import &#123; TodoApp &#125; from './components/todo-app.js'
 
-const shadeInjector = new Injector()
+const shadesInjector = createInjector()
 
 const rootElement = document.getElementById('root') as HTMLDivElement
 
 initializeShadeRoot(&#123;
-  injector: shadeInjector,
+  injector: shadesInjector,
   rootElement,
   jsxElement: &lt;TodoApp /&gt;,
 &#125;)</code></pre>
 
         <h3>frontend/src/components/todo-app.tsx</h3>
         <p>
-          A Shade component that uses <code>@furystack/rest-client-fetch</code> for type-safe API calls:
+          A Shade component using <code>useObservable</code> for reactive state and <code
+            >@furystack/rest-client-fetch</code
+          > for type-safe API calls:
         </p>
         <pre><code>import &#123; createComponent, Shade &#125; from '@furystack/shades'
 import &#123; createClient &#125; from '@furystack/rest-client-fetch'
+import &#123; ObservableValue &#125; from '@furystack/utils'
 import type &#123; MyApi, TodoItem &#125; from 'common'
+
+const client = createClient&lt;MyApi&gt;(&#123;
+  endpointUrl: 'http://localhost:3000/api',
+&#125;)
 
 export const TodoApp = Shade(&#123;
   customElementName: 'todo-app',
-  render: (&#123; useState, element &#125;) =&gt; &#123;
-    const client = createClient&lt;MyApi&gt;(&#123;
-      endpointUrl: 'http://localhost:3000/api',
-    &#125;)
+  render: (&#123; useObservable &#125;) =&gt; &#123;
+    const todos$ = new ObservableValue&lt;TodoItem[]&gt;([])
+    const input$ = new ObservableValue('')
 
-    const [todos, setTodos] = useState&lt;TodoItem[]&gt;('todos', [])
-    const [input, setInput] = useState('input', '')
+    const todos = useObservable('todos', todos$)
+    const input = useObservable('input', input$)
 
     const loadTodos = async () =&gt; &#123;
-      const result = await client(&#123;
-        method: 'GET',
-        action: '/todos',
-      &#125;)
-      setTodos(result)
+      const result = await client(&#123; method: 'GET', action: '/todos' &#125;)
+      todos$.setValue(result.result)
     &#125;
 
     void loadTodos()
@@ -384,7 +394,7 @@ export const TodoApp = Shade(&#123;
         action: '/todos',
         body: &#123; title: input &#125;,
       &#125;)
-      setInput('')
+      input$.setValue('')
       void loadTodos()
     &#125;
 
@@ -395,7 +405,7 @@ export const TodoApp = Shade(&#123;
           &lt;input
             value=&#123;input&#125;
             oninput=&#123;(e: Event) =&gt;
-              setInput((e.target as HTMLInputElement).value)&#125;
+              input$.setValue((e.target as HTMLInputElement).value)&#125;
             placeholder="What needs to be done?"
           /&gt;
           &lt;button onclick=&#123;addTodo&#125;&gt;Add&lt;/button&gt;
@@ -439,19 +449,29 @@ yarn start:frontend</code></pre>
         <p>You now have a working full-stack FuryStack application. From here you can:</p>
         <ul>
           <li>
-            Swap <code>InMemoryStore</code> for <code>FileSystemStore</code> or <code
-              >MongodbStore</code
-            > to persist data
+            Swap the <code>InMemoryStore</code> factory for <code>defineFileSystemStore</code>,
+            <code>defineMongoDbStore</code>, <code>defineRedisStore</code>, or
+            <code>defineSequelizeStore</code> to persist data &mdash; see <a
+              href="/getting-started/data-stores/">Data Stores</a
+            >
           </li>
           <li>
             Add authentication with <code>@furystack/auth-jwt</code> and <code
               >@furystack/security</code
             >
           </li>
-          <li>Add authorization rules to your data sets via <code>@furystack/repository</code></li>
           <li>
-            Explore the <a href="/getting-started/">Getting Started hub</a> for guided deep-dives into
-            each package
+            Layer authorization, modifiers, and change events on your dataset &mdash; see <a
+              href="/getting-started/repository/">Repository</a
+            >
+          </li>
+          <li>
+            Add runtime validation to your endpoints &mdash; see <a
+              href="/getting-started/data-validation/">Data Validation</a
+            >
+          </li>
+          <li>
+            Explore the <a href="/getting-started/">Getting Started hub</a> for the full set of guides
           </li>
         </ul>
       </div>
