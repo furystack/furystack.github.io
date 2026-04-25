@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const usedTags = new Set(allPosts.flatMap(p => p.data.tags ?? []).map(t => t.toLowerCase()));
 
 const packages = [
   '@furystack/auth-google',
@@ -42,6 +46,7 @@ const packages = [
         {
           packages.map(pkg => {
             const shortName = pkg.split('/')[1];
+            const hasPosts = usedTags.has(shortName.toLowerCase());
             return (
               <div class="pkg-row">
                 <div class="pkg-name">
@@ -53,6 +58,11 @@ const packages = [
                     {pkg}
                   </a>
                 </div>
+                {hasPosts && (
+                  <a class="pkg-posts-link" href={`/tags/${shortName}/`}>
+                    Posts &rarr;
+                  </a>
+                )}
                 <div class="pkg-badge">
                   <img
                     src={`https://img.shields.io/npm/v/${pkg}.svg?maxAge=3600`}
@@ -61,9 +71,6 @@ const packages = [
                     decoding="async"
                   />
                 </div>
-                <a class="pkg-posts-link" href={`/tags/${shortName}/`}>
-                  Posts &rarr;
-                </a>
               </div>
             );
           })
