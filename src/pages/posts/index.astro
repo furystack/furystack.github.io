@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE } from '../../consts';
+
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const title = `All Posts - ${SITE_TITLE}`;
+const description = `Browse all ${posts.length} posts on ${SITE_TITLE}`;
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="posts-header">
+    <div class="posts-header-inner">
+      <h1>All Posts</h1>
+      <p>A collection of {posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+    </div>
+  </header>
+
+  <main id="main-content" class="posts-main">
+    <div class="inner">
+      <div class="posts-grid">
+        {posts.map((post, i) => <PostCard post={post} eager={i === 0} />)}
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .posts-header {
+    padding: calc(64px + 48px) 5vw 40px;
+    background: var(--color-nav-bg);
+    color: #fff;
+  }
+
+  .posts-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .posts-header h1 {
+    font-size: 3.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 600px) {
+    .posts-header h1 {
+      font-size: 2.6rem;
+    }
+  }
+
+  .posts-header p {
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    max-width: 500px;
+  }
+
+  .posts-main {
+    flex-grow: 1;
+    padding: 40px 5vw 80px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .posts-main {
+      background: var(--color-darkmode);
+    }
+  }
+</style>

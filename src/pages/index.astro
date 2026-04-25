@@ -52,6 +52,19 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     </div>
   </section>
 
+  <main id="main-content" class="main-content">
+    <div class="inner">
+      {
+        featured && (
+          <section class="featured-section reveal">
+            <span class="section-label">Latest</span>
+            <PostCard post={featured} large eager />
+          </section>
+        )
+      }
+    </div>
+  </main>
+
   <section class="features">
     <div class="inner">
       <div class="features-grid">
@@ -153,17 +166,8 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     </div>
   </section>
 
-  <main id="main-content" class="main-content">
+  <section class="posts-content">
     <div class="inner">
-      {
-        featured && (
-          <section class="featured-section reveal">
-            <span class="section-label">Latest</span>
-            <PostCard post={featured} large eager />
-          </section>
-        )
-      }
-
       {
         displayedPosts.length > 0 && (
           <section class="posts-section">
@@ -177,7 +181,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
             </div>
             {rest.length > 6 && (
               <div class="view-all-wrapper">
-                <a href="/tags/" class="btn btn-outline">
+                <a href="/posts/" class="btn btn-outline">
                   View all posts
                 </a>
               </div>
@@ -186,7 +190,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
         )
       }
     </div>
-  </main>
+  </section>
 </BaseLayout>
 
 <script>
@@ -215,6 +219,11 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     color: #fff;
     text-align: center;
     overflow: hidden;
+  }
+  @media (min-width: 1080px) {
+    .hero {
+      padding: calc(64px + 2.5vw) 5vw 2.5vw;
+    }
   }
 
   .hero-aurora {
@@ -281,6 +290,12 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     gap: 24px;
     margin: 0 auto 36px;
   }
+  @media (min-width: 1080px) {
+    .hero-brands {
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+  }
   @media (max-width: 600px) {
     .hero-brands {
       flex-direction: column;
@@ -307,6 +322,13 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     transform: translateY(-3px);
     border-color: rgba(255, 255, 255, 0.14);
     box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
+  }
+  @media (min-width: 1080px) {
+    .hero-brand-card {
+      flex-direction: row;
+      gap: 16px;
+      padding: 20px 28px;
+    }
   }
   @media (max-width: 600px) {
     .hero-brand-card {
@@ -353,6 +375,12 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     color: rgba(255, 255, 255, 0.65);
     margin-bottom: 32px;
     font-weight: 400;
+  }
+  @media (min-width: 1080px) {
+    .hero-description {
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+    }
   }
   @media (max-width: 600px) {
     .hero-description {
@@ -436,6 +464,11 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
   }
+  @media (min-width: 1080px) {
+    .quick-start {
+      margin-top: 16px;
+    }
+  }
   .quick-start code {
     font-family: var(--font-mono);
     font-size: 1.4rem;
@@ -457,19 +490,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     }
   }
   .features::before {
-    content: '';
-    position: absolute;
-    top: -60px;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(to bottom, var(--color-nav-bg), var(--color-whitegrey));
-    pointer-events: none;
-  }
-  @media (prefers-color-scheme: dark) {
-    .features::before {
-      background: linear-gradient(to bottom, var(--color-nav-bg), var(--color-darkmode));
-    }
+    display: none;
   }
 
   .features-grid {
@@ -545,15 +566,40 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
     }
   }
 
-  /* ── Main content ── */
+  /* ── Main content (featured post) ── */
   .main-content {
     position: relative;
-    flex-grow: 1;
-    padding: 64px 5vw 80px;
+    padding: 48px 5vw 0;
     background: var(--color-whitegrey);
+  }
+  .main-content::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--color-nav-bg), var(--color-whitegrey));
+    pointer-events: none;
   }
   @media (prefers-color-scheme: dark) {
     .main-content {
+      background: var(--color-darkmode);
+    }
+    .main-content::before {
+      background: linear-gradient(to bottom, var(--color-nav-bg), var(--color-darkmode));
+    }
+  }
+
+  /* ── Posts content (remaining posts) ── */
+  .posts-content {
+    position: relative;
+    flex-grow: 1;
+    padding: 48px 5vw 80px;
+    background: var(--color-whitegrey);
+  }
+  @media (prefers-color-scheme: dark) {
+    .posts-content {
       background: var(--color-darkmode);
     }
   }
@@ -569,7 +615,7 @@ const ogImage = `${SITE_URL}/images/blog-cover.png`;
   }
 
   .featured-section {
-    margin-bottom: 64px;
+    margin-bottom: 0;
   }
 
   .posts-section {
