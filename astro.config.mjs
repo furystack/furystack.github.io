@@ -7,7 +7,6 @@ export default defineConfig({
     shikiConfig: {
       theme: 'night-owl',
     },
-    remarkPlugins: ['remark-smartypants'],
   },
   integrations: [sitemap()],
 });
