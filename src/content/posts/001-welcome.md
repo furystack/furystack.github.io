@@ -25,7 +25,7 @@ The new site should be:
 
 ## The new candidates
 
-So I've ~killed~ archived the old one and I have to make a replacement. The old site was a react-based SPA. I could do the same with React or Shades but I still had to struggle with routes and SEO...
+So I've ~~killed~~ archived the old one and I have to make a replacement. The old site was a react-based SPA. I could do the same with React or Shades but I still had to struggle with routes and SEO...
 
 First, I've checked [Jekyll](https://jekyllrb.com/) - as the default approach for Github Pages it's easy to setup and deploy. We've used it in one of my previous workplace, it does the job pretty well.
 The downside is that I'm not so familiar with Ruby, _gemfiles_ and other esotheric things, so the stack is totally out of scope. So the templating syntax, theming and stuffs like these.

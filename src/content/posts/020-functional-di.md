@@ -138,9 +138,7 @@ const UserStore = defineStore<User, 'username'>({
 const UserDataSet = defineDataSet({
   name: 'my-app/UserDataSet',
   store: UserStore,
-  settings: {
-    /* authorize, modifyOnAdd, etc. */
-  },
+  settings: {/* authorize, modifyOnAdd, etc. */},
 });
 ```
 
@@ -262,9 +260,7 @@ export const GridPageService = defineServiceAsync({
     const scope = useSystemIdentityContext({ injector, username: 'GridPageService' });
     onDispose(() => scope[Symbol.asyncDispose]());
     await seedDemoData(dataSet, scope);
-    return {
-      /* the actually useful surface */
-    };
+    return {/* the actually useful surface */};
   },
 });
 ```
